@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.idea_festival.golaroid_android"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.idea_festival.golaroid_android"
