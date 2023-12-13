@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Golaroid-Android"
 include(":app")
+include(":data")
+include(":domain")
+include(":design-system")
