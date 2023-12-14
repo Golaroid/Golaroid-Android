@@ -4,7 +4,6 @@ plugins {
     id(Dependency.Google.HILT_PLUGIN)
     kotlin(Dependency.Gradle.KAPT)
     id(Dependency.Google.GOOGLE_SERVICES_PLUGIN)
-    id(Dependency.Google.FIREBASE_CRASHLYTICS_PLUGIN)
 }
 
 @Suppress("UnstableApiUsage")
