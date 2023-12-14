@@ -62,8 +62,4 @@ dependencies {
     implementation(Dependency.Libraries.RETROFIT_CONVERTER_GSON)
     implementation(Dependency.Libraries.OKHTTP)
     implementation(Dependency.Libraries.OKHTTP_LOGGING_INTERCEPTOR)
-
-    implementation(platform(Dependency.Google.FIREBASE_BOM))
-    implementation(Dependency.Google.FIREBASE_ANALYTICS)
-    implementation(Dependency.Google.FIREBASE_CRASHLYTICS)
 }
