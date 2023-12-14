@@ -1,43 +1,79 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id(Dependency.Gradle.LIBRARY)
+    id(Dependency.Gradle.KOTLIN)
+    id(Dependency.Google.HILT_PLUGIN)
+    kotlin(Dependency.Gradle.KAPT)
 }
 
+@Suppress("UnstableApiUsage")
 android {
-    namespace = "com.idea_festival.presetation"
-    compileSdk = 33
+    namespace = ProjectProperties.NameSpace.PRESENTATION
+    compileSdk = ProjectProperties.Versions.COMPILE_SDK
 
     defaultConfig {
-        minSdk = 24
+        minSdk = ProjectProperties.Versions.MIN_SDK
+        targetSdk = ProjectProperties.Versions.TARGET_SDK
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
+        testInstrumentationRunner = ProjectProperties.Test.TEST_RUNNER
+        consumerProguardFiles(ProjectProperties.Files.CONSUMER_PROGUARDFILES)
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+
+        buildTypes {
+            release {
+                isMinifyEnabled = false
+                proguardFiles(
+                    getDefaultProguardFile(ProjectProperties.Files.DEFAULT_PROGUARDFILES),
+                    ProjectProperties.Files.PROGUARDFILES
+                )
+            }
+        }
+        compileOptions {
+            sourceCompatibility = ProjectProperties.Versions.JAVA_VERSION
+            targetCompatibility = ProjectProperties.Versions.JAVA_VERSION
+        }
+        kotlinOptions {
+            jvmTarget = ProjectProperties.Versions.JVM_TARGET
+        }
+        buildFeatures {
+            compose = true
+        }
+        composeOptions {
+            kotlinCompilerExtensionVersion = Versions.COMPOSE
+        }
+        packagingOptions {
+            resources {
+                excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            }
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
-dependencies {
+    dependencies {
+        implementation(project(":domain"))
+        implementation(project(":design-system"))
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-}
+        implementation(Dependency.AndroidX.CORE_KTX)
+        implementation(Dependency.AndroidX.LIFECYCLE)
+        implementation(Dependency.Compose.ACTIVITY_COMPOSE)
+        implementation(Dependency.Compose.COMPOSE)
+        implementation(Dependency.Compose.COMPOSE_TOOLING)
+        implementation(Dependency.Compose.COMPOSE_MATERIAL)
+        implementation(Dependency.Compose.COMPOSE_MATERIAL3)
+        implementation(Dependency.Compose.COMPOSE_PREVIEW)
+        testImplementation(Dependency.Test.JUNIT)
+        androidTestImplementation(Dependency.Test.ANDROID_JUNIT)
+        androidTestImplementation(Dependency.Test.ESPRESSO)
+        androidTestImplementation(Dependency.Test.COMPOSE_JUNIT)
+        debugImplementation(Dependency.Compose.COMPOSE_TOOLING)
+        debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
+
+        implementation(Dependency.Google.HILT)
+        kapt(Dependency.Google.HILT_COMPILER)
+        implementation(Dependency.Navigation.NAVIGATION)
+
+        implementation(Dependency.Libraries.OKHTTP)
+
+        implementation(Dependency.Libraries.COIL)
+
+        implementation(Dependency.AndroidX.SPLASH)
+    }
