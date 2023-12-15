@@ -33,6 +33,9 @@ android {
             )
         }
     }
+    buildFeatures {
+        compose = true
+    }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.COMPOSE
     }
@@ -42,6 +45,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = ProjectProperties.Versions.JVM_TARGET
+    }
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
