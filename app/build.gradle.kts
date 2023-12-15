@@ -33,6 +33,9 @@ android {
             )
         }
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.COMPOSE
+    }
     compileOptions {
         sourceCompatibility = ProjectProperties.Versions.JAVA_VERSION
         targetCompatibility = ProjectProperties.Versions.JAVA_VERSION
@@ -54,6 +57,17 @@ dependencies {
     testImplementation(Dependency.Test.JUNIT)
     androidTestImplementation(Dependency.Test.ANDROID_JUNIT)
     androidTestImplementation(Dependency.Test.ESPRESSO)
+
+    implementation(Dependency.AndroidX.LIFECYCLE)
+    implementation(Dependency.Compose.ACTIVITY_COMPOSE)
+    implementation(Dependency.Compose.COMPOSE)
+    implementation(Dependency.Compose.COMPOSE_TOOLING)
+    implementation(Dependency.Compose.COMPOSE_MATERIAL)
+    implementation(Dependency.Compose.COMPOSE_MATERIAL3)
+    implementation(Dependency.Compose.COMPOSE_PREVIEW)
+    androidTestImplementation(Dependency.Test.COMPOSE_JUNIT)
+    debugImplementation(Dependency.Compose.COMPOSE_TOOLING)
+    debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
 
     implementation(Dependency.Google.HILT)
     kapt(Dependency.Google.HILT_COMPILER)

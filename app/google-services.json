@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "174435020893",
+    "project_id": "golaroid-47824",
+    "storage_bucket": "golaroid-47824.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174435020893:android:3325bc4738fddf7c521db4",
+        "android_client_info": {
+          "package_name": "com.idea_festival.golaroid_android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcCXD7Fz-SWDcLfTP0FmqOQYzz5iGr1Zo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

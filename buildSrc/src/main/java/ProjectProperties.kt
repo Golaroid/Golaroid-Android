@@ -6,7 +6,7 @@ object ProjectProperties {
     }
 
     object Id {
-        const val APPLICATION_ID = "com.idea_festival.golaroid-android"
+        const val APPLICATION_ID = "com.idea_festival.golaroid_android"
     }
 
     object Files {
@@ -26,10 +26,10 @@ object ProjectProperties {
     }
 
     object NameSpace {
-        const val PRESENTATION = "com.golaroid-android.presentation"
-        const val DOMAIN = "com.golaroid-android.domain"
-        const val DATA = "com.golaroid-android.data"
-        const val APP = "com.idea_festival.golaroid-android"
-        const val DESIGN_SYSTEM = "com.golaroid-android.design-system"
+        const val PRESENTATION = "com.idea_festival.golaroid_android.presentation"
+        const val DOMAIN = "com.idea_festival.golaroid_android.domain"
+        const val DATA = "com.idea_festival.golaroid_android.data"
+        const val APP = "com.idea_festival.golaroid_android"
+        const val DESIGN_SYSTEM = "com.idea_festival.golaroid_android.design_system"
     }
 }
