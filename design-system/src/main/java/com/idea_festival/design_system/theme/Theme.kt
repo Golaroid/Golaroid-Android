@@ -11,4 +11,5 @@ fun GolaroidAndroidTheme(
     typography: Typography = Typography,
     content: @Composable (colors: ColorTheme, typography: Typography) -> Unit
 ) {
+    content(colors, typography)
 }
