@@ -1,4 +1,4 @@
-package com.idea_festival.golaroid_android
+package com.idea_festival.presetation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

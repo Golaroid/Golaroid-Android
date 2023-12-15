@@ -4,6 +4,7 @@ plugins {
     id(Dependency.Google.HILT_PLUGIN)
     kotlin(Dependency.Gradle.KAPT)
     id(Dependency.Google.GOOGLE_SERVICES_PLUGIN)
+    id(Dependency.Google.FIREBASE_CRASHLYTICS_PLUGIN)
 }
 
 @Suppress("UnstableApiUsage")
@@ -33,12 +34,6 @@ android {
             )
         }
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE
-    }
     compileOptions {
         sourceCompatibility = ProjectProperties.Versions.JAVA_VERSION
         targetCompatibility = ProjectProperties.Versions.JAVA_VERSION
@@ -46,12 +41,8 @@ android {
     kotlinOptions {
         jvmTarget = ProjectProperties.Versions.JVM_TARGET
     }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
+
 
 dependencies {
     implementation(project(":presentation"))
@@ -66,17 +57,6 @@ dependencies {
     androidTestImplementation(Dependency.Test.ANDROID_JUNIT)
     androidTestImplementation(Dependency.Test.ESPRESSO)
 
-    implementation(Dependency.AndroidX.LIFECYCLE)
-    implementation(Dependency.Compose.ACTIVITY_COMPOSE)
-    implementation(Dependency.Compose.COMPOSE)
-    implementation(Dependency.Compose.COMPOSE_TOOLING)
-    implementation(Dependency.Compose.COMPOSE_MATERIAL)
-    implementation(Dependency.Compose.COMPOSE_MATERIAL3)
-    implementation(Dependency.Compose.COMPOSE_PREVIEW)
-    androidTestImplementation(Dependency.Test.COMPOSE_JUNIT)
-    debugImplementation(Dependency.Compose.COMPOSE_TOOLING)
-    debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
-
     implementation(Dependency.Google.HILT)
     kapt(Dependency.Google.HILT_COMPILER)
 
@@ -84,4 +64,8 @@ dependencies {
     implementation(Dependency.Libraries.RETROFIT_CONVERTER_GSON)
     implementation(Dependency.Libraries.OKHTTP)
     implementation(Dependency.Libraries.OKHTTP_LOGGING_INTERCEPTOR)
+
+    implementation(platform(Dependency.Google.FIREBASE_BOM))
+    implementation(Dependency.Google.FIREBASE_ANALYTICS)
+    implementation(Dependency.Google.FIREBASE_CRASHLYTICS)
 }
