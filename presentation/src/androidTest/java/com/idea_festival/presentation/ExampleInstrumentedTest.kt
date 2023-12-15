@@ -1,4 +1,4 @@
-package com.idea_festival.presetation
+package com.idea_festival.presentation
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

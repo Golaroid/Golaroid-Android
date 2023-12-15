@@ -1,4 +1,4 @@
-package com.idea_festival.presetation
+package com.idea_festival.presentation
 
 import org.junit.Test
 

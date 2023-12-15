@@ -5,8 +5,6 @@ G
 presentation/.gitignore,f/b/fbca453880d1e4bf85dee45541fc678b5da70bdf
 S
 #domain/src/main/AndroidManifest.xml,4/6/46c5973a8a062650780ae254450fba029a8b5598
-C
-settings.gradle.kts,7/4/749edfcc96398253e5b3416184e95c46621da850
 G
 domain/build.gradle.kts,d/7/d72c8b69b8da0b3b02b699ccd509295dbd783baa
 E
