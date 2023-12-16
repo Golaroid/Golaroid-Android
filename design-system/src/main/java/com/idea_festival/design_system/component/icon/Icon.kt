@@ -28,5 +28,13 @@ fun StarIcon(
 fun StarfishStarIcon(
     modifier: Modifier = Modifier,
 ) {
-    Image(painter = painterResource(id = R.drawable.ic_starfish_star), contentDescription = "백그라운드용 핑크 별 아이콘")
+    Image(painter = painterResource(id = R.drawable.ic_starfish_star), contentDescription = "백그라운드용 메인컬러 별 아이콘")
+}
+
+
+@Composable
+fun OrangeCircleIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(painter = painterResource(id = R.drawable.ic_orange_circle), contentDescription = "백그라운드용 오렌지 원 아이콘")
 }
