@@ -13,7 +13,7 @@ fun SearchIcon(
     Image(
         painter = painterResource(id = R.drawable.ic_search),
         contentDescription = "검색 버튼 돋보기 아이콘",
-        modifier = modifier // 이 부분을 추가해줍니다.
+        modifier = modifier
     )
 }
 
@@ -21,14 +21,22 @@ fun SearchIcon(
 fun StarIcon(
     modifier: Modifier = Modifier,
 ) {
-    Image(painter = painterResource(id = R.drawable.ic_star), contentDescription = "백그라운드용 핑크 별 아이콘")
+    Image(
+        painter = painterResource(id = R.drawable.ic_star),
+        contentDescription = "백그라운드용 핑크 별 아이콘",
+        modifier = modifier
+    )
 }
 
 @Composable
 fun StarfishStarIcon(
     modifier: Modifier = Modifier,
 ) {
-    Image(painter = painterResource(id = R.drawable.ic_starfish_star), contentDescription = "백그라운드용 메인컬러 별 아이콘")
+    Image(
+        painter = painterResource(id = R.drawable.ic_starfish_star),
+        contentDescription = "백그라운드용 메인컬러 별 아이콘",
+        modifier = modifier
+    )
 }
 
 
@@ -36,5 +44,9 @@ fun StarfishStarIcon(
 fun OrangeCircleIcon(
     modifier: Modifier = Modifier,
 ) {
-    Image(painter = painterResource(id = R.drawable.ic_orange_circle), contentDescription = "백그라운드용 오렌지 원 아이콘")
+    Image(
+        painter = painterResource(id = R.drawable.ic_orange_circle),
+        contentDescription = "백그라운드용 오렌지 아이콘",
+        modifier = modifier
+    )
 }
