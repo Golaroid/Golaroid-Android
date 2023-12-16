@@ -12,6 +12,7 @@ fun SearchIcon(
 ) {
     Image(
         painter = painterResource(id = R.drawable.ic_search),
-        contentDescription = "검색 버튼 돋보기 아이콘"
+        contentDescription = "검색 버튼 돋보기 아이콘",
+        modifier = modifier // 이 부분을 추가해줍니다.
     )
 }
