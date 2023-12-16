@@ -16,3 +16,17 @@ fun SearchIcon(
         modifier = modifier // 이 부분을 추가해줍니다.
     )
 }
+
+@Composable
+fun StarIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(painter = painterResource(id = R.drawable.ic_star), contentDescription = "백그라운드용 핑크 별 아이콘")
+}
+
+@Composable
+fun StarfishStarIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(painter = painterResource(id = R.drawable.ic_starfish_star), contentDescription = "백그라운드용 핑크 별 아이콘")
+}

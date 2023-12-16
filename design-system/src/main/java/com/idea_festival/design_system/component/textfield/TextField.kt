@@ -41,20 +41,19 @@ fun GolaroidTextField(
     var text by remember { mutableStateOf(value ?: "") }
 
     GolaroidAndroidTheme { colors, typography ->
-        Box(
-            modifier = modifier
-                .fillMaxWidth()
-        ) {
             TextField(
                 value = text,
                 onValueChange = {
                     text = value ?: it
                     onValueChange(it)
                 },
-                modifier = modifier,
+                modifier = modifier.background(color = Color.Transparent),
                 shape = RoundedCornerShape(100.dp),
                 trailingIcon = {
-                    SearchIcon()
+                    IconButton(onClick = {  }) {
+                        SearchIcon()
+                    }
+
                 },
                 maxLines = 1,
                 singleLine = true,
@@ -62,20 +61,23 @@ fun GolaroidTextField(
                     focusedTextColor = colors.BLACK,
                     unfocusedTextColor = colors.BLACK,
                     cursorColor = colors.GRAY,
-                    focusedIndicatorColor = colors.GRAY,
-                    unfocusedIndicatorColor = colors.GRAY,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
                     unfocusedPlaceholderColor = colors.GRAY,
                     focusedPlaceholderColor = colors.GRAY,
-                    disabledPlaceholderColor = colors.GRAY,
                     containerColor = colors.DARKGRAY
                 ),
                 placeholder = {
-                    Text(text = placeholder, style = typography.labelMedium, color = colors.GRAY)
+                    Text(
+                        text = placeholder,
+                        style = typography.labelMedium,
+                        color = colors.GRAY,
+                        fontSize = 14.sp
+                    )
                 }
             )
         }
     }
-}
 
 
 @Preview
