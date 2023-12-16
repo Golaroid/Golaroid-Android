@@ -1,16 +1,17 @@
 package com.idea_festival.presentation.ui.main.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,22 +23,27 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.idea_festival.design_system.component.icon.StarIcon
 import com.idea_festival.design_system.component.textfield.GolaroidTextField
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.design_system.theme.pretendard
 import com.idea_festival.presentation.ui.main.component.GolaroidLogo
+import com.idea_festival.presentation.ui.main.component.PictureCard
 
 @Composable
-@OptIn(ExperimentalMaterialApi::class)
 fun MainScreen(
 
 ) {
     GolaroidAndroidTheme { colors, typography ->
-        Column {
+        Column(
+            modifier = Modifier
+                .background(color = colors.BLACK)
+                .padding(start = 16.dp)
+        ) {
             Column(
                 modifier = Modifier
                     .background(color = colors.BLACK)
-                    .padding(horizontal = 16.dp)
+                    .padding(end = 16.dp)
                     .wrapContentSize()
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
@@ -120,6 +126,35 @@ fun MainScreen(
                     // modifier = Modifier.padding(start = 16.dp)
                 )
             }
+
+            Spacer(modifier = Modifier.height(3.dp))
+
+            Row {
+                StarIcon(modifier = Modifier.wrapContentSize())
+            }
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Text(
+                text = "오늘의 사진보기",
+                color = colors.WHITE,
+                style = typography.bodyMedium
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            PictureList()
+        }
+    }
+}
+
+@Composable
+fun PictureList() {
+    LazyRow(
+        modifier = Modifier.wrapContentHeight(),
+    ) {
+        items(10) {
+            PictureCard()
         }
     }
 }
