@@ -46,7 +46,18 @@ fun OrangeCircleIcon(
 ) {
     Image(
         painter = painterResource(id = R.drawable.ic_orange_circle),
-        contentDescription = "백그라운드용 오렌지 아이콘",
+        contentDescription = "백그라운드용 오렌지 원 아이콘",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun OrangeCameraIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.ic_orange_camera),
+        contentDescription = "백그라운드용 오렌지 카메라 아이콘",
         modifier = modifier
     )
 }

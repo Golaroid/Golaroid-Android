@@ -38,12 +38,11 @@ fun MainScreen(
         Column(
             modifier = Modifier
                 .background(color = colors.BLACK)
-                .padding(start = 16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .background(color = colors.BLACK)
-                    .padding(end = 16.dp)
+                    .padding(horizontal = 16.dp)
                     .wrapContentSize()
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
@@ -130,12 +129,13 @@ fun MainScreen(
             Spacer(modifier = Modifier.height(3.dp))
 
             Row {
-                StarIcon(modifier = Modifier.wrapContentSize())
+                StarIcon(modifier = Modifier.wrapContentSize().padding(start = 16.dp))
             }
 
             Spacer(modifier = Modifier.height(30.dp))
 
             Text(
+                modifier = Modifier.padding(start = 16.dp),
                 text = "오늘의 사진보기",
                 color = colors.WHITE,
                 style = typography.bodyMedium
@@ -154,7 +154,11 @@ fun PictureList() {
         modifier = Modifier.wrapContentHeight(),
     ) {
         items(10) {
-            PictureCard()
+            Row {
+                Spacer(modifier = Modifier.width(10.dp))
+
+                PictureCard()
+            }
         }
     }
 }
