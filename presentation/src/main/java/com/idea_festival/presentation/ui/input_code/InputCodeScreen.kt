@@ -7,12 +7,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.idea_festival.design_system.component.button.GolaroidButton
+import com.idea_festival.design_system.component.icon.ClipboardIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
@@ -27,8 +31,9 @@ fun InputCodeScreen() {
 
             Spacer(modifier = Modifier.height(56.dp))
 
-            Row(modifier = Modifier
-                .fillMaxWidth()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
                 Spacer(modifier = Modifier.weight(1f))
 
@@ -38,7 +43,39 @@ fun InputCodeScreen() {
                     color = colors.WHITE,
                 )
 
+                Spacer(modifier = Modifier.width(14.dp))
+
+                ClipboardIcon(modifier = Modifier.padding(top = 4.dp))
+
                 Spacer(modifier = Modifier.weight(1f))
+
+            }
+
+            Spacer(modifier = Modifier.height(151.dp))
+
+            Text(
+                text = "윤태빈님과",
+                style = typography.headlineMedium,
+                color = colors.WHITE,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+
+            Text(
+                text = "같이 사진찍기",
+                style = typography.headlineMedium,
+                color = colors.WHITE,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            GolaroidButton(
+                text = "사진찍기",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 36.dp)
+            ) {
 
             }
         }
