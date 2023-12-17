@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,7 +24,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.idea_festival.design_system.component.button.GolaroidButton
+import com.idea_festival.design_system.component.icon.OrangeCameraIcon
+import com.idea_festival.design_system.component.icon.OrangeCircleIcon
 import com.idea_festival.design_system.component.icon.StarIcon
+import com.idea_festival.design_system.component.icon.StarfishStarIcon
 import com.idea_festival.design_system.component.textfield.GolaroidTextField
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.design_system.theme.pretendard
@@ -37,6 +42,7 @@ fun MainScreen(
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
+                .wrapContentHeight()
                 .background(color = colors.BLACK)
         ) {
             Column(
@@ -128,8 +134,20 @@ fun MainScreen(
 
             Spacer(modifier = Modifier.height(3.dp))
 
-            Row {
-                StarIcon(modifier = Modifier.wrapContentSize().padding(start = 16.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                StarIcon(
+                    modifier = Modifier
+                        .wrapContentSize()
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                OrangeCameraIcon(
+                    modifier = Modifier
+                        .wrapContentSize()
+                )
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -144,6 +162,37 @@ fun MainScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             PictureList()
+
+            Spacer(modifier = Modifier.height(21.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                StarfishStarIcon(
+                    modifier = Modifier
+                        .wrapContentSize()
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                OrangeCircleIcon(modifier = Modifier
+                    .padding(top = 47.dp)
+                    .wrapContentSize())
+            }
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            GolaroidButton(
+                text = "사진찍기",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .padding(horizontal = 16.dp)
+            ) {
+
+            }
+
+            Spacer(modifier = Modifier.height(36.dp))
         }
     }
 }
