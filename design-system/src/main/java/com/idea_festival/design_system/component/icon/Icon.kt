@@ -61,3 +61,14 @@ fun OrangeCameraIcon(
         modifier = modifier
     )
 }
+
+@Composable
+fun ClipboardIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.ic_clipboard),
+        contentDescription = "클립보드 복사 아이콘",
+        modifier = modifier
+    )
+}
