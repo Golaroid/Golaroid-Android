@@ -1,4 +1,4 @@
-package com.idea_festival.presentation.ui.input_code
+package com.idea_festival.presentation.ui.input_code.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
