@@ -34,6 +34,7 @@ import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.design_system.theme.pretendard
 import com.idea_festival.presentation.ui.main.component.GolaroidLogo
 import com.idea_festival.presentation.ui.main.component.PictureCard
+import com.idea_festival.presentation.ui.main.component.PictureLazyRow
 
 @Composable
 fun MainScreen(
@@ -161,7 +162,7 @@ fun MainScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            PictureList()
+            PictureLazyRow()
 
             Spacer(modifier = Modifier.height(21.dp))
 
@@ -197,20 +198,6 @@ fun MainScreen(
     }
 }
 
-@Composable
-fun PictureList() {
-    LazyRow(
-        modifier = Modifier.wrapContentHeight(),
-    ) {
-        items(10) {
-            Row {
-                Spacer(modifier = Modifier.width(10.dp))
-
-                PictureCard()
-            }
-        }
-    }
-}
 
 @Preview
 @Composable
