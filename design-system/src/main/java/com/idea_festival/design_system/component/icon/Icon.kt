@@ -90,6 +90,49 @@ fun ClipboardIcon(
 }
 
 @Composable
+fun PurpleStickIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.ic_purple_stick),
+        contentDescription = "기울어진 보라색 막대",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun CutPinkStarIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.ic_cut_pink_star),
+        contentDescription = "잘린 StarIcon",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun UnCutOrangeCameraIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.ic_un_cut_orange_camera),
+        contentDescription = "전체 오렌지 카메라 아이콘",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun GreenStarIcon(
+    modifier: Modifier = Modifier
+){
+    Image(
+        painter = painterResource(id = R.drawable.ic_green_star),
+        contentDescription = "기울어진 형광 별 아이콘",
+        modifier = modifier
+    )
+}
+@Composable
 fun WhiteCircleIcon(
     modifier: Modifier = Modifier,
 ) {
