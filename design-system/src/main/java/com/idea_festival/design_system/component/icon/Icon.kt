@@ -1,9 +1,12 @@
 package com.idea_festival.design_system.component.icon
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.idea_festival.golaroid_android.design_system.R
 
 @Composable
@@ -18,6 +21,17 @@ fun SearchIcon(
 }
 
 @Composable
+fun GoBackIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.ic_go_back),
+        contentDescription = "돌아가기 아이콘",
+        modifier = modifier
+    )
+}
+
+@Composable
 fun StarIcon(
     modifier: Modifier = Modifier,
 ) {
@@ -25,6 +39,8 @@ fun StarIcon(
         painter = painterResource(id = R.drawable.ic_star),
         contentDescription = "백그라운드용 핑크 별 아이콘",
         modifier = modifier
+            .width(24.dp)
+            .height(24.dp)
     )
 }
 

@@ -74,6 +74,7 @@ android {
         implementation(Dependency.Libraries.OKHTTP)
 
         implementation(Dependency.Libraries.COIL)
+        implementation(Dependency.Libraries.COIL_COMPOSE)
 
         implementation(Dependency.AndroidX.SPLASH)
     }

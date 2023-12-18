@@ -65,6 +65,10 @@ dependencies {
     debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
     implementation(Dependency.Lottie.LOTTIE_COMPOSE)
 
+    implementation(Dependency.Libraries.COIL)
+    implementation(Dependency.Libraries.COIL_GIF)
+    implementation(Dependency.Libraries.COIL_COMPOSE)
+
     implementation(Dependency.Google.HILT)
     kapt(Dependency.Google.HILT_COMPILER)
 }
