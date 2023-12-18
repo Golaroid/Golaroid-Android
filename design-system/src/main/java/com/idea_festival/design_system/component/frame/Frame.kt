@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,6 +51,7 @@ fun ChristmasFrame() {
             modifier = Modifier
                 .fillMaxHeight()
                 .align(Alignment.Center)
+                .zIndex(-1f)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.test_image_one_piece),
@@ -101,12 +103,80 @@ fun ChristmasFrame() {
     }
 }
 
+@Composable
+fun RupeeFrame() {
+    Box(
+        modifier = Modifier
+            .width(180.dp)
+            .height(600.dp)
+            .background(color = Color(0xFFFFBABA))
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.rupee_frame_decoration),
+            contentDescription = null,
+            modifier = Modifier.padding(top = 42.dp)
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .align(Alignment.Center)
+                .zIndex(-1f)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(top = 37.dp, bottom = 8.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(120.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(115.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(115.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(115.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+        }
+    }
+}
 @Preview
 @Composable
 fun FramePre() {
     Row(
         modifier = Modifier.fillMaxSize()
     ) {
-        ChristmasFrame()
+        RupeeFrame()
     }
 }
