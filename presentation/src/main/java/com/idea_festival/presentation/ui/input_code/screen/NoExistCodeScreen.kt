@@ -20,7 +20,7 @@ import com.idea_festival.design_system.component.icon.ClipboardIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
-fun InputCodeScreen() {
+fun NoExistCodeScreen() {
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -84,6 +84,6 @@ fun InputCodeScreen() {
 
 @Preview
 @Composable
-fun InputCodeScreenPre() {
-    InputCodeScreen()
+fun NoExistCodeScreenPre() {
+    NoExistCodeScreen()
 }
