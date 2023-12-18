@@ -132,3 +132,13 @@ fun GreenStarIcon(
         modifier = modifier
     )
 }
+@Composable
+fun WhiteCircleIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.bg_count),
+        contentDescription = "가운데가 비어있고 테두리만 흰색인 원",
+        modifier = modifier
+    )
+}
