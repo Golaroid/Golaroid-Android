@@ -26,7 +26,9 @@ import androidx.compose.ui.zIndex
 import com.idea_festival.golaroid_android.design_system.R
 
 @Composable
-fun ChristmasFrame() {
+fun ChristmasFrame(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .width(180.dp)
@@ -104,7 +106,9 @@ fun ChristmasFrame() {
 }
 
 @Composable
-fun RupeeFrame() {
+fun RupeeFrame(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .width(180.dp)
@@ -173,7 +177,9 @@ fun RupeeFrame() {
 }
 
 @Composable
-fun WinterFrame() {
+fun WinterFrame(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .width(180.dp)
@@ -242,7 +248,9 @@ fun WinterFrame() {
 }
 
 @Composable
-fun WantedFrame() {
+fun WantedFrame(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .width(180.dp)
@@ -314,7 +322,9 @@ fun WantedFrame() {
 }
 
 @Composable
-fun PangPangFrame() {
+fun PangPangFrame(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .width(180.dp)
@@ -385,7 +395,9 @@ fun PangPangFrame() {
 }
 
 @Composable
-fun GolaroidGrayFrame() {
+fun GolaroidGrayFrame(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .width(180.dp)
@@ -458,7 +470,9 @@ fun GolaroidGrayFrame() {
 }
 
 @Composable
-fun GolaroidBlackFrame() {
+fun GolaroidBlackFrame(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .width(180.dp)
