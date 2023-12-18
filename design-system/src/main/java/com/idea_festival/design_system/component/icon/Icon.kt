@@ -124,14 +124,15 @@ fun UnCutOrangeCameraIcon(
 
 @Composable
 fun GreenStarIcon(
-    modifier: Modifier = Modifier
-){
+    modifier: Modifier = Modifier,
+) {
     Image(
         painter = painterResource(id = R.drawable.ic_green_star),
         contentDescription = "기울어진 형광 별 아이콘",
         modifier = modifier
     )
 }
+
 @Composable
 fun WhiteCircleIcon(
     modifier: Modifier = Modifier,
@@ -139,6 +140,17 @@ fun WhiteCircleIcon(
     Image(
         painter = painterResource(id = R.drawable.bg_count),
         contentDescription = "가운데가 비어있고 테두리만 흰색인 원",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun CheckIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.ic_check),
+        contentDescription = "흰색 체크 아이콘",
         modifier = modifier
     )
 }

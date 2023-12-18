@@ -27,10 +27,6 @@ y
 Ipresentation/src/main/java/com/idea_festival/presentation/MainActivity.kt,e/d/ed0e0ba756bd24c83ebeeb7082419e6f63e3fd51
 Ü
 Vpresentation/src/main/java/com/idea_festival/presentation/ui/main/screen/MainScreen.kt,b/5/b51613f6739d05af3ccfaa1ae8b446c05ab3bf25
-å
-\design-system/src/main/java/com/idea_festival/design_system/component/textfield/TextField.kt,7/1/716774594730013651f73dfa941a9f6d3879a4d1
-ä
-Zpresentation/src/main/java/com/idea_festival/presentation/ui/main/component/PictureCard.kt,3/8/381412e0ea1472c1faad668840e07664e64803e4
 ç
 ]presentation/src/main/java/com/idea_festival/presentation/ui/main/component/PictureLazyRow.kt,d/6/d6e92bf211cb82ebb94db85f62f696ac4de98786
 Ç
@@ -43,9 +39,5 @@ M
 presentation/build.gradle.kts,b/b/bbb5f5d9acc7530bc591aed4f71c56457464aa34
 N
 design-system/build.gradle.kts,f/6/f604268b083cdbdd775be9859229fc6fc51cedaf
-R
-"buildSrc/src/main/java/Versions.kt,1/7/17cc39576120ea39e86f37255d0843f33952bb99
-Ü
-Vdesign-system/src/main/java/com/idea_festival/design_system/component/button/Button.kt,3/c/3cef0c24dc9edb94af72a2b85a315803b91eadcb
 à
 Xdesign-system/src/main/java/com/idea_festival/design_system/theme/color/GolaroidColor.kt,0/5/055f66e08d5e8ea9de58db0805a65b3b4623b316
