@@ -25,13 +25,13 @@ Y
 )presentation/src/main/AndroidManifest.xml,f/f/ff448c8b12f3de1e58a75bb9abe0b8d4396181d5
 y
 Ipresentation/src/main/java/com/idea_festival/presentation/MainActivity.kt,e/d/ed0e0ba756bd24c83ebeeb7082419e6f63e3fd51
-Ü
+‚Ä†
 Vpresentation/src/main/java/com/idea_festival/presentation/ui/main/screen/MainScreen.kt,b/5/b51613f6739d05af3ccfaa1ae8b446c05ab3bf25
-ä
+≈†
 Zpresentation/src/main/java/com/idea_festival/presentation/ui/main/component/PictureCard.kt,3/8/381412e0ea1472c1faad668840e07664e64803e4
-ç
+¬ç
 ]presentation/src/main/java/com/idea_festival/presentation/ui/main/component/PictureLazyRow.kt,d/6/d6e92bf211cb82ebb94db85f62f696ac4de98786
-Ç
+‚Äö
 Rdata/src/main/java/com/idea_festival/data/remote/dto/post/GetDetailPostResponse.kt,d/2/d2d390baa957458786a4972339e2059b37811945
 G
 domain/build.gradle.kts,d/7/d72c8b69b8da0b3b02b699ccd509295dbd783baa
@@ -41,9 +41,5 @@ M
 presentation/build.gradle.kts,b/b/bbb5f5d9acc7530bc591aed4f71c56457464aa34
 N
 design-system/build.gradle.kts,f/6/f604268b083cdbdd775be9859229fc6fc51cedaf
-R
-"buildSrc/src/main/java/Versions.kt,1/7/17cc39576120ea39e86f37255d0843f33952bb99
-Ü
-Vdesign-system/src/main/java/com/idea_festival/design_system/component/button/Button.kt,3/c/3cef0c24dc9edb94af72a2b85a315803b91eadcb
-à
+ÀÜ
 Xdesign-system/src/main/java/com/idea_festival/design_system/theme/color/GolaroidColor.kt,0/5/055f66e08d5e8ea9de58db0805a65b3b4623b316
