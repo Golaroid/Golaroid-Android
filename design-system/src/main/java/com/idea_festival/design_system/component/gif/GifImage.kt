@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,10 +18,9 @@ import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import com.idea_festival.golaroid_android.design_system.R
-import java.nio.file.Files.size
 
 @Composable
-fun NoExistCodeGif(
+fun FailedGif(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -37,7 +35,7 @@ fun NoExistCodeGif(
         .build()
     Image(
         painter = rememberAsyncImagePainter(
-            ImageRequest.Builder(context).data(data = R.drawable.can_not_find_code)
+            ImageRequest.Builder(context).data(data = R.drawable.failed)
                 .apply(
                     block = {
                         size(coil.size.Size.ORIGINAL)
@@ -50,6 +48,34 @@ fun NoExistCodeGif(
     )
 }
 
+@Composable
+fun SuccessGif(
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    val imageLoader = ImageLoader.Builder(context)
+        .components {
+            if (SDK_INT >= 28) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
+        }
+        .build()
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(context).data(data = R.drawable.success)
+                .apply(
+                    block = {
+                        size(coil.size.Size.ORIGINAL)
+                    })
+                .build(),
+            imageLoader = imageLoader
+        ),
+        contentDescription = null,
+        modifier = modifier
+    )
+}
 @Preview
 @Composable
 fun GifPre() {
@@ -59,7 +85,10 @@ fun GifPre() {
             .fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        NoExistCodeGif(
+        FailedGif(
+            modifier = Modifier.fillMaxSize()
+        )
+        SuccessGif(
             modifier = Modifier.fillMaxSize()
         )
     }
