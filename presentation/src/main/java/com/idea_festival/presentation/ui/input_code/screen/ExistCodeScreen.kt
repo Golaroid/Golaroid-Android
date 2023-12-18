@@ -17,6 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.ClipboardIcon
+import com.idea_festival.design_system.component.icon.GoBackIcon
+import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
@@ -28,9 +30,16 @@ fun ExistCodeScreen() {
                 .fillMaxWidth()
                 .background(color = colors.BLACK)
         ) {
+            Spacer(modifier = Modifier.height(22.dp))
 
-            Spacer(modifier = Modifier.height(56.dp))
+            GoBackTopBar(
+                icon = { (GoBackIcon()) },
+                text = "돌아가기"
+            ) {
 
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
