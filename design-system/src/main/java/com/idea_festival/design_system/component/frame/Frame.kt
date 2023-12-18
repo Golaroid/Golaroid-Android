@@ -386,12 +386,85 @@ fun PangPangFrame() {
     }
 }
 
+@Composable
+fun GolaroidGrayFrame() {
+    Box(
+        modifier = Modifier
+            .width(180.dp)
+            .height(600.dp)
+            .background(color = Color(0xFF9C9C9C))
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.gray_frame_golaroid_logo),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(top = 9.dp)
+                .width(86.dp)
+                .height(18.dp)
+                .align(Alignment.TopCenter),
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .align(Alignment.Center)
+                .zIndex(-1f)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(top = 37.dp, bottom = 7.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(120.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(115.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(115.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(115.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+        }
+    }
+}
+
 @Preview
 @Composable
 fun FramePre() {
     Row(
         modifier = Modifier.fillMaxSize()
     ) {
-        PangPangFrame()
+        GolaroidGrayFrame()
     }
 }
