@@ -78,7 +78,48 @@ fun GolaroidTextField(
             )
         }
     }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun GolaroidTextFieldWithOutIcon(
+    modifier: Modifier = Modifier,
+    placeholder: String,
+    onValueChange: (String) -> Unit,
+    value: String? = null,
+) {
+    var text by remember { mutableStateOf(value ?: "") }
 
+    GolaroidAndroidTheme { colors, typography ->
+        TextField(
+            value = text,
+            onValueChange = {
+                text = value ?: it
+                onValueChange(it)
+            },
+            modifier = modifier.background(color = Color.Transparent),
+            shape = RoundedCornerShape(10.dp),
+            maxLines = 1,
+            singleLine = true,
+            colors = TextFieldDefaults.textFieldColors(
+                focusedTextColor = colors.BLACK,
+                unfocusedTextColor = colors.BLACK,
+                cursorColor = colors.GRAY,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                unfocusedPlaceholderColor = colors.GRAY,
+                focusedPlaceholderColor = colors.GRAY,
+                containerColor = colors.DARKGRAY
+            ),
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    style = typography.labelMedium,
+                    color = colors.GRAY,
+                    fontSize = 14.sp
+                )
+            }
+        )
+    }
+}
 
 @Preview
 @Composable

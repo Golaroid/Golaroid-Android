@@ -27,8 +27,6 @@ y
 Ipresentation/src/main/java/com/idea_festival/presentation/MainActivity.kt,e/d/ed0e0ba756bd24c83ebeeb7082419e6f63e3fd51
 Ü
 Vpresentation/src/main/java/com/idea_festival/presentation/ui/main/screen/MainScreen.kt,b/5/b51613f6739d05af3ccfaa1ae8b446c05ab3bf25
-å
-\design-system/src/main/java/com/idea_festival/design_system/component/textfield/TextField.kt,7/1/716774594730013651f73dfa941a9f6d3879a4d1
 ä
 Zpresentation/src/main/java/com/idea_festival/presentation/ui/main/component/PictureCard.kt,3/8/381412e0ea1472c1faad668840e07664e64803e4
 ç

@@ -44,7 +44,7 @@ fun RevealPictureScreen() {
 
             GoBackTopBar(
                 icon = { (GoBackIcon()) },
-                text = "돌아가기"
+                text = "뒤로가기"
             ) {
 
             }
