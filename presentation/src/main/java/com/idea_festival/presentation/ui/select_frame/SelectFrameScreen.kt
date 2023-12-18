@@ -40,7 +40,7 @@ fun SelectFrameScreen() {
 
             HorizontalPager(
                 pageCount = 6,
-                contentPadding = PaddingValues(horizontal = 40.dp)
+                contentPadding = PaddingValues(horizontal = 75.dp)
             ) { page ->
 
                 when (page) {

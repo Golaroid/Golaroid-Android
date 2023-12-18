@@ -79,6 +79,7 @@ fun MainScreen(
                                 fontFamily = pretendard,
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
+                                letterSpacing = 0.6.sp,
                                 color = colors.WHITE
                             )
                         ) {
@@ -89,6 +90,7 @@ fun MainScreen(
                                 fontFamily = pretendard,
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
+                                letterSpacing = 0.6.sp,
                                 color = colors.WHITE
                             )
                         ) {
@@ -100,6 +102,7 @@ fun MainScreen(
                                 fontFamily = pretendard,
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
+                                letterSpacing = 0.6.sp,
                                 color = colors.WHITE
                             )
                         ) {
@@ -111,6 +114,7 @@ fun MainScreen(
                                 fontFamily = pretendard,
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
+                                letterSpacing = 0.6.sp,
                                 color = colors.MAIN
                             )
                         ) {
@@ -123,6 +127,7 @@ fun MainScreen(
                                 fontFamily = pretendard,
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
+                                letterSpacing = 0.6.sp,
                                 color = colors.WHITE
                             )
                         ) {
@@ -176,9 +181,11 @@ fun MainScreen(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                OrangeCircleIcon(modifier = Modifier
-                    .padding(top = 47.dp)
-                    .wrapContentSize())
+                OrangeCircleIcon(
+                    modifier = Modifier
+                        .padding(top = 47.dp)
+                        .wrapContentSize()
+                )
             }
 
             Spacer(modifier = Modifier.height(30.dp))
