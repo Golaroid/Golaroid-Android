@@ -154,3 +154,14 @@ fun CheckIcon(
         modifier = modifier
     )
 }
+
+@Composable
+fun CutPurpleStickIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.ic_cut_purple_stick),
+        contentDescription = "잘린 기울어진 보라색 막대",
+        modifier = modifier
+    )
+}
