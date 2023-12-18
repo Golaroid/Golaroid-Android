@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -396,6 +394,79 @@ fun GolaroidGrayFrame() {
     ) {
         Image(
             painter = painterResource(id = R.drawable.gray_frame_golaroid_logo),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(top = 9.dp)
+                .width(86.dp)
+                .height(18.dp)
+                .align(Alignment.TopCenter),
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .align(Alignment.Center)
+                .zIndex(-1f)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(top = 37.dp, bottom = 7.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(120.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(115.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(115.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.test_image_one_piece),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .height(115.dp)
+                    .clip(shape = RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.Crop
+            )
+        }
+    }
+}
+
+@Composable
+fun GolaroidBlackFrame() {
+    Box(
+        modifier = Modifier
+            .width(180.dp)
+            .height(600.dp)
+            .background(color = Color(0xFF000000))
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.black_frame_golaroid_logo),
             contentDescription = null,
             modifier = Modifier
                 .padding(top = 9.dp)
