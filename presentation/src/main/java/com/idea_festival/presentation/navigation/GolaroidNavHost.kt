@@ -21,6 +21,8 @@ fun GolaroidNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        mainScreen(onTakePictureButtonClick = navController::navigateToCapture)
+        mainScreen(
+            onTakePictureButtonClick = navController::navigateToCapture
+        )
     }
 }

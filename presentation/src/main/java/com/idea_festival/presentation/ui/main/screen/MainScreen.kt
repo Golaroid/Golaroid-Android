@@ -204,7 +204,7 @@ fun MainScreen(
                     .height(60.dp)
                     .padding(horizontal = 16.dp)
             ) {
-
+                onTakePictureButtonClick()
             }
 
             Spacer(modifier = Modifier.height(36.dp))
