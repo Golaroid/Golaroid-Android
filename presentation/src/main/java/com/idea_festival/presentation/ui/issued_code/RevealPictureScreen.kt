@@ -32,7 +32,21 @@ import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
-fun RevealPictureScreen() {
+fun RevealPictureRoute(
+    onApproveButtonClick: () -> Unit,
+    onRejectButtonClick: () -> Unit,
+) {
+    RevealPictureScreen(
+        onApproveButtonClick = onApproveButtonClick,
+        onRejectButtonClick = onRejectButtonClick
+    )
+}
+
+@Composable
+fun RevealPictureScreen(
+    onApproveButtonClick: () -> Unit,
+    onRejectButtonClick: () -> Unit,
+) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -145,7 +159,7 @@ fun RevealPictureScreen() {
                     modifier = Modifier.weight(1f),
                     text = "예"
                 ) {
-
+                    onApproveButtonClick()
                 }
 
                 Spacer(modifier = Modifier.width(20.dp))
@@ -154,7 +168,7 @@ fun RevealPictureScreen() {
                     modifier = Modifier.weight(1f),
                     text = "아니오"
                 ) {
-
+                    onRejectButtonClick()
                 }
             }
 
@@ -167,5 +181,8 @@ fun RevealPictureScreen() {
 @Preview
 @Composable
 fun RevealPictureScreenPre() {
-    RevealPictureScreen()
+    RevealPictureScreen(
+        onApproveButtonClick = {},
+        onRejectButtonClick = {}
+    )
 }
