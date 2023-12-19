@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +30,7 @@ import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SelectFrameScreen() {
+    val pagerState = rememberPagerState(pageCount = { 6 })
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -39,8 +41,8 @@ fun SelectFrameScreen() {
             Spacer(modifier = Modifier.height(40.dp))
 
             HorizontalPager(
-                pageCount = 6,
-                contentPadding = PaddingValues(horizontal = 75.dp)
+                contentPadding = PaddingValues(horizontal = 75.dp),
+                state = pagerState
             ) { page ->
 
                 when (page) {
