@@ -1,7 +1,6 @@
 package com.idea_festival.golaroid_android.module
 import com.idea_festival.data.remote.network.ImageAPI
 import com.idea_festival.data.remote.network.PostAPI
-import com.idea_festival.golaroid_android.presentation.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,7 +35,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-           // .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl("https://naver.com/")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

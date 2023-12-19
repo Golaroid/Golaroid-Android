@@ -33,6 +33,9 @@ import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SelectImageScreen() {
+    val state = rememberPagerState {
+        8
+    }
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -72,7 +75,7 @@ fun SelectImageScreen() {
             Spacer(modifier = Modifier.height(74.dp))
 
             HorizontalPager(
-                pageCount = 10,
+                state = state,
                 contentPadding = PaddingValues(horizontal = 40.dp)
             ) { page ->
                 ChooseImage(

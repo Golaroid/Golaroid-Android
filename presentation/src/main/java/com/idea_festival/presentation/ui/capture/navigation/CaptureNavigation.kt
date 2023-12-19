@@ -14,8 +14,12 @@ fun NavController.navigateToCapture(navOptions: NavOptions? = null ) {
     this.navigate(captureRoute, navOptions)
 }
 
-fun NavGraphBuilder.mainScreen() {
+fun NavGraphBuilder.captureScreen(
+    onBackClick: () -> Unit
+) {
     composable(route = captureRoute) {
-        CaptureRoute()
+        CaptureRoute(
+            onBackClick = onBackClick
+        )
     }
 }

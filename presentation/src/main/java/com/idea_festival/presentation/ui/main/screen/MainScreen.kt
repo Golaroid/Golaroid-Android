@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,20 +38,27 @@ import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 @Composable
 fun MainRoute(
     onTakePictureButtonClick: () -> Unit,
-    postViewModel: PostViewModel = hiltViewModel()
+    onSearchButtonClick: () -> Unit,
+    onImageClick: () -> Unit,
+    postViewModel: PostViewModel = hiltViewModel(),
 ) {
     MainScreen(
-        onTakePictureButtonClick = onTakePictureButtonClick
+        onTakePictureButtonClick = onTakePictureButtonClick,
+        onSearchButtonClick = onSearchButtonClick,
+        onImageClick = onImageClick
     )
 }
+
 @Composable
 fun MainScreen(
-    onTakePictureButtonClick: () -> Unit
+    onTakePictureButtonClick: () -> Unit,
+    onSearchButtonClick: () -> Unit,
+    onImageClick: () -> Unit,
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
-                .wrapContentHeight()
+                .fillMaxSize()
                 .background(color = colors.BLACK)
         ) {
             Column(
@@ -216,5 +224,9 @@ fun MainScreen(
 @Preview
 @Composable
 fun MainScreenPre() {
-    MainScreen(onTakePictureButtonClick = {})
+    MainScreen(
+        onTakePictureButtonClick = {},
+        onSearchButtonClick = {},
+        onImageClick = {}
+    )
 }
