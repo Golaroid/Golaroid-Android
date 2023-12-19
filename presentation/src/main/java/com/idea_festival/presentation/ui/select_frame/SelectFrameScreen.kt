@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,9 +27,24 @@ import com.idea_festival.design_system.component.frame.WantedFrame
 import com.idea_festival.design_system.component.frame.WinterFrame
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
+@Composable
+fun SelectFrameRoute(
+    onPrintButtonClick: () -> Unit,
+    onNextButtonClick: () -> Unit,
+) {
+    SelectFrameScreen(
+        onPrintButtonClick = onPrintButtonClick,
+        onNextButtonClick = onNextButtonClick
+    )
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SelectFrameScreen() {
+fun SelectFrameScreen(
+    onPrintButtonClick: () -> Unit,
+    onNextButtonClick: () -> Unit,
+) {
+    val pagerState = rememberPagerState(pageCount = { 6 })
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -39,8 +55,8 @@ fun SelectFrameScreen() {
             Spacer(modifier = Modifier.height(40.dp))
 
             HorizontalPager(
-                pageCount = 6,
-                contentPadding = PaddingValues(horizontal = 75.dp)
+                contentPadding = PaddingValues(horizontal = 75.dp),
+                state = pagerState
             ) { page ->
 
                 when (page) {
@@ -71,13 +87,13 @@ fun SelectFrameScreen() {
                     .padding(horizontal = 16.dp)
             ) {
                 GolaroidButton(text = "출력하기", modifier = Modifier.weight(1f)) {
-
+                    onPrintButtonClick()
                 }
 
                 Spacer(modifier = Modifier.width(20.dp))
 
                 GolaroidButton(text = "넘어가기", modifier = Modifier.weight(1f)) {
-
+                    onNextButtonClick()
                 }
 
             }
@@ -89,5 +105,8 @@ fun SelectFrameScreen() {
 @Preview
 @Composable
 fun SelectFrameScreenPre() {
-    SelectFrameScreen()
+    SelectFrameScreen(
+        onPrintButtonClick = {},
+        onNextButtonClick = {}
+    )
 }

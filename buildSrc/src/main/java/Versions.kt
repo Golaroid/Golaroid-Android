@@ -1,8 +1,8 @@
 object Versions {
-    const val GRADLE = "7.4.2"
-    const val KOTLIN = "1.7.0"
+    const val GRADLE = "8.1.3"
+    const val KOTLIN = "1.9.20"
 
-    const val COMPOSE = "1.2.0"
+    const val COMPOSE = "1.5.4"
     const val APPCOMPAT = "1.6.1"
     const val ACTIVITY_COMPOSE = "1.7.2"
     const val COMPOSE_MATERIAL = "1.4.3"

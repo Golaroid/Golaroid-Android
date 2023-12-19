@@ -23,7 +23,18 @@ import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
-fun InputInformationScreen() {
+fun InputInformationRoute(
+    onNextButtonClick: () -> Unit,
+) {
+    InputInformationScreen(
+        onNextButtonClick = onNextButtonClick
+    )
+}
+
+@Composable
+fun InputInformationScreen(
+    onNextButtonClick: () -> Unit,
+) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -93,7 +104,7 @@ fun InputInformationScreen() {
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-
+                onNextButtonClick()
             }
         }
     }
@@ -102,5 +113,7 @@ fun InputInformationScreen() {
 @Preview
 @Composable
 fun InputInformationScreenPre() {
-    InputInformationScreen()
+    InputInformationScreen(
+        onNextButtonClick = {}
+    )
 }

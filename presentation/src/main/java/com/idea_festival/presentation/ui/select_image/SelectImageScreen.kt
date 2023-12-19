@@ -30,9 +30,23 @@ import com.idea_festival.design_system.component.image.ChooseImage
 import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
+@Composable
+fun SelectImageRoute(
+    onNextButtonClick:() -> Unit
+) {
+    SelectImageScreen (
+        onNextButtonClick = onNextButtonClick
+    )
+
+}
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SelectImageScreen() {
+fun SelectImageScreen(
+    onNextButtonClick:() -> Unit
+) {
+    val state = rememberPagerState {
+        8
+    }
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -72,7 +86,7 @@ fun SelectImageScreen() {
             Spacer(modifier = Modifier.height(74.dp))
 
             HorizontalPager(
-                pageCount = 10,
+                state = state,
                 contentPadding = PaddingValues(horizontal = 40.dp)
             ) { page ->
                 ChooseImage(
@@ -89,7 +103,7 @@ fun SelectImageScreen() {
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-
+                onNextButtonClick()
             }
         }
     }
@@ -98,5 +112,7 @@ fun SelectImageScreen() {
 @Preview
 @Composable
 fun SelectImageScreenPre() {
-    SelectImageScreen()
+    SelectImageScreen(
+        onNextButtonClick = {}
+    )
 }

@@ -5,14 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,17 +32,33 @@ import com.idea_festival.design_system.component.textfield.GolaroidTextField
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.design_system.theme.pretendard
 import com.idea_festival.presentation.ui.main.component.GolaroidLogo
-import com.idea_festival.presentation.ui.main.component.PictureCard
 import com.idea_festival.presentation.ui.main.component.PictureLazyRow
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
+
+@Composable
+fun MainRoute(
+    onTakePictureButtonClick: () -> Unit,
+    onSearchButtonClick: () -> Unit,
+    onImageClick: () -> Unit,
+    postViewModel: PostViewModel = hiltViewModel(),
+) {
+    MainScreen(
+        onTakePictureButtonClick = onTakePictureButtonClick,
+        onSearchButtonClick = onSearchButtonClick,
+        onImageClick = onImageClick
+    )
+}
 
 @Composable
 fun MainScreen(
-
+    onTakePictureButtonClick: () -> Unit,
+    onSearchButtonClick: () -> Unit,
+    onImageClick: () -> Unit,
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
-                .wrapContentHeight()
+                .fillMaxSize()
                 .background(color = colors.BLACK)
         ) {
             Column(
@@ -67,7 +82,8 @@ fun MainScreen(
                     placeholder = "코드를 입력해 주세요",
                     onValueChange = {
                     }, modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    onSearchButtonClick = { onSearchButtonClick() }
                 )
 
                 Spacer(modifier = Modifier.height(30.dp))
@@ -197,7 +213,7 @@ fun MainScreen(
                     .height(60.dp)
                     .padding(horizontal = 16.dp)
             ) {
-
+                onTakePictureButtonClick()
             }
 
             Spacer(modifier = Modifier.height(36.dp))
@@ -209,5 +225,9 @@ fun MainScreen(
 @Preview
 @Composable
 fun MainScreenPre() {
-    MainScreen()
+    MainScreen(
+        onTakePictureButtonClick = {},
+        onSearchButtonClick = {},
+        onImageClick = {}
+    )
 }

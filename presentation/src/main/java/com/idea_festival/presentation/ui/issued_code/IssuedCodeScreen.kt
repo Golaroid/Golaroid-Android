@@ -20,7 +20,18 @@ import com.idea_festival.design_system.component.icon.ClipboardIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
-fun IssuedCodeScreen() {
+fun IssuedCodeRoute(
+    onNextButtonClick: () -> Unit,
+) {
+    IssuedCodeScreen(
+        onNextButtonClick = onNextButtonClick
+    )
+}
+
+@Composable
+fun IssuedCodeScreen(
+    onNextButtonClick: () -> Unit,
+) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -87,7 +98,7 @@ fun IssuedCodeScreen() {
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-
+                onNextButtonClick()
             }
         }
     }
@@ -96,5 +107,5 @@ fun IssuedCodeScreen() {
 @Preview
 @Composable
 fun IssuedCodeScreenPre() {
-    IssuedCodeScreen()
+    IssuedCodeScreen(onNextButtonClick = {})
 }

@@ -23,10 +23,20 @@ import com.idea_festival.design_system.component.icon.GreenStarIcon
 import com.idea_festival.design_system.component.icon.StarIcon
 import com.idea_festival.design_system.component.icon.UnCutOrangeCameraIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
-import com.idea_festival.presentation.ui.input_information.screen.UploadImageScreen
 
 @Composable
-fun PrintSuccessScreen() {
+fun PrintSuccessRoute(
+    onNextButtonClick: () -> Unit,
+) {
+    PrintSuccessScreen(
+        onNextButtonClick = onNextButtonClick
+    )
+}
+
+@Composable
+fun PrintSuccessScreen(
+    onNextButtonClick: () -> Unit,
+) {
     GolaroidAndroidTheme { colors, typography ->
         Box(
             modifier = Modifier
@@ -99,13 +109,14 @@ fun PrintSuccessScreen() {
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-
+                onNextButtonClick()
             }
         }
     }
 }
+
 @Preview
 @Composable
 fun PrintSuccessScreenPre() {
-    PrintSuccessScreen()
+    PrintSuccessScreen(onNextButtonClick = {})
 }

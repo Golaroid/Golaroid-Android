@@ -20,9 +20,19 @@ import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.frame.RupeeFrame
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TodayImageScreen() {
+fun TodayImageRoute(
+    onCheckButtonClick: () -> Unit,
+) {
+    TodayImageScreen(
+        onCheckButtonClick = onCheckButtonClick
+    )
+}
+
+@Composable
+fun TodayImageScreen(
+    onCheckButtonClick: () -> Unit,
+) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -49,7 +59,7 @@ fun TodayImageScreen() {
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-
+                onCheckButtonClick()
             }
 
         }
@@ -59,5 +69,7 @@ fun TodayImageScreen() {
 @Preview
 @Composable
 fun TodayImageScreenPre() {
-    TodayImageScreen()
+    TodayImageScreen(
+        onCheckButtonClick = {}
+    )
 }

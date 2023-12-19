@@ -20,7 +20,16 @@ import com.idea_festival.design_system.component.icon.WhiteCircleIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
-fun CaptureScreen() {
+fun CaptureRoute(
+    onBackClick: () -> Unit,
+) {
+    CaptureScreen(onBackClick = onBackClick)
+}
+
+@Composable
+fun CaptureScreen(
+    onBackClick: () -> Unit,
+) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -81,5 +90,5 @@ fun CaptureScreen() {
 @Preview
 @Composable
 fun CaptureScreenPre() {
-    CaptureScreen()
+    CaptureScreen(onBackClick = {})
 }
