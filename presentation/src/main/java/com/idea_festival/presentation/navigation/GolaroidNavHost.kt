@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.idea_festival.presentation.ui.GolaroidAppState
 import com.idea_festival.presentation.ui.capture.navigation.captureScreen
 import com.idea_festival.presentation.ui.capture.navigation.navigateToCapture
+import com.idea_festival.presentation.ui.input_information.navigation.navigateToInputInformation
 import com.idea_festival.presentation.ui.issued_code.navigation.issuedCodeScreen
 import com.idea_festival.presentation.ui.issued_code.navigation.navigateToRevealPicture
 import com.idea_festival.presentation.ui.issued_code.navigation.revealPictureScreen
@@ -54,7 +55,8 @@ fun GolaroidNavHost(
         )
 
         revealPictureScreen(
-            onApproveButtonClick = 
+            onApproveButtonClick = navController::navigateToInputInformation,
+            onRejectButtonClick = navController::navigateToInputInformation,
         )
     }
 }

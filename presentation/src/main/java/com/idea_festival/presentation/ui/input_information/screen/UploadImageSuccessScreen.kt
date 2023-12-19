@@ -25,7 +25,17 @@ import com.idea_festival.design_system.component.icon.UnCutOrangeCameraIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
-fun UploadImageScreen() {
+fun UploadImageSuccessRoute(
+    onCheckButtonClick:() -> Unit
+) {
+    UploadImageSuccessScreen(
+        onCheckButtonClick = onCheckButtonClick
+    )
+}
+@Composable
+fun UploadImageSuccessScreen(
+    onCheckButtonClick:() -> Unit
+) {
     GolaroidAndroidTheme { colors, typography ->
         Box(
             modifier = Modifier
@@ -98,7 +108,7 @@ fun UploadImageScreen() {
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-
+                onCheckButtonClick()
             }
         }
     }
@@ -107,5 +117,5 @@ fun UploadImageScreen() {
 @Preview
 @Composable
 fun UploadImageScreenPre() {
-    UploadImageScreen()
+    UploadImageSuccessScreen(onCheckButtonClick = {})
 }
