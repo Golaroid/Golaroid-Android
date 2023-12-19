@@ -8,12 +8,20 @@ import com.idea_festival.presentation.ui.main.screen.MainRoute
 
 const val mainRoute = "main_route"
 
-fun NavController.navigateToMain(navOptions: NavOptions? = null ) {
+fun NavController.navigateToMain(navOptions: NavOptions? = null) {
     this.navigate(mainRoute, navOptions)
 }
 
-fun NavGraphBuilder.mainScreen(onTakePictureButtonClick: () -> Unit) {
+fun NavGraphBuilder.mainScreen(
+    onTakePictureButtonClick: () -> Unit,
+    onImageClick: () -> Unit,
+    onSearchButtonClick: () -> Unit,
+) {
     composable(route = mainRoute) {
-        MainRoute(onTakePictureButtonClick = onTakePictureButtonClick)
+        MainRoute(
+            onTakePictureButtonClick = onTakePictureButtonClick,
+            onImageClick = onImageClick,
+            onSearchButtonClick = onSearchButtonClick
+        )
     }
 }

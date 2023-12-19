@@ -9,6 +9,9 @@ import com.idea_festival.presentation.ui.capture.navigation.navigateToCapture
 import com.idea_festival.presentation.ui.main.navigation.mainRoute
 import com.idea_festival.presentation.ui.main.navigation.mainScreen
 import com.idea_festival.presentation.ui.main.navigation.navigateToMain
+import com.idea_festival.presentation.ui.search_result.navigation.existCodeScreen
+import com.idea_festival.presentation.ui.search_result.navigation.navigateToExistCode
+import com.idea_festival.presentation.ui.search_result.navigation.noExistCodeScreen
 
 @Composable
 fun GolaroidNavHost(
@@ -24,11 +27,24 @@ fun GolaroidNavHost(
         modifier = modifier
     ) {
         mainScreen(
-            onTakePictureButtonClick = navController::navigateToCapture
+            onTakePictureButtonClick = navController::navigateToCapture,
+            onSearchButtonClick = navController::navigateToExistCode,
+            onImageClick = {}
         )
 
         captureScreen(
             onBackClick = navController::popBackStack
         )
+
+        existCodeScreen(
+            onTakePictureButtonClick = navController::navigateToCapture,
+            onBackClick = navController::popBackStack
+        )
+
+        noExistCodeScreen(
+            onTakePictureButtonClick = navController::navigateToCapture,
+            onBackClick = navController::popBackStack
+        )
+
     }
 }

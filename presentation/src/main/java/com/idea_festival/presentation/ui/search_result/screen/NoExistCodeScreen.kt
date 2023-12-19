@@ -1,4 +1,4 @@
-package com.idea_festival.presentation.ui.input_code.screen
+package com.idea_festival.presentation.ui.search_result.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,7 +25,21 @@ import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
-fun NoExistCodeScreen() {
+fun NoExistCodeRoute(
+    onTakePictureButtonClick: () -> Unit,
+    onBackClick: () -> Unit
+) {
+    NoExistCodeScreen(
+        onTakePictureButtonClick = onTakePictureButtonClick,
+        onBackClick = onBackClick
+    )
+}
+
+@Composable
+fun NoExistCodeScreen(
+    onTakePictureButtonClick: () -> Unit,
+    onBackClick: () -> Unit
+) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -65,7 +79,7 @@ fun NoExistCodeScreen() {
             }
             Box(
                 modifier = Modifier.align(Alignment.CenterHorizontally)
-            ){
+            ) {
                 FailedGif(
                     modifier = Modifier
                         .wrapContentSize()
@@ -76,7 +90,8 @@ fun NoExistCodeScreen() {
                     text = "해당되는 코드가 존재하지않습니다.",
                     style = typography.labelMedium,
                     color = colors.WHITE,
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier
+                        .align(Alignment.Center)
                         .padding(top = 278.dp)
                 )
             }
@@ -98,5 +113,8 @@ fun NoExistCodeScreen() {
 @Preview
 @Composable
 fun NoExistCodeScreenPre() {
-    NoExistCodeScreen()
+    NoExistCodeScreen(
+        onTakePictureButtonClick = {},
+        onBackClick = {}
+    )
 }

@@ -1,4 +1,4 @@
-package com.idea_festival.presentation.ui.input_code.screen
+package com.idea_festival.presentation.ui.search_result.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -22,7 +22,21 @@ import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
-fun ExistCodeScreen() {
+fun ExistCodeRoute(
+    onTakePictureButtonClick: () -> Unit,
+    onBackClick: () -> Unit,
+) {
+    ExistCodeScreen(
+        onTakePictureButtonClick = onTakePictureButtonClick,
+        onBackClick = onBackClick
+    )
+}
+
+@Composable
+fun ExistCodeScreen(
+    onTakePictureButtonClick: () -> Unit,
+    onBackClick: () -> Unit,
+) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -34,7 +48,7 @@ fun ExistCodeScreen() {
 
             GoBackTopBar(
                 icon = { (GoBackIcon()) },
-                text = "돌아가기"
+                text = "뒤로가기"
             ) {
 
             }
@@ -94,5 +108,8 @@ fun ExistCodeScreen() {
 @Preview
 @Composable
 fun ExistCodeScreenPre() {
-    ExistCodeScreen()
+    ExistCodeScreen(
+        onTakePictureButtonClick = {},
+        onBackClick = {}
+    )
 }

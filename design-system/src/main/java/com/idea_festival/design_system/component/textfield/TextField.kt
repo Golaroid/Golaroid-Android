@@ -33,6 +33,7 @@ import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GolaroidTextField(
+    onSearchButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String,
     onValueChange: (String) -> Unit,
@@ -50,7 +51,7 @@ fun GolaroidTextField(
                 modifier = modifier.background(color = Color.Transparent),
                 shape = RoundedCornerShape(100.dp),
                 trailingIcon = {
-                    IconButton(onClick = {  }) {
+                    IconButton(onClick = { onSearchButtonClick() }) {
                         SearchIcon()
                     }
 
@@ -128,5 +129,6 @@ fun GolaroidTextFieldPre() {
         modifier = Modifier.fillMaxWidth(),
         placeholder = "코드를 입력해 주세요",
         onValueChange = {},
+        onSearchButtonClick = {}
     )
 }

@@ -82,7 +82,8 @@ fun MainScreen(
                     placeholder = "코드를 입력해 주세요",
                     onValueChange = {
                     }, modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    onSearchButtonClick = { onSearchButtonClick() }
                 )
 
                 Spacer(modifier = Modifier.height(30.dp))
