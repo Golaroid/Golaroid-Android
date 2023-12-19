@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.idea_festival.presentation.ui.GolaroidAppState
 import com.idea_festival.presentation.ui.capture.navigation.captureScreen
 import com.idea_festival.presentation.ui.capture.navigation.navigateToCapture
+import com.idea_festival.presentation.ui.issued_code.navigation.issuedCodeScreen
 import com.idea_festival.presentation.ui.main.navigation.mainRoute
 import com.idea_festival.presentation.ui.main.navigation.mainScreen
 import com.idea_festival.presentation.ui.main.navigation.navigateToMain
@@ -46,5 +47,8 @@ fun GolaroidNavHost(
             onBackClick = navController::popBackStack
         )
 
+        issuedCodeScreen(
+            onNextButtonClick =
+        )
     }
 }
