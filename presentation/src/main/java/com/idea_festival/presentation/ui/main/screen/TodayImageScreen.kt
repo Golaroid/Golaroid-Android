@@ -20,7 +20,6 @@ import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.frame.RupeeFrame
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TodayImageScreen() {
     GolaroidAndroidTheme { colors, typography ->

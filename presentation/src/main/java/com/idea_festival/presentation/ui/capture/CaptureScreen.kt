@@ -20,6 +20,10 @@ import com.idea_festival.design_system.component.icon.WhiteCircleIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
+fun CaptureRoute() {
+    CaptureScreen()
+}
+@Composable
 fun CaptureScreen() {
     GolaroidAndroidTheme { colors, typography ->
         Column(

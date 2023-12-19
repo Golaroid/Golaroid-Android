@@ -127,7 +127,7 @@ fun RupeeFrame(
                 .zIndex(-1f)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.test_image_one_piece),
+                painter = painterResource(id = R.drawable.j1),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(top = 37.dp, bottom = 8.dp)
@@ -139,7 +139,7 @@ fun RupeeFrame(
             )
 
             Image(
-                painter = painterResource(id = R.drawable.test_image_one_piece),
+                painter = painterResource(id = R.drawable.j2),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(bottom = 8.dp)
@@ -151,7 +151,7 @@ fun RupeeFrame(
             )
 
             Image(
-                painter = painterResource(id = R.drawable.test_image_one_piece),
+                painter = painterResource(id = R.drawable.j3),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(bottom = 8.dp)
@@ -163,7 +163,7 @@ fun RupeeFrame(
             )
 
             Image(
-                painter = painterResource(id = R.drawable.test_image_one_piece),
+                painter = painterResource(id = R.drawable.j4),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -550,6 +550,6 @@ fun FramePre() {
     Row(
         modifier = Modifier.fillMaxSize()
     ) {
-        GolaroidGrayFrame()
+        RupeeFrame()
     }
 }

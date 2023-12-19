@@ -8,25 +8,25 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : ComponentActivity() {
+//@AndroidEntryPoint
+//class MainActivity : ComponentActivity() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //        setContent {
-//            GolaroidAndroidTheme {
-//                Surface(
-//                    modifier = Modifier.fillMaxSize(),
-//                    color = MaterialTheme.colorScheme.background
-//                ) {
-//                    Greeting("Android")
+//            CompositionLocalProvider {
+//                GolaroidAndroidTheme { _, _ ->
+//                        GolaroidApp(windowSizeClass = calculateWindowSizeClass(this))
 //                }
 //            }
 //        }
 //    }
-}
+//}
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {

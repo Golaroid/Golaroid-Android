@@ -66,6 +66,8 @@ android {
         androidTestImplementation(Dependency.Test.COMPOSE_JUNIT)
         debugImplementation(Dependency.Compose.COMPOSE_TOOLING)
         debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
+        implementation(Dependency.Compose.COMPOSE_WINDOW_SIZE_CLASS)
+        implementation(Dependency.Compose.COMPOSE_NAVIGATION)
 
         implementation(Dependency.Google.HILT)
         kapt(Dependency.Google.HILT_COMPILER)
