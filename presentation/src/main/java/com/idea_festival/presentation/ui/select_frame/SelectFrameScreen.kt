@@ -27,9 +27,23 @@ import com.idea_festival.design_system.component.frame.WantedFrame
 import com.idea_festival.design_system.component.frame.WinterFrame
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
+@Composable
+fun SelectFrameRoute(
+    onPrintButtonClick: () -> Unit,
+    onNextButtonClick: () -> Unit,
+) {
+    SelectFrameScreen(
+        onPrintButtonClick = onPrintButtonClick,
+        onNextButtonClick = onNextButtonClick
+    )
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SelectFrameScreen() {
+fun SelectFrameScreen(
+    onPrintButtonClick: () -> Unit,
+    onNextButtonClick: () -> Unit,
+) {
     val pagerState = rememberPagerState(pageCount = { 6 })
     GolaroidAndroidTheme { colors, typography ->
         Column(
@@ -73,13 +87,13 @@ fun SelectFrameScreen() {
                     .padding(horizontal = 16.dp)
             ) {
                 GolaroidButton(text = "출력하기", modifier = Modifier.weight(1f)) {
-
+                    onPrintButtonClick()
                 }
 
                 Spacer(modifier = Modifier.width(20.dp))
 
                 GolaroidButton(text = "넘어가기", modifier = Modifier.weight(1f)) {
-
+                    onNextButtonClick()
                 }
 
             }
@@ -91,5 +105,8 @@ fun SelectFrameScreen() {
 @Preview
 @Composable
 fun SelectFrameScreenPre() {
-    SelectFrameScreen()
+    SelectFrameScreen(
+        onPrintButtonClick = {},
+        onNextButtonClick = {}
+    )
 }
