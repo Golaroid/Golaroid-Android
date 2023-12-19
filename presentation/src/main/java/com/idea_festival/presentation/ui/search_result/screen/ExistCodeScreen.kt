@@ -50,7 +50,7 @@ fun ExistCodeScreen(
                 icon = { (GoBackIcon()) },
                 text = "뒤로가기"
             ) {
-
+                onBackClick()
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -99,7 +99,7 @@ fun ExistCodeScreen(
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-
+                onTakePictureButtonClick()
             }
         }
     }

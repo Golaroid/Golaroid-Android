@@ -53,7 +53,7 @@ fun NoExistCodeScreen(
                 icon = { (GoBackIcon()) },
                 text = "돌아가기"
             ) {
-
+                onBackClick()
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -104,7 +104,7 @@ fun NoExistCodeScreen(
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-
+                onTakePictureButtonClick()
             }
         }
     }

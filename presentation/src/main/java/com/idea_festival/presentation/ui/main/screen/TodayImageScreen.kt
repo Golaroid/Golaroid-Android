@@ -59,7 +59,7 @@ fun TodayImageScreen(
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-
+                onCheckButtonClick()
             }
 
         }

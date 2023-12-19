@@ -103,7 +103,7 @@ fun SelectImageScreen(
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-
+                onNextButtonClick()
             }
         }
     }
