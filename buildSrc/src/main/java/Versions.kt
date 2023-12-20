@@ -8,6 +8,8 @@ object Versions {
     const val COMPOSE_MATERIAL = "1.4.3"
     const val COMPOSE_MATERIAL3 = "1.1.1"
 
+    const val CAMERX = "1.2.1"
+
     const val SPLASH = "1.0.1"
     const val LIFECYCLE = "2.6.1"
     const val CORE_KTX = "1.10.1"

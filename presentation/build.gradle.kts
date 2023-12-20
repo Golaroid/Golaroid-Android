@@ -68,6 +68,12 @@ android {
         debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
         implementation(Dependency.Compose.COMPOSE_WINDOW_SIZE_CLASS)
         implementation(Dependency.Compose.COMPOSE_NAVIGATION)
+        implementation(Dependency.CamPoser.CAMPOSER)
+        implementation("androidx.camera:camera-camera2:1.3.0-beta01")
+        implementation("androidx.camera:camera-lifecycle:1.3.0-beta01")
+        implementation("androidx.camera:camera-view:1.3.0-beta01")
+        implementation("androidx.camera:camera-extensions:1.3.0-beta01")
+        implementation("com.google.accompanist:accompanist-permissions:0.31.2-alpha")
 
         implementation(Dependency.Google.HILT)
         kapt(Dependency.Google.HILT_COMPILER)

@@ -27,6 +27,9 @@ object Dependency {
         const val COMPOSE_WINDOW_SIZE_CLASS = "androidx.compose.material3:material3-window-size-class-android:1.2.0-beta01"
     }
 
+    object CamPoser {
+        const val CAMPOSER = "io.github.ujizin:camposer:0.1.0"
+    }
     object Google {
         const val MATERIAL = "com.google.android.material:material:${Versions.MATERIAL}"
 
