@@ -60,6 +60,7 @@ android {
         implementation(Dependency.Compose.COMPOSE_MATERIAL)
         implementation(Dependency.Compose.COMPOSE_MATERIAL3)
         implementation(Dependency.Compose.COMPOSE_PREVIEW)
+        implementation(Dependency.Compose.COMPOSE_VIEWMODEl)
         testImplementation(Dependency.Test.JUNIT)
         androidTestImplementation(Dependency.Test.ANDROID_JUNIT)
         androidTestImplementation(Dependency.Test.ESPRESSO)

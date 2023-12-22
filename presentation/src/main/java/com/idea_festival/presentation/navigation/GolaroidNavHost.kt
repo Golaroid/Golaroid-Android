@@ -11,6 +11,7 @@ import com.idea_festival.presentation.ui.input_information.navigation.navigateTo
 import com.idea_festival.presentation.ui.input_information.navigation.navigateToUploadImageSuccess
 import com.idea_festival.presentation.ui.input_information.navigation.uploadImageSuccessScreen
 import com.idea_festival.presentation.ui.issued_code.navigation.issuedCodeScreen
+import com.idea_festival.presentation.ui.issued_code.navigation.navigateToIssuedCode
 import com.idea_festival.presentation.ui.issued_code.navigation.navigateToRevealPicture
 import com.idea_festival.presentation.ui.issued_code.navigation.revealPictureScreen
 import com.idea_festival.presentation.ui.main.navigation.mainRoute
@@ -45,7 +46,8 @@ fun GolaroidNavHost(
         )
 
         captureScreen(
-            onBackClick = navController::popBackStack
+            onBackClick = navController::popBackStack,
+            onTakePictureFinish = navController::navigateToIssuedCode
         )
 
         existCodeScreen(
