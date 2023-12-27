@@ -48,6 +48,8 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Locale
 import java.util.concurrent.Executor
 
 
@@ -76,7 +78,7 @@ fun CaptureScreen(
     onTakePictureFinish: () -> Unit,
     onInquiryCapture: (ByteArray) -> Unit,
     onBackClick: () -> Unit,
-    onCaptured: Boolean
+    onCaptured: Boolean,
 ) {
     val imageArray: MutableList<Bitmap>? = mutableListOf()
     val context = LocalContext.current
@@ -110,8 +112,7 @@ fun CaptureScreen(
                 onPhotoCaptured = { captured ->
                     if (captured && viewModel.isInquiry.value) {
                         onInquiryCapture(viewModel.swapBitmapToJpeg())
-                    }
-                    else if (onCaptured) {
+                    } else if (onCaptured) {
                         lastCapturedPhoto.value?.let { imageArray?.add(it) }
                     }
                 },
@@ -165,93 +166,31 @@ fun CaptureScreen(
         }
     }
 }
+private fun takePhoto(
+    filenameFormat: String,
+    imageCapture: ImageCapture,
+    outputDirectory: File,
+    executor: Executor,
+    onImageCaptured: (Uri) -> Unit,
+    onError: (ImageCaptureException) -> Unit
+) {
 
-private suspend fun saveBitmapToMediaStore(imageFile: File?, context: Context): Uri? {
-    return withContext(Dispatchers.IO) {
-        if (imageFile == null) {
-            return@withContext null
-        }
+    val photoFile = File(
+        outputDirectory,
+        SimpleDateFormat(filenameFormat, Locale.US).format(System.currentTimeMillis()) + ".jpeg"
+    )
 
-        val contentValues = ContentValues().apply {
-            put(
-                MediaStore.Images.Media.DISPLAY_NAME,
-                "captured_image_${System.currentTimeMillis()}.jpg"
-            )
-            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
-        }
+    val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
-        val resolver = context.contentResolver
-        var outputStream: OutputStream? = null
-        var uri: Uri? = null
-
-        try {
-            val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            val contentUriResult = resolver.insert(contentUri, contentValues)
-
-            if (contentUriResult != null) {
-                outputStream = resolver.openOutputStream(contentUriResult)
-                if (outputStream != null) {
-                    // Read the bitmap from the file and compress it
-                    val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
-                    bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-                    uri = contentUriResult
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            outputStream?.close()
-        }
-
-        return@withContext uri
-    }
-}
-
-fun capturePhoto(
-    context: Context,
-    cameraController: LifecycleCameraController,
-): File? {
-    val mainExecutor: Executor = ContextCompat.getMainExecutor(context)
-
-    var capturedFile: File? = null
-
-    cameraController.takePicture(mainExecutor, object : ImageCapture.OnImageCapturedCallback() {
-        override fun onCaptureSuccess(image: ImageProxy) {
-            val correctedBitmap: Bitmap = image
-                .toBitmap()
-                .rotateBitmap(image.imageInfo.rotationDegrees)
-
-            // Save the bitmap to a file
-            capturedFile = saveBitmapToFile(correctedBitmap, context)
-
-            image.close()
-        }
-
+    imageCapture.takePicture(outputOptions, executor, object: ImageCapture.OnImageSavedCallback {
         override fun onError(exception: ImageCaptureException) {
-            // Handle error
+            Log.e("kilo", "Take photo error:", exception)
+            onError(exception)
+        }
+
+        override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+            val savedUri = Uri.fromFile(photoFile)
+            onImageCaptured(savedUri)
         }
     })
-
-    return capturedFile
-}
-
-fun saveBitmapToFile(bitmap: Bitmap, context: Context): File {
-    val imageFile = context.createNewFile("jpg")
-
-    val stream = FileOutputStream(imageFile)
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-    stream.flush()
-    stream.close()
-
-    return imageFile
-}
-
-fun Bitmap.rotateBitmap(rotationDegrees: Int): Bitmap {
-    val matrix = Matrix().apply {
-        postRotate(-rotationDegrees.toFloat())
-        postScale(-1f, -1f)
-    }
-
-    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }
