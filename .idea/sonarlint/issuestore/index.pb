@@ -59,8 +59,6 @@ Qdomain/src/main/java/com/idea_festival/domain/usecase/image/UploadImageUseCase.
 dpresentation/src/main/java/com/idea_festival/presentation/ui/capture/component/NoPermissionScreen.kt,8/2/822de2d5e2eb9edb5eb81ccabc3ee070fd657ae0
 à
 Xpresentation/src/main/java/com/idea_festival/presentation/ui/viewmodel/ImageViewModel.kt,7/0/702213afcc74fa738594a502c2927edc08fab851
-P
- app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 M
 presentation/build.gradle.kts,b/b/bbb5f5d9acc7530bc591aed4f71c56457464aa34
 é
@@ -69,7 +67,5 @@ M
 ^presentation/src/main/java/com/idea_festival/presentation/ui/select_frame/SelectFrameScreen.kt,6/5/65df777085176e027b12b230453236e83830bcee
 û
 npresentation/src/main/java/com/idea_festival/presentation/ui/select_frame/navigation/PrintSuccessNavigation.kt,3/1/312055865e7c3b77cf4649eb84aeed9c0407eddd
-á
-Wpresentation/src/main/java/com/idea_festival/presentation/navigation/GolaroidNavHost.kt,4/e/4e8684505628451f9d5a06188babd8f9848b0b0d
 ù
 mpresentation/src/main/java/com/idea_festival/presentation/ui/select_frame/navigation/SelectFrameNavigation.kt,3/e/3e83988345b45b805e90e9d6882f44d6b7ee5887

@@ -1,18 +1,12 @@
 package com.idea_festival.presentation.ui.capture
 
-import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.net.Uri
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
-import androidx.camera.view.LifecycleCameraController
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,29 +27,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.idea_festival.design_system.component.icon.WhiteCircleIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.presentation.ui.capture.component.CameraPreview
 import com.idea_festival.presentation.ui.capture.component.CheckPermission
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executor
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
-
-private fun Context.createNewFile(extension: String) = File(
-    filesDir, "${System.currentTimeMillis()}.$extension"
-).apply { createNewFile() }
 
 @Composable
 fun CaptureRoute(
@@ -64,11 +52,9 @@ fun CaptureRoute(
     viewModel: CameraViewModel = hiltViewModel(),
 ) {
     CaptureScreen(
-        onBackClick = onBackClick,
         viewModel = viewModel,
         onTakePictureFinish = onTakePictureFinish,
-        onInquiryCapture = {},
-        onCaptured = true
+        onBackClick = onBackClick,
     )
 }
 
@@ -76,15 +62,17 @@ fun CaptureRoute(
 fun CaptureScreen(
     viewModel: CameraViewModel,
     onTakePictureFinish: () -> Unit,
-    onInquiryCapture: (ByteArray) -> Unit,
     onBackClick: () -> Unit,
-    onCaptured: Boolean,
 ) {
     val imageArray: MutableList<Bitmap>? = mutableListOf()
     val context = LocalContext.current
+
     var countdownValue by remember { mutableIntStateOf(10) }
     var leftoverPictureValue by remember { mutableIntStateOf(8) }
+
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
+
+    var onCaptured = remember { mutableStateOf(false) }
 
     CheckPermission(context = context, viewModel = viewModel)
 
@@ -101,23 +89,25 @@ fun CaptureScreen(
                     if (countdownValue == 0) {
                         countdownValue = 10
                         --leftoverPictureValue
-                        onTakePictureFinish()
+                        onCaptured.value = true
                     }
+                } else if(leftoverPictureValue == 0) {
+                    onTakePictureFinish()
                 }
+                onCaptured.value = false
             }
-
 
             CameraPreview(
                 context = context,
                 onPhotoCaptured = { captured ->
                     if (captured && viewModel.isInquiry.value) {
-                        onInquiryCapture(viewModel.swapBitmapToJpeg())
-                    } else if (onCaptured) {
+                     //   onInquiryCapture(viewModel.swapBitmapToJpeg())
+                    } else if (onCaptured.value) {
                         lastCapturedPhoto.value?.let { imageArray?.add(it) }
                     }
                 },
                 onPhotoCapturedData = viewModel::loadImgBitmap,
-                onCaptured = true
+                onCaptured = onCaptured.value
             )
 
             Row(
@@ -166,13 +156,23 @@ fun CaptureScreen(
         }
     }
 }
+
+private suspend fun Context.getCameraProvider(): ProcessCameraProvider =
+    suspendCoroutine { continuation ->
+        ProcessCameraProvider.getInstance(this).also { cameraProvider ->
+            cameraProvider.addListener({
+                continuation.resume(cameraProvider.get())
+            }, ContextCompat.getMainExecutor(this))
+        }
+    }
+
 private fun takePhoto(
     filenameFormat: String,
     imageCapture: ImageCapture,
     outputDirectory: File,
     executor: Executor,
     onImageCaptured: (Uri) -> Unit,
-    onError: (ImageCaptureException) -> Unit
+    onError: (ImageCaptureException) -> Unit,
 ) {
 
     val photoFile = File(
@@ -182,7 +182,7 @@ private fun takePhoto(
 
     val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
-    imageCapture.takePicture(outputOptions, executor, object: ImageCapture.OnImageSavedCallback {
+    imageCapture.takePicture(outputOptions, executor, object : ImageCapture.OnImageSavedCallback {
         override fun onError(exception: ImageCaptureException) {
             Log.e("kilo", "Take photo error:", exception)
             onError(exception)
