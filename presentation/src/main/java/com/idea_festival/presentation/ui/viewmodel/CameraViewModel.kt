@@ -4,12 +4,20 @@ import android.graphics.Bitmap
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.idea_festival.domain.model.image.ImageUploadRequestModel
+import com.idea_festival.domain.model.image.ImageUploadWithCodeRequestModel
+import com.idea_festival.domain.usecase.image.UploadImageUseCase
+import com.idea_festival.domain.usecase.image.UploadImageWithCodeUseCase
 import com.idea_festival.presentation.ui.capture.CameraState
+import com.idea_festival.presentation.ui.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -19,10 +27,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CameraViewModel @Inject constructor(
+    private val uploadImageUseCase: UploadImageUseCase,
+    private val uploadImageWithCodeUseCase: UploadImageWithCodeUseCase
 ) : ViewModel() {
     private val _capturedImgBitmapState = MutableStateFlow(CameraState())
     val captureImgBitmapState = _capturedImgBitmapState.asStateFlow()
 
+    private val _uploadImageRequest = MutableLiveData<Event<>>()
+    val uploadImageRequest: LiveData<Event>
     var isInquiry = mutableStateOf(false)
 
     fun loadImgBitmap(bitmap: Bitmap) = viewModelScope.launch {
@@ -63,5 +75,25 @@ class CameraViewModel @Inject constructor(
         swapBitmap?.compress(Bitmap.CompressFormat.JPEG, 10, byteArrayOutputStream)
 
         return byteArrayOutputStream.toByteArray()
+    }
+
+    fun uploadImage(body: ImageUploadRequestModel) = viewModelScope.launch {
+            uploadImageUseCase(
+                body = body
+            ).onSuccess {
+                it.catch { remoteError ->
+
+                }
+            }
+    }
+
+    fun uploadImageWithCode(body: ImageUploadWithCodeRequestModel) = viewModelScope.launch {
+        val multipartFile = getMultipartFile()
+
+        try {
+            uploadImageWithCodeUseCase()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

@@ -29,8 +29,6 @@ dpresentation/src/main/java/com/idea_festival/presentation/ui/main/navigation/To
 opresentation/src/main/java/com/idea_festival/presentation/ui/search_result/navigation/SearchResultNavigation.kt,9/5/95a16c8a81b53214891a5f7cac58778e3025ffc4
 å
 \presentation/src/main/java/com/idea_festival/presentation/ui/main/screen/TodayImageScreen.kt,7/2/72333d3a4c532e795c7f173028569842b8585653
-Ü
-Vpresentation/src/main/java/com/idea_festival/presentation/ui/main/screen/MainScreen.kt,b/5/b51613f6739d05af3ccfaa1ae8b446c05ab3bf25
 ü
 opresentation/src/main/java/com/idea_festival/presentation/ui/input_information/screen/InputInformationScreen.kt,4/1/41285d83e7b2ca4c6aa8956ff52395b2f1000260
 °
@@ -55,10 +53,6 @@ G
 domain/build.gradle.kts,d/7/d72c8b69b8da0b3b02b699ccd509295dbd783baa
 î
 dpresentation/src/main/java/com/idea_festival/presentation/ui/capture/component/NoPermissionScreen.kt,8/2/822de2d5e2eb9edb5eb81ccabc3ee070fd657ae0
-Å
-Qdomain/src/main/java/com/idea_festival/domain/usecase/image/UploadImageUseCase.kt,e/d/ed7afa560b3bd10662d2a94eb6bdeb88fa824465
-à
-Xpresentation/src/main/java/com/idea_festival/presentation/ui/viewmodel/ImageViewModel.kt,7/0/702213afcc74fa738594a502c2927edc08fab851
 M
 presentation/build.gradle.kts,b/b/bbb5f5d9acc7530bc591aed4f71c56457464aa34
 é

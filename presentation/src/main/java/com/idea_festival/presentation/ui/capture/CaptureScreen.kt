@@ -27,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -55,6 +54,9 @@ fun CaptureRoute(
         viewModel = viewModel,
         onTakePictureFinish = onTakePictureFinish,
         onBackClick = onBackClick,
+        onInquiryCapture = {
+
+        }
     )
 }
 
@@ -63,6 +65,7 @@ fun CaptureScreen(
     viewModel: CameraViewModel,
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
+    onInquiryCapture: (ByteArray) -> Unit,
 ) {
     val imageArray: MutableList<Bitmap>? = mutableListOf()
     val context = LocalContext.current
@@ -72,7 +75,7 @@ fun CaptureScreen(
 
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
 
-    var onCaptured = remember { mutableStateOf(false) }
+    var onCaptured by remember { mutableStateOf(false) }
 
     CheckPermission(context = context, viewModel = viewModel)
 
@@ -89,25 +92,25 @@ fun CaptureScreen(
                     if (countdownValue == 0) {
                         countdownValue = 10
                         --leftoverPictureValue
-                        onCaptured.value = true
+                        onCaptured = true
                     }
                 } else if(leftoverPictureValue == 0) {
                     onTakePictureFinish()
                 }
-                onCaptured.value = false
+                onCaptured = false
             }
 
             CameraPreview(
                 context = context,
                 onPhotoCaptured = { captured ->
                     if (captured && viewModel.isInquiry.value) {
-                     //   onInquiryCapture(viewModel.swapBitmapToJpeg())
-                    } else if (onCaptured.value) {
+                        onInquiryCapture(viewModel.swapBitmapToJpeg())
+                    } else if (onCaptured) {
                         lastCapturedPhoto.value?.let { imageArray?.add(it) }
                     }
                 },
                 onPhotoCapturedData = viewModel::loadImgBitmap,
-                onCaptured = onCaptured.value
+                onCaptured = onCaptured
             )
 
             Row(
