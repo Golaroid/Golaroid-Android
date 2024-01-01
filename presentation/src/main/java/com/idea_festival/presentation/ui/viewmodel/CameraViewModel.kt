@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.util.Log
+import androidx.camera.core.CameraSelector
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -37,6 +39,8 @@ class CameraViewModel @Inject constructor(
     private val uploadImageWithCodeUseCase: UploadImageWithCodeUseCase,
 ) : ViewModel() {
 
+    val _facing = MutableStateFlow(CameraSelector.LENS_FACING_BACK)
+
     private val _capturedImgBitmapState = MutableStateFlow(CaptureState())
     val captureImgBitmapState = _capturedImgBitmapState.asStateFlow()
 
@@ -59,7 +63,6 @@ class CameraViewModel @Inject constructor(
             _capturedImgBitmapState.value = _capturedImgBitmapState.value.copy(capturedImage = bitmap)
         }
     }
-
 
     fun getMultipartFile(context: Context, isDefault: Boolean): MultipartBody.Part {
         val fileName = "capturedImage.jpg"
@@ -130,6 +133,15 @@ class CameraViewModel @Inject constructor(
         drawable.draw(canvas)
 
         return bitmap
+    }
+
+    fun toggleCameraFacing() {
+        Log.e("스위칭", "스위치 함수 실행")
+        if (_facing.value == CameraSelector.LENS_FACING_BACK) {
+            _facing.value = CameraSelector.LENS_FACING_FRONT
+        } else {
+            _facing.value = CameraSelector.LENS_FACING_BACK
+        }
     }
 
 

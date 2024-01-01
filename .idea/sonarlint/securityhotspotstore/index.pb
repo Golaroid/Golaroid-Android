@@ -21,8 +21,6 @@ npresentation/src/main/java/com/idea_festival/presentation/ui/issued_code/naviga
 wpresentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/InputInformationNavigation.kt,c/e/ce1c2a626513302937150718f71f95c0561dbc22
 ¨
 |presentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/UploadingImageSuccessNavigation.kt,a/a/aa592afa960f4417a0f148e9b398efb0817d7c37
-ù
-mpresentation/src/main/java/com/idea_festival/presentation/ui/select_image/navigation/SelectImageNavigation.kt,f/2/f271036a34b043e25f9025ae4f2c95ec770b93c3
 î
 dpresentation/src/main/java/com/idea_festival/presentation/ui/main/navigation/TodayImageNavigation.kt,1/e/1ea80b5323a1ec629749fe4c8385b901bfda63d9
 ü
@@ -52,8 +50,6 @@ G
 î
 dpresentation/src/main/java/com/idea_festival/presentation/ui/capture/component/NoPermissionScreen.kt,8/2/822de2d5e2eb9edb5eb81ccabc3ee070fd657ae0
 é
-^presentation/src/main/java/com/idea_festival/presentation/ui/select_image/SelectImageScreen.kt,b/7/b7af281cbd6de7c5ce4b7229d3516a4c5f3ec321
-é
 ^presentation/src/main/java/com/idea_festival/presentation/ui/select_frame/SelectFrameScreen.kt,6/5/65df777085176e027b12b230453236e83830bcee
 ù
 mpresentation/src/main/java/com/idea_festival/presentation/ui/select_frame/navigation/SelectFrameNavigation.kt,3/e/3e83988345b45b805e90e9d6882f44d6b7ee5887
@@ -65,8 +61,6 @@ _presentation/src/main/java/com/idea_festival/presentation/ui/select_frame/Print
 Ppresentation/src/main/java/com/idea_festival/presentation/ui/GolaroidAppState.kt,8/9/893f15520a3a02025873cf2d3df2cd46e287d32f
 T
 $buildSrc/src/main/java/Dependency.kt,0/5/05e18f13e16e2ae760966dac11c3d26643594bdc
-P
- app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 Ü
 Vdesign-system/src/main/java/com/idea_festival/design_system/component/button/Button.kt,3/c/3cef0c24dc9edb94af72a2b85a315803b91eadcb
 Ü

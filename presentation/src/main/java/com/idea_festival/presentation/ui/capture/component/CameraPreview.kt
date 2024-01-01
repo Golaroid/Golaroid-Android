@@ -2,13 +2,18 @@ package com.idea_festival.presentation.ui.capture.component
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.LinearLayout
+import androidx.camera.core.CameraSelector
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -17,8 +22,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.LifecycleOwner
+import com.idea_festival.design_system.component.icon.SwitchCameraIcon
 import com.idea_festival.presentation.ui.util.capturePhoto
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import java.io.File
@@ -38,6 +45,7 @@ fun CameraPreview(
         Scaffold(
             modifier = Modifier.fillMaxSize(),
         ) { innerPadding: PaddingValues ->
+            Log.e("captureTest", onCaptured.toString())
             if (onCaptured) {
                 capturePhoto(
                     context = context,

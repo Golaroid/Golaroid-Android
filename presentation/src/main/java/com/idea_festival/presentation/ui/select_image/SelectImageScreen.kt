@@ -1,5 +1,7 @@
 package com.idea_festival.presentation.ui.select_image
 
+import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -24,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.component.image.ChooseImage
@@ -32,17 +35,21 @@ import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
 fun SelectImageRoute(
-    onNextButtonClick:() -> Unit
+    onNextButtonClick: () -> Unit,
+    imageArray: MutableList<Bitmap>?,
 ) {
-    SelectImageScreen (
-        onNextButtonClick = onNextButtonClick
+    SelectImageScreen(
+        onNextButtonClick = onNextButtonClick,
+        imageArray = imageArray
     )
 
 }
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SelectImageScreen(
-    onNextButtonClick:() -> Unit
+    onNextButtonClick: () -> Unit,
+    imageArray: MutableList<Bitmap>? = null,
 ) {
     val state = rememberPagerState {
         8
@@ -89,8 +96,10 @@ fun SelectImageScreen(
                 state = state,
                 contentPadding = PaddingValues(horizontal = 40.dp)
             ) { page ->
+                Log.e("imageArray", imageArray.toString())
                 ChooseImage(
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    image = imageArray?.get(page)
                 )
             }
 
@@ -109,10 +118,10 @@ fun SelectImageScreen(
     }
 }
 
-@Preview
-@Composable
-fun SelectImageScreenPre() {
-    SelectImageScreen(
-        onNextButtonClick = {}
-    )
-}
+//@Preview
+//@Composable
+//fun SelectImageScreenPre() {
+//    SelectImageScreen(
+//        onNextButtonClick = {}
+//    )
+//}

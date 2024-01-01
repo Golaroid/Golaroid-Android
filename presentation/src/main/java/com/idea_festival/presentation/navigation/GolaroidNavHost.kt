@@ -1,5 +1,6 @@
 package com.idea_festival.presentation.navigation
 
+import android.graphics.Bitmap
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -78,7 +79,8 @@ fun GolaroidNavHost(
         )
 
         selectImageScreen(
-            onNextButtonClick = navController::navigateToSelectFrame
+            onNextButtonClick = navController::navigateToSelectFrame,
+            imageArray = navController.currentBackStackEntry?.arguments?.get("imageArray") as? MutableList<Bitmap>
         )
 
         selectFrameScreen(

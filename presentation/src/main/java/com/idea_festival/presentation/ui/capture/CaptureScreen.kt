@@ -1,12 +1,8 @@
 package com.idea_festival.presentation.ui.capture
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
 import android.util.Log
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,20 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
+import com.idea_festival.design_system.component.icon.SwitchCameraIcon
 import com.idea_festival.design_system.component.icon.WhiteCircleIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.presentation.ui.capture.component.CameraPreview
 import com.idea_festival.presentation.ui.capture.component.CheckPermission
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 import kotlinx.coroutines.delay
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.concurrent.Executor
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 
 @Composable
@@ -49,13 +40,16 @@ fun CaptureRoute(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
     viewModel: CameraViewModel = hiltViewModel(),
+    onInquiryCapture: (ByteArray) -> Unit
 ) {
+    val navController = rememberNavController()
+
     CaptureScreen(
         viewModel = viewModel,
         onTakePictureFinish = onTakePictureFinish,
         onBackClick = onBackClick,
-        onInquiryCapture = {
-
+        onInquiryCapture = { imageArray ->
+            navController.navigate(route = "selectImageRoute/image{$imageArray}")
         }
     )
 }
@@ -70,7 +64,7 @@ fun CaptureScreen(
     val imageArray: MutableList<Bitmap>? = mutableListOf()
     val context = LocalContext.current
 
-    var countdownValue by remember { mutableIntStateOf(10) }
+    var countdownValue by remember { mutableIntStateOf(2) }
     var leftoverPictureValue by remember { mutableIntStateOf(8) }
 
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
@@ -90,28 +84,28 @@ fun CaptureScreen(
                     --countdownValue
 
                     if (countdownValue == 0) {
-                        countdownValue = 10
+                        countdownValue = 2
                         --leftoverPictureValue
                         onCaptured = true
                     }
-                } else if(leftoverPictureValue == 0) {
+                } else if (leftoverPictureValue == 0) {
                     onTakePictureFinish()
                 }
-                onCaptured = false
             }
 
             CameraPreview(
                 context = context,
-                onPhotoCaptured = { captured ->
-                    if (captured && viewModel.isInquiry.value) {
-                        onInquiryCapture(viewModel.swapBitmapToJpeg())
-                    } else if (onCaptured) {
-                        lastCapturedPhoto.value?.let { imageArray?.add(it) }
-                    }
+                onPhotoCapturedData = {
+                    viewModel.loadImgBitmap(it)
+                    lastCapturedPhoto.value = it
                 },
-                onPhotoCapturedData = viewModel::loadImgBitmap,
-                onCaptured = onCaptured
+                onPhotoCaptured = { captured ->
+                    onCaptured = false
+                    lastCapturedPhoto.value?.let { imageArray?.add(it) }
+                },
+                onCaptured = onCaptured,
             )
+
 
             Row(
                 modifier = Modifier
@@ -119,6 +113,18 @@ fun CaptureScreen(
                     .fillMaxWidth()
                     .align(Alignment.TopCenter)
             ) {
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                SwitchCameraIcon(
+                    modifier = Modifier
+                        .clickable {
+                            viewModel.toggleCameraFacing()
+                        }
+                        .width(24.dp)
+                        .height(24.dp)
+                )
+
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     text = "남은 사진 ${leftoverPictureValue}개",
