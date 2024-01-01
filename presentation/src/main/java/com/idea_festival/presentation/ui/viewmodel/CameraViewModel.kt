@@ -1,19 +1,25 @@
 package com.idea_festival.presentation.ui.viewmodel
 
+import com.idea_festival.golaroid_android.design_system.R
+import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.idea_festival.domain.model.image.ImageResponseModel
 import com.idea_festival.domain.model.image.ImageUploadRequestModel
 import com.idea_festival.domain.model.image.ImageUploadWithCodeRequestModel
 import com.idea_festival.domain.usecase.image.UploadImageUseCase
 import com.idea_festival.domain.usecase.image.UploadImageWithCodeUseCase
-import com.idea_festival.presentation.ui.capture.CameraState
+import com.idea_festival.presentation.ui.capture.CaptureState
 import com.idea_festival.presentation.ui.util.Event
+import com.idea_festival.presentation.ui.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,44 +34,53 @@ import javax.inject.Inject
 @HiltViewModel
 class CameraViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
-    private val uploadImageWithCodeUseCase: UploadImageWithCodeUseCase
+    private val uploadImageWithCodeUseCase: UploadImageWithCodeUseCase,
 ) : ViewModel() {
-    private val _capturedImgBitmapState = MutableStateFlow(CameraState())
+
+    private val _capturedImgBitmapState = MutableStateFlow(CaptureState())
     val captureImgBitmapState = _capturedImgBitmapState.asStateFlow()
 
-    private val _uploadImageRequest = MutableLiveData<Event<>>()
-    val uploadImageRequest: LiveData<Event>
+    private val _defaultImageBitmap = MutableStateFlow(CaptureState())
+    val defaultImageBitmap = _defaultImageBitmap.asStateFlow()
+
+
+    private val _uploadImageRequest = MutableLiveData<Event<ImageResponseModel>>()
+    val uploadImageRequest: LiveData<Event<ImageResponseModel>> get() = _uploadImageRequest
+
+
+    private val _uploadImageWithRequest = MutableLiveData<Event<ImageResponseModel>>()
+    val uploadImageWithRequest: LiveData<Event<ImageResponseModel>> get() = _uploadImageWithRequest
+
     var isInquiry = mutableStateOf(false)
 
-    fun loadImgBitmap(bitmap: Bitmap) = viewModelScope.launch {
-        _capturedImgBitmapState.value.capturedImage?.recycle()
-        _capturedImgBitmapState.value = _capturedImgBitmapState.value.copy(capturedImage = bitmap)
-    }
-
-    fun getBitmap(): ImageBitmap? {
-        (captureImgBitmapState.value.capturedImage?.asImageBitmap() ?: null)?.let {
-            return it
+    fun loadImgBitmap(bitmap: Bitmap){
+        viewModelScope.launch {
+            _capturedImgBitmapState.value.capturedImage?.recycle()
+            _capturedImgBitmapState.value = _capturedImgBitmapState.value.copy(capturedImage = bitmap)
         }
-        return null
     }
 
-    fun getMultipartFile(): MultipartBody.Part {
+
+    fun getMultipartFile(context: Context, isDefault: Boolean): MultipartBody.Part {
         val fileName = "capturedImage.jpg"
         val mediaType = "image/jpeg"
-        val byteArray = swapBitmapToJpegWithMultipartFile().toRequestBody(mediaType.toMediaType())
+        val byteArray = if (isDefault) {
+            _defaultImageBitmap.value.capturedImage?.recycle()
+            _defaultImageBitmap.value = _defaultImageBitmap.value.copy(
+                capturedImage = getBitmapFromDrawableResourceId(
+                    context = context,
+                    drawableResId = R.drawable.ic_logo
 
-        return MultipartBody.Part.createFormData("recyclables", fileName, byteArray)
+                )
+            )
+            swapBitmapToJpegWithMultipartFile(true).toRequestBody(mediaType.toMediaType())
+        } else {
+            swapBitmapToJpegWithMultipartFile(false).toRequestBody(mediaType.toMediaType())
+        }
+
+        return MultipartBody.Part.createFormData("golaroid", fileName, byteArray)
     }
 
-    private fun swapBitmapToJpegWithMultipartFile(): ByteArray {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-
-        val swapBitmap = _capturedImgBitmapState.value.capturedImage
-
-        swapBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-
-        return byteArrayOutputStream.toByteArray()
-    }
 
     fun swapBitmapToJpeg(): ByteArray {
         val byteArrayOutputStream = ByteArrayOutputStream()
@@ -77,23 +92,72 @@ class CameraViewModel @Inject constructor(
         return byteArrayOutputStream.toByteArray()
     }
 
-    fun uploadImage(body: ImageUploadRequestModel) = viewModelScope.launch {
-            uploadImageUseCase(
-                body = body
-            ).onSuccess {
-                it.catch { remoteError ->
 
-                }
+    private fun swapBitmapToJpegWithMultipartFile(isDefault: Boolean): ByteArray {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+
+        val swapBitmap = if (isDefault) {
+            _defaultImageBitmap.value.capturedImage
+        } else {
+            _capturedImgBitmapState.value.capturedImage
+        }
+
+        swapBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+
+        return byteArrayOutputStream.toByteArray()
+    }
+
+    private fun getBitmapFromDrawableResourceId(context: Context, drawableResId: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(context, drawableResId)
+            ?: throw IllegalArgumentException("Invalid drawable resource ID")
+
+        return drawableToBitmap(drawable)
+    }
+
+
+    private fun drawableToBitmap(drawable: Drawable): Bitmap {
+        if (drawable is BitmapDrawable) {
+            return drawable.bitmap
+        }
+
+        val bitmap = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+
+        return bitmap
+    }
+
+
+    fun uploadImage(body: ImageUploadRequestModel) = viewModelScope.launch {
+        uploadImageUseCase(
+            body = body
+        ).onSuccess {
+            it.catch { remoteError ->
+                _uploadImageRequest.value = remoteError.errorHandling()
+            }.collect { response ->
+                _uploadImageRequest.value = Event.Success(data = response)
             }
+        }.onFailure {
+            _uploadImageRequest.value = it.errorHandling()
+        }
     }
 
     fun uploadImageWithCode(body: ImageUploadWithCodeRequestModel) = viewModelScope.launch {
-        val multipartFile = getMultipartFile()
-
-        try {
-            uploadImageWithCodeUseCase()
-        } catch (e: Exception) {
-            e.printStackTrace()
+        uploadImageWithCodeUseCase(
+            body = body
+        ).onSuccess {
+            it.catch { remoteError ->
+                _uploadImageWithRequest.value = remoteError.errorHandling()
+            }.collect { response ->
+                _uploadImageWithRequest.value = Event.Success(data = response)
+            }
+        }.onFailure {
+            _uploadImageWithRequest.value = it.errorHandling()
         }
     }
 }
