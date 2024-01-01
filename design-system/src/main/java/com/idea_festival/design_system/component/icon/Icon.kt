@@ -165,3 +165,14 @@ fun CutPurpleStickIcon(
         modifier = modifier
     )
 }
+
+@Composable
+fun SwitchCameraIcon(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.ic_switch_camera),
+        contentDescription = "",
+        modifier = modifier
+    )
+}
