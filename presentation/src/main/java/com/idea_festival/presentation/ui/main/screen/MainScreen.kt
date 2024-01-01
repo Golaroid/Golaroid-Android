@@ -10,10 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -31,9 +31,11 @@ import com.idea_festival.design_system.component.icon.StarfishStarIcon
 import com.idea_festival.design_system.component.textfield.GolaroidTextField
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.design_system.theme.pretendard
+import com.idea_festival.domain.model.post.GetPostResponseModel
+import com.idea_festival.presentation.ui.main.component.AutoScrollingLazyRow
 import com.idea_festival.presentation.ui.main.component.GolaroidLogo
-import com.idea_festival.presentation.ui.main.component.PictureLazyRow
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
+import com.idea_festival.presentation.ui.viewmodel.util.Event
 
 @Composable
 fun MainRoute(
@@ -42,18 +44,47 @@ fun MainRoute(
     onImageClick: () -> Unit,
     postViewModel: PostViewModel = hiltViewModel(),
 ) {
+    postViewModel.getPostList()
+    LaunchedEffect(key1 = true) {
+        getPostList(
+            viewModel = postViewModel,
+            onSuccess = {
+                postViewModel.postList.value = it
+            }
+        )
+    }
     MainScreen(
         onTakePictureButtonClick = onTakePictureButtonClick,
         onSearchButtonClick = onSearchButtonClick,
-        onImageClick = onImageClick
+        onImageClick = {
+            onImageClick()
+            postViewModel.getDetailPostList(it)
+        },
+        items = postViewModel.postList.value!!
     )
+}
+
+suspend fun getPostList(
+    viewModel: PostViewModel,
+    onSuccess: (data: GetPostResponseModel) -> Unit
+) {
+    viewModel.getPostResponse.collect { response ->
+        when (response) {
+            is Event.Success -> {
+                onSuccess(response.data!!)
+            }
+
+            else -> {}
+        }
+    }
 }
 
 @Composable
 fun MainScreen(
     onTakePictureButtonClick: () -> Unit,
     onSearchButtonClick: () -> Unit,
-    onImageClick: () -> Unit,
+    onImageClick: (String) -> Unit,
+    items: GetPostResponseModel
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
@@ -183,7 +214,10 @@ fun MainScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            PictureLazyRow()
+            AutoScrollingLazyRow(
+                list = items.post,
+                itemClicked = onImageClick
+            )
 
             Spacer(modifier = Modifier.height(21.dp))
 
@@ -228,6 +262,16 @@ fun MainScreenPre() {
     MainScreen(
         onTakePictureButtonClick = {},
         onSearchButtonClick = {},
-        onImageClick = {}
+        onImageClick = {},
+        items = GetPostResponseModel(
+            post = listOf(
+                GetPostResponseModel.Post(
+                    id = 1341513L,
+                    writer = "채종인",
+                    code = "A368SF",
+                    imageUrl = ""
+                )
+            )
+        )
     )
 }

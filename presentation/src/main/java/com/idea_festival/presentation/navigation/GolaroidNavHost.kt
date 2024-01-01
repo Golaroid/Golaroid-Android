@@ -16,6 +16,7 @@ import com.idea_festival.presentation.ui.issued_code.navigation.revealPictureScr
 import com.idea_festival.presentation.ui.main.navigation.mainRoute
 import com.idea_festival.presentation.ui.main.navigation.mainScreen
 import com.idea_festival.presentation.ui.main.navigation.navigateToMain
+import com.idea_festival.presentation.ui.main.navigation.navigateToTodayImage
 import com.idea_festival.presentation.ui.search_result.navigation.existCodeScreen
 import com.idea_festival.presentation.ui.search_result.navigation.navigateToExistCode
 import com.idea_festival.presentation.ui.search_result.navigation.noExistCodeScreen
@@ -41,7 +42,7 @@ fun GolaroidNavHost(
         mainScreen(
             onTakePictureButtonClick = navController::navigateToCapture,
             onSearchButtonClick = navController::navigateToExistCode,
-            onImageClick = {}
+            onImageClick = navController::navigateToTodayImage
         )
 
         captureScreen(
