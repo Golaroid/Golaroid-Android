@@ -64,6 +64,10 @@ dependencies {
     debugImplementation(Dependency.Compose.COMPOSE_TOOLING)
     debugImplementation(Dependency.Test.COMPOSE_MANIFEST)
     implementation(Dependency.Lottie.LOTTIE_COMPOSE)
+    implementation(Dependency.CamPoser.CAMPOSER)
+    implementation("androidx.camera:camera-camera2:1.4.0-alpha02")
+    implementation("androidx.camera:camera-lifecycle:1.4.0-alpha02")
+    implementation ("androidx.camera:camera-view:1.4.0-alpha02")
 
     implementation(Dependency.Libraries.COIL)
     implementation(Dependency.Libraries.COIL_GIF)

@@ -250,7 +250,7 @@ fun MainScreen(
                 onTakePictureButtonClick()
             }
 
-            Spacer(modifier = Modifier.height(36.dp))
+            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }

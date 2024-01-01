@@ -23,10 +23,14 @@ object Dependency {
             "androidx.compose.material:material:${Versions.COMPOSE_MATERIAL}"
         const val COMPOSE_MATERIAL3 =
             "androidx.compose.material3:material3:${Versions.COMPOSE_MATERIAL3}"
+        const val COMPOSE_VIEWMODEl = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.COMPOSE}"
         const val COMPOSE_TOOLING = "androidx.compose.ui:ui-tooling:${Versions.COMPOSE}"
         const val COMPOSE_WINDOW_SIZE_CLASS = "androidx.compose.material3:material3-window-size-class-android:1.2.0-beta01"
     }
 
+    object CamPoser {
+        const val CAMPOSER = "io.github.ujizin:camposer:0.1.0"
+    }
     object Google {
         const val MATERIAL = "com.google.android.material:material:${Versions.MATERIAL}"
 

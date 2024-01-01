@@ -1,5 +1,6 @@
 package com.idea_festival.presentation.ui.select_image.navigation
 
+import android.graphics.Bitmap
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -13,11 +14,13 @@ fun NavController.navigateToSelectImage(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.selectImageScreen(
-    onNextButtonClick:() -> Unit
+    onNextButtonClick:() -> Unit,
+    imageArray: MutableList<Bitmap>? = null
 ) {
     composable(route = selectImageRoute) {
         SelectImageRoute(
-            onNextButtonClick = onNextButtonClick
+            onNextButtonClick = onNextButtonClick,
+            imageArray = imageArray
         )
     }
 }

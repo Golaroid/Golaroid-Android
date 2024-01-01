@@ -1,5 +1,6 @@
 package com.idea_festival.design_system.component.image
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,7 +24,8 @@ import com.idea_festival.golaroid_android.design_system.R
 
 @Composable
 fun ChooseImage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    image: Bitmap? = null
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Box(
@@ -30,14 +33,16 @@ fun ChooseImage(
                 .width(280.dp)
                 .height(460.dp)
         ) {
-            Image(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(RoundedCornerShape(10.dp)),
-                painter = painterResource(id = R.drawable.test_image),
-                contentDescription = "test image",
-                contentScale = ContentScale.Crop
-            )
+            if (image != null) {
+                Image(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(10.dp)),
+                    bitmap = image.asImageBitmap(),
+                    contentDescription = "Selected image",
+                    contentScale = ContentScale.Crop
+                )
+            }
 
             IconButton(
                 onClick = { },
@@ -48,6 +53,7 @@ fun ChooseImage(
         }
     }
 }
+
 
 @Preview
 @Composable
