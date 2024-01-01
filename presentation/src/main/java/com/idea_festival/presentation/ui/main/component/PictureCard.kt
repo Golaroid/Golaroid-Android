@@ -2,6 +2,7 @@ package com.idea_festival.presentation.ui.main.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,21 +23,27 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.domain.model.post.GetPostResponseModel
 import com.idea_festival.golaroid_android.presentation.R
 
 @Composable
-fun PictureCard() {
+fun PictureCard(
+    data: GetPostResponseModel.Post,
+    onClick: (String) -> Unit
+) {
     GolaroidAndroidTheme { colors, typography ->
         Box(
             modifier = Modifier
                 .width(140.dp)
                 .height(180.dp)
+                .clickable(onClick = { onClick(data.code) })
         ) {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .clip(RoundedCornerShape(10.dp)),
-                painter = painterResource(id = com.idea_festival.golaroid_android.design_system.R.drawable.test_image),
+                model = data.imageUrl,
                 contentDescription = "test image",
                 contentScale = ContentScale.Crop
             )
@@ -48,7 +55,9 @@ fun PictureCard() {
                     modifier = Modifier
                         .fillMaxHeight()
                         .fillMaxWidth()
-                        .padding(top = 148.dp, start = 42.dp, bottom = 6.dp, end = 6.dp)
+                        .padding(top = 148.dp, start = 42.dp, bottom = 6.dp, end = 6.dp),
+                    writer = data.writer,
+                    code = data.code
                 )
             }
         }
@@ -58,5 +67,13 @@ fun PictureCard() {
 @Preview
 @Composable
 fun PictureCardPre() {
-    PictureCard()
+    PictureCard(
+        data = GetPostResponseModel.Post(
+            id = 1493853L,
+            writer = "채종인",
+            code = "F239AS",
+            imageUrl = ""
+        ),
+        onClick = {}
+    )
 }
