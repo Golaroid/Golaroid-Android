@@ -47,7 +47,7 @@ fun GolaroidNavHost(
 
         captureScreen(
             onBackClick = navController::popBackStack,
-            onTakePictureFinish = navController::navigateToIssuedCode
+            onTakePictureFinish = navController::navigateToRevealPicture
         )
 
         existCodeScreen(
@@ -70,7 +70,7 @@ fun GolaroidNavHost(
         )
 
         inputInformationScreen(
-            onNextButtonClick = navController::navigateToUploadImageSuccess
+            onNextButtonClick = navController::navigateToSelectImage
         )
 
         uploadImageSuccessScreen(
@@ -82,8 +82,12 @@ fun GolaroidNavHost(
         )
 
         selectFrameScreen(
-            onNextButtonClick = navController::navigateToMain,
+            onNextButtonClick = navController::navigateToUploadImageSuccess,
             onPrintButtonClick = navController::navigateToPrintSuccess
+        )
+
+        uploadImageSuccessScreen(
+            onCheckButtonClick = navController::navigateToMain
         )
     }
 }
