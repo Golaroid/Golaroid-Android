@@ -1,5 +1,6 @@
 package com.idea_festival.presentation.navigation
 
+import android.graphics.Bitmap
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -11,6 +12,7 @@ import com.idea_festival.presentation.ui.input_information.navigation.navigateTo
 import com.idea_festival.presentation.ui.input_information.navigation.navigateToUploadImageSuccess
 import com.idea_festival.presentation.ui.input_information.navigation.uploadImageSuccessScreen
 import com.idea_festival.presentation.ui.issued_code.navigation.issuedCodeScreen
+import com.idea_festival.presentation.ui.issued_code.navigation.navigateToIssuedCode
 import com.idea_festival.presentation.ui.issued_code.navigation.navigateToRevealPicture
 import com.idea_festival.presentation.ui.issued_code.navigation.revealPictureScreen
 import com.idea_festival.presentation.ui.main.navigation.mainRoute
@@ -45,7 +47,8 @@ fun GolaroidNavHost(
         )
 
         captureScreen(
-            onBackClick = navController::popBackStack
+            onBackClick = navController::popBackStack,
+            onTakePictureFinish = navController::navigateToRevealPicture
         )
 
         existCodeScreen(
@@ -68,7 +71,7 @@ fun GolaroidNavHost(
         )
 
         inputInformationScreen(
-            onNextButtonClick = navController::navigateToUploadImageSuccess
+            onNextButtonClick = navController::navigateToSelectImage
         )
 
         uploadImageSuccessScreen(
@@ -76,12 +79,17 @@ fun GolaroidNavHost(
         )
 
         selectImageScreen(
-            onNextButtonClick = navController::navigateToSelectFrame
+            onNextButtonClick = navController::navigateToSelectFrame,
+            imageArray = navController.currentBackStackEntry?.arguments?.get("imageArray") as? MutableList<Bitmap>
         )
 
         selectFrameScreen(
-            onNextButtonClick = navController::navigateToMain,
+            onNextButtonClick = navController::navigateToUploadImageSuccess,
             onPrintButtonClick = navController::navigateToPrintSuccess
+        )
+
+        uploadImageSuccessScreen(
+            onCheckButtonClick = navController::navigateToMain
         )
     }
 }
