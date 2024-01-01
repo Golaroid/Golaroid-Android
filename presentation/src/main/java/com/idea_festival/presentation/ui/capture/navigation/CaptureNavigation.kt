@@ -22,7 +22,8 @@ fun NavGraphBuilder.captureScreen(
     composable(route = captureRoute) {
         CaptureRoute(
             onBackClick = onBackClick,
-            onTakePictureFinish = onTakePictureFinish
+            onTakePictureFinish = onTakePictureFinish,
+            onInquiryCapture = {}
         )
     }
 }
