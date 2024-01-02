@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,24 +23,70 @@ import com.idea_festival.design_system.component.icon.ClipboardIcon
 import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.domain.model.post.GetDetailPostResponseModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
+import com.idea_festival.presentation.ui.viewmodel.util.Event
 
 @Composable
 fun ExistCodeRoute(
     onTakePictureButtonClick: () -> Unit,
     onBackClick: () -> Unit,
+    onNotFound: () -> Unit,
     postViewModel: PostViewModel
 ) {
-    ExistCodeScreen(
-        onTakePictureButtonClick = onTakePictureButtonClick,
-        onBackClick = onBackClick
-    )
+    val status = remember{ mutableStateOf(false) }
+    LaunchedEffect(true) {
+        getPost(
+            viewModel = postViewModel,
+            onSuccess = {
+                postViewModel.post.value = it
+            },
+            onNotFound = onNotFound,
+            onFinished = {
+                status.value = it
+            }
+        )
+    }
+    if (status.value) {
+        postViewModel.withCode.value = true
+        ExistCodeScreen(
+            onTakePictureButtonClick = onTakePictureButtonClick,
+            onBackClick = onBackClick,
+            code = postViewModel.savedCode.value,
+            writer = postViewModel.post.value.writer
+        )
+    }
+}
+
+suspend fun getPost(
+    viewModel: PostViewModel,
+    onSuccess: (data: GetDetailPostResponseModel) -> Unit,
+    onNotFound: () -> Unit,
+    onFinished: (isSuccess: Boolean) -> Unit
+) {
+    viewModel.getDetailPostResponse.collect { response ->
+        when (response) {
+            is Event.Success -> {
+                onSuccess(response.data!!)
+                onFinished(true)
+            }
+            is Event.NotFound -> {
+                onNotFound()
+                onFinished(false)
+            }
+            else -> {
+                onFinished(false)
+            }
+        }
+    }
 }
 
 @Composable
 fun ExistCodeScreen(
     onTakePictureButtonClick: () -> Unit,
     onBackClick: () -> Unit,
+    code: String,
+    writer: String
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
@@ -63,7 +112,7 @@ fun ExistCodeScreen(
                 Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                    text = "F14GH",
+                    text = code,
                     style = typography.headlineSmall,
                     color = colors.WHITE,
                 )
@@ -79,7 +128,7 @@ fun ExistCodeScreen(
             Spacer(modifier = Modifier.height(151.dp))
 
             Text(
-                text = "윤태빈님과",
+                text = "${writer}님과",
                 style = typography.headlineMedium,
                 color = colors.WHITE,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -112,6 +161,8 @@ fun ExistCodeScreen(
 fun ExistCodeScreenPre() {
     ExistCodeScreen(
         onTakePictureButtonClick = {},
-        onBackClick = {}
+        onBackClick = {},
+        code = "",
+        writer = ""
     )
 }
