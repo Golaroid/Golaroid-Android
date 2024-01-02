@@ -24,6 +24,7 @@ import com.idea_festival.presentation.ui.util.Event
 import com.idea_festival.presentation.ui.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -57,7 +58,14 @@ class CameraViewModel @Inject constructor(
 
     var isInquiry = mutableStateOf(false)
 
-    fun loadImgBitmap(bitmap: Bitmap){
+    private val _imageArray = MutableStateFlow<MutableList<Bitmap>>(mutableListOf())
+    val imageArray: StateFlow<MutableList<Bitmap>> get() = _imageArray
+
+    fun setImageArray(imageArray: MutableList<Bitmap>) {
+        _imageArray.value = imageArray
+    }
+
+    fun loadImgBitmap(bitmap: Bitmap) {
         viewModelScope.launch {
             _capturedImgBitmapState.value.capturedImage?.recycle()
             _capturedImgBitmapState.value = _capturedImgBitmapState.value.copy(capturedImage = bitmap)

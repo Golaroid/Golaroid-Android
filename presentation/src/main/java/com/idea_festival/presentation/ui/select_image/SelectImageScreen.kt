@@ -15,22 +15,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.TopAppBar
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
 import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.component.image.ChooseImage
-import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
@@ -49,7 +43,7 @@ fun SelectImageRoute(
 @Composable
 fun SelectImageScreen(
     onNextButtonClick: () -> Unit,
-    imageArray: MutableList<Bitmap>? = null,
+    imageArray: List<Bitmap>? = null,
 ) {
     val state = rememberPagerState {
         8

@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -40,16 +41,15 @@ fun CaptureRoute(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
     viewModel: CameraViewModel = hiltViewModel(),
-    onInquiryCapture: (ByteArray) -> Unit
+    onInquiryCapture: (imageArray: MutableList<Bitmap>) -> Unit,
 ) {
-    val navController = rememberNavController()
-
     CaptureScreen(
         viewModel = viewModel,
         onTakePictureFinish = onTakePictureFinish,
         onBackClick = onBackClick,
         onInquiryCapture = { imageArray ->
-            navController.navigate(route = "selectImageRoute/image{$imageArray}")
+            viewModel.setImageArray(imageArray)
+            onInquiryCapture(imageArray)
         }
     )
 }
@@ -59,9 +59,9 @@ fun CaptureScreen(
     viewModel: CameraViewModel,
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
-    onInquiryCapture: (ByteArray) -> Unit,
+    onInquiryCapture: (imageArray: MutableList<Bitmap>) -> Unit,
 ) {
-    val imageArray: MutableList<Bitmap>? = mutableListOf()
+    val imageArray: MutableList<Bitmap> = mutableListOf()
     val context = LocalContext.current
 
     var countdownValue by remember { mutableIntStateOf(2) }
@@ -87,6 +87,9 @@ fun CaptureScreen(
                         countdownValue = 2
                         --leftoverPictureValue
                         onCaptured = true
+                        onInquiryCapture(
+                            imageArray
+                        )
                     }
                 } else if (leftoverPictureValue == 0) {
                     onTakePictureFinish()
