@@ -76,19 +76,6 @@ class CameraViewModel @Inject constructor(
     var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
         private set
 
-    var imageUrl: MutableList<DetailPostData> = mutableListOf()
-
-    fun setImageUrl(imageUrl: List<GetDetailPostResponseModel>) {
-        this.imageUrl.clear()
-        imageUrl.forEach { getDetailPostResponseModel ->
-            val detailPostData = DetailPostData(
-                postId = getDetailPostResponseModel.postId,
-                imageUrl = getDetailPostResponseModel.imageUrl,
-                writer = getDetailPostResponseModel.writer
-            )
-            this.imageUrl.add(detailPostData)
-        }
-    }
 
     fun setImageArray(imageArray: MutableList<Bitmap>) {
         _imageArray.value = imageArray

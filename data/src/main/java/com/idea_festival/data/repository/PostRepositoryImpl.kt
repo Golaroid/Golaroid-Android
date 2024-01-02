@@ -15,9 +15,9 @@ class PostRepositoryImpl @Inject constructor(
     override suspend fun getPost(): Flow<List<PostModel>> =
         dataSource.getPost().map { it -> it.map { it.toModel() } }
 
-    override suspend fun getDetailPost(code: String): Flow<List<GetDetailPostResponseModel>> {
+    override suspend fun getDetailPost(code: String): Flow<GetDetailPostResponseModel> {
         return dataSource.getDetailPost(
             code = code
-        ).map { it -> it.map { it.toModel() } }
+        ).map { it.toModel() }
     }
 }

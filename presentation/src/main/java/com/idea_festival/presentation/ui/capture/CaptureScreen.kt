@@ -37,7 +37,10 @@ import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.domain.model.post.GetDetailPostResponseModel
 import com.idea_festival.presentation.ui.capture.component.CameraPreview
 import com.idea_festival.presentation.ui.capture.component.CheckPermission
+import com.idea_festival.presentation.ui.main.screen.getPost
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
+import com.idea_festival.presentation.ui.viewmodel.util.Event
 import kotlinx.coroutines.delay
 
 
@@ -60,6 +63,10 @@ fun CaptureScreen(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
 ) {
+    val status = remember{ mutableStateOf(false) }
+
+    var postViewModel: PostViewModel = hiltViewModel()
+
     var overlayImageIndex by remember { mutableStateOf(0) }
 
     var lensFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
@@ -98,6 +105,18 @@ fun CaptureScreen(
                 }
             }
 
+            LaunchedEffect(true) {
+                getOverLayImageUrl(
+                    viewModel = postViewModel,
+                    onSuccess = {
+                        postViewModel.post.value = it
+                    },
+                    onFinished = {
+                        status.value = it
+                    }
+                )
+            }
+
             CameraPreview(
                 context = context,
                 onPhotoCapturedData = {
@@ -113,13 +132,14 @@ fun CaptureScreen(
                 onCaptured = onCaptured,
             )
 
-            Image(
-                painter = rememberImagePainter(
-                    data = viewModel.imageUrl.getOrNull(overlayImageIndex)
-                ),
-                contentDescription = null,
-                modifier = Modifier.wrapContentSize()
-            )
+            postViewModel.getDetailPostResponse?.let { imageUrl ->
+                Image(
+                    painter = rememberImagePainter(data = imageUrl),
+                    contentDescription = null,
+                    modifier = Modifier.wrapContentSize()
+
+                )
+            }
 
             Row(
                 modifier = Modifier
@@ -181,6 +201,24 @@ fun CaptureScreen(
                 Spacer(modifier = Modifier.width(16.dp))
             }
 
+        }
+    }
+
+}
+
+suspend fun getOverLayImageUrl(
+    viewModel: PostViewModel,
+    onSuccess: (data: GetDetailPostResponseModel) -> Unit,
+    onFinished: (isSuccess: Boolean) -> Unit
+) {
+    viewModel.getDetailPostResponse.collect { response ->
+        when (response) {
+            is Event.Success -> {
+                onSuccess(response.data!!)
+                onFinished(true)
+            }
+
+            else -> { onFinished(false) }
         }
     }
 }
