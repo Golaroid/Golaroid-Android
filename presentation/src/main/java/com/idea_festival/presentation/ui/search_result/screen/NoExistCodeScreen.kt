@@ -33,14 +33,16 @@ fun NoExistCodeRoute(
 ) {
     NoExistCodeScreen(
         onTakePictureButtonClick = onTakePictureButtonClick,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        code = postViewModel.savedCode.value
     )
 }
 
 @Composable
 fun NoExistCodeScreen(
     onTakePictureButtonClick: () -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    code: String
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
@@ -67,7 +69,7 @@ fun NoExistCodeScreen(
                 Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                    text = "F14GH",
+                    text = code,
                     style = typography.headlineSmall,
                     color = colors.WHITE,
                 )
@@ -117,6 +119,7 @@ fun NoExistCodeScreen(
 fun NoExistCodeScreenPre() {
     NoExistCodeScreen(
         onTakePictureButtonClick = {},
-        onBackClick = {}
+        onBackClick = {},
+        code = ""
     )
 }
