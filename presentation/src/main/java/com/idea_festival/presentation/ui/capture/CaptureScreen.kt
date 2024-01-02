@@ -3,6 +3,7 @@
 package com.idea_festival.presentation.ui.capture
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -59,6 +60,7 @@ fun CaptureScreen(
     var lensFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
 
     val imageArray: MutableList<Bitmap> = mutableListOf()
+
     val context = LocalContext.current
 
     var countdownValue by remember { mutableIntStateOf(2) }

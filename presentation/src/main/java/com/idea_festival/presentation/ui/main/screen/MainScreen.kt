@@ -136,7 +136,8 @@ fun MainScreen(
                         searchCode.value = it
                     }, modifier = Modifier
                         .fillMaxWidth(),
-                    onSearchButtonClick = { onSearchButtonClick(searchCode.value) }
+                    onSearchButtonClick = { onSearchButtonClick(searchCode.value) },
+                    value = searchCode.value
                 )
 
                 Spacer(modifier = Modifier.height(30.dp))
