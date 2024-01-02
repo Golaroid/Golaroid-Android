@@ -1,3 +1,5 @@
+@file:JvmName("CaptureScreenKt")
+
 package com.idea_festival.presentation.ui.capture
 
 import android.graphics.Bitmap
@@ -22,42 +24,34 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.idea_festival.design_system.component.icon.SwitchCameraIcon
 import com.idea_festival.design_system.component.icon.WhiteCircleIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
-import com.idea_festival.domain.model.post.GetDetailPostResponseModel
 import com.idea_festival.presentation.ui.capture.component.CameraPreview
 import com.idea_festival.presentation.ui.capture.component.CheckPermission
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
-import com.idea_festival.presentation.ui.viewmodel.PostViewModel
-import com.idea_festival.presentation.ui.viewmodel.util.Event
 import kotlinx.coroutines.delay
 
 
 @Composable
-fun CaptureWithCodeRoute(
+fun CaptureRoute(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
     cameraViewModel: CameraViewModel,
-    postViewModel: PostViewModel,
 ) {
-    CaptureWithCodeScreen(
+    CaptureScreen(
         viewModel = cameraViewModel,
         onTakePictureFinish = onTakePictureFinish,
         onBackClick = onBackClick,
-        postViewModel = postViewModel,
     )
 }
 
 
 @Composable
-fun CaptureWithCodeScreen(
+fun CaptureScreen(
     viewModel: CameraViewModel,
-    postViewModel: PostViewModel,
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -109,14 +103,6 @@ fun CaptureWithCodeScreen(
                     viewModel.setImageArray(imageArray)
                 },
                 onCaptured = onCaptured,
-            )
-
-            AsyncImage(
-                model = postViewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
             )
 
             Row(

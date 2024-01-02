@@ -15,33 +15,35 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.idea_festival.design_system.component.button.GolaroidButton
-import com.idea_festival.design_system.component.frame.ChristmasFrame
-import com.idea_festival.design_system.component.frame.GolaroidBlackFrame
-import com.idea_festival.design_system.component.frame.GolaroidGrayFrame
-import com.idea_festival.design_system.component.frame.RupeeFrame
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.select_frame.component.WithCodeChristmasFrame
+import com.idea_festival.presentation.ui.select_frame.component.WithCodeGolaroidBlackFrame
+import com.idea_festival.presentation.ui.select_frame.component.WithCodeGolaroidGrayFrame
+import com.idea_festival.presentation.ui.select_frame.component.WithCodeRupeeFrame
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
 @Composable
-fun SelectFrameRoute(
+fun SelectFrameWithCodeRoute(
     onPrintButtonClick: () -> Unit,
     onNextButtonClick: () -> Unit,
-    cameraViewModel: CameraViewModel
+    cameraViewModel: CameraViewModel,
+    postViewModel: PostViewModel
 ) {
     SelectFrameScreen(
         onPrintButtonClick = onPrintButtonClick,
-        onNextButtonClick = onNextButtonClick
+        onNextButtonClick = onNextButtonClick,
     )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SelectFrameScreen(
+fun SelectFrameWithCodeScreen(
     onPrintButtonClick: () -> Unit,
     onNextButtonClick: () -> Unit,
+    postViewModel: PostViewModel
 ) {
     val pagerState = rememberPagerState(pageCount = { 6 })
     GolaroidAndroidTheme { colors, typography ->
@@ -60,13 +62,13 @@ fun SelectFrameScreen(
 
                 when (page) {
 
-                    0 -> ChristmasFrame()
+                    0 -> WithCodeChristmasFrame(viewModel = postViewModel)
 
-                    1 -> RupeeFrame()
+                    1 -> WithCodeRupeeFrame(viewModel = postViewModel)
 
-                    2 -> GolaroidGrayFrame()
+                    2 -> WithCodeGolaroidGrayFrame(viewModel = postViewModel)
 
-                    3 -> GolaroidBlackFrame()
+                    3 -> WithCodeGolaroidBlackFrame(viewModel = postViewModel)
 
                 }
             }
@@ -92,14 +94,4 @@ fun SelectFrameScreen(
             }
         }
     }
-}
-
-
-@Preview
-@Composable
-fun SelectFrameScreenPre() {
-    SelectFrameScreen(
-        onPrintButtonClick = {},
-        onNextButtonClick = {}
-    )
 }

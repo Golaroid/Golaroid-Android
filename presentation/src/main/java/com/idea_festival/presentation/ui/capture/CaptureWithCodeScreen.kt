@@ -36,22 +36,27 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun CaptureRoute(
+fun CaptureWithCodeRoute(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
     cameraViewModel: CameraViewModel,
+    postViewModel: PostViewModel,
 ) {
-    CaptureScreen(
+    cameraViewModel.isPublic.value = null
+
+    CaptureWithCodeScreen(
         viewModel = cameraViewModel,
         onTakePictureFinish = onTakePictureFinish,
         onBackClick = onBackClick,
+        postViewModel = postViewModel,
     )
 }
 
 
 @Composable
-fun CaptureScreen(
+fun CaptureWithCodeScreen(
     viewModel: CameraViewModel,
+    postViewModel: PostViewModel,
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -103,6 +108,14 @@ fun CaptureScreen(
                     viewModel.setImageArray(imageArray)
                 },
                 onCaptured = onCaptured,
+            )
+
+            AsyncImage(
+                model = postViewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
             )
 
             Row(

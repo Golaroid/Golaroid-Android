@@ -29,10 +29,12 @@ import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.presentation.ui.main.component.ChooseImage
+import com.idea_festival.presentation.ui.select_image.component.ChooseImageWithCode
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
 @Composable
-fun SelectImageRoute(
+fun SelectImageWithCodeRoute(
     onNextButtonClick: () -> Unit,
     cameraViewModel: CameraViewModel,
 ) {
@@ -53,9 +55,10 @@ fun SelectImageRoute(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SelectImageScreen(
+fun SelectImageWithCodeScreen(
     onNextButtonClick: (Int) -> Unit,
     imageArray: MutableList<Bitmap>,
+    postViewModel: PostViewModel
 ) {
 
     val state = rememberPagerState {
@@ -105,9 +108,10 @@ fun SelectImageScreen(
                 contentPadding = PaddingValues(horizontal = 40.dp)
             ) { page ->
                 Log.e("imageArray", imageArray.toString())
-                ChooseImage(
+                ChooseImageWithCode(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     image = imageArray?.get(page),
+                    postViewModel = postViewModel
                 )
                 currentPage.value = state.currentPage
             }
@@ -126,11 +130,3 @@ fun SelectImageScreen(
         }
     }
 }
-
-//@Preview
-//@Composable
-//fun SelectImageScreenPre() {
-//    SelectImageScreen(
-//        onNextButtonClick = {}
-//    )
-//}

@@ -28,6 +28,7 @@ import com.idea_festival.presentation.ui.search_result.navigation.noExistCodeScr
 import com.idea_festival.presentation.ui.select_frame.navigation.navigateToPrintSuccess
 import com.idea_festival.presentation.ui.select_frame.navigation.navigateToSelectFrame
 import com.idea_festival.presentation.ui.select_frame.navigation.selectFrameScreen
+import com.idea_festival.presentation.ui.select_frame.navigation.selectFrameWithCodeScreen
 import com.idea_festival.presentation.ui.select_image.navigation.navigateToSelectImage
 import com.idea_festival.presentation.ui.select_image.navigation.selectImageScreen
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
@@ -69,7 +70,7 @@ fun GolaroidNavHost(
 
         captureWithCodeScreen(
             onBackClick = navController::popBackStack,
-            onTakePictureFinish = navController::navigateToRevealPicture,
+            onTakePictureFinish = navController::navigateToSelectImage,
             cameraViewModel = cameraViewModel,
             postViewModel = postViewModel
         )
@@ -119,6 +120,12 @@ fun GolaroidNavHost(
             cameraViewModel = cameraViewModel
         )
 
+        selectFrameWithCodeScreen(
+            onNextButtonClick = navController::navigateToUploadImageSuccess,
+            onPrintButtonClick = navController::navigateToPrintSuccess,
+            cameraViewModel = cameraViewModel,
+            postViewModel = postViewModel
+        )
         uploadImageSuccessScreen(
             onCheckButtonClick = navController::navigateToMain,
             cameraViewModel = cameraViewModel
