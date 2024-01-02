@@ -21,6 +21,7 @@ import com.idea_festival.presentation.ui.main.navigation.navigateToTodayImage
 import com.idea_festival.presentation.ui.main.navigation.todayImageScreen
 import com.idea_festival.presentation.ui.search_result.navigation.existCodeScreen
 import com.idea_festival.presentation.ui.search_result.navigation.navigateToExistCode
+import com.idea_festival.presentation.ui.search_result.navigation.navigateToNoExistCode
 import com.idea_festival.presentation.ui.search_result.navigation.noExistCodeScreen
 import com.idea_festival.presentation.ui.select_frame.navigation.navigateToPrintSuccess
 import com.idea_festival.presentation.ui.select_frame.navigation.navigateToSelectFrame
@@ -68,12 +69,13 @@ fun GolaroidNavHost(
         existCodeScreen(
             onTakePictureButtonClick = navController::navigateToCapture,
             onBackClick = navController::popBackStack,
+            onNotFound = navController::navigateToNoExistCode,
             postViewModel = postViewModel
         )
 
         noExistCodeScreen(
             onTakePictureButtonClick = navController::navigateToCapture,
-            onBackClick = navController::popBackStack,
+            onBackClick = navController::navigateToMain,
             postViewModel = postViewModel
         )
 

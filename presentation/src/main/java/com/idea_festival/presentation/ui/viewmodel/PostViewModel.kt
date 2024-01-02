@@ -40,6 +40,12 @@ class PostViewModel @Inject constructor(
         )
     )
 
+    var savedCode = mutableStateOf("")
+        private set
+
+    var withCode = mutableStateOf(false)
+        private set
+
     fun getPostList() = viewModelScope.launch {
         getPostUseCase().onSuccess {
             it.catch { remoteError ->
@@ -55,6 +61,7 @@ class PostViewModel @Inject constructor(
     fun getDetailPostList(
         code: String
     ) = viewModelScope.launch {
+        savedCode.value = code
         getDetailPostUseCase(code = code).onSuccess {
             it.catch { remoteError ->
                 _getDetailPostResponse.value = remoteError.errorHandling()

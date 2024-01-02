@@ -62,7 +62,11 @@ fun MainRoute(
     if (status.value) {
         MainScreen(
             onTakePictureButtonClick = onTakePictureButtonClick,
-            onSearchButtonClick = onSearchButtonClick,
+            onSearchButtonClick = {
+                postViewModel.getDetailPostList(it)
+                postViewModel.postList.clear()
+                onSearchButtonClick()
+            },
             onImageClick = {
                 postViewModel.getDetailPostList(it)
                 postViewModel.postList.clear()
@@ -98,10 +102,11 @@ suspend fun getPostList(
 @Composable
 fun MainScreen(
     onTakePictureButtonClick: () -> Unit,
-    onSearchButtonClick: () -> Unit,
+    onSearchButtonClick: (String) -> Unit,
     onImageClick: (String) -> Unit,
     items: List<PostModel>
 ) {
+    val searchCode = remember { mutableStateOf("") }
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -128,10 +133,11 @@ fun MainScreen(
                 GolaroidTextField(
                     placeholder = "코드를 입력해 주세요",
                     onValueChange = {
-
+                        searchCode.value = it
                     }, modifier = Modifier
                         .fillMaxWidth(),
-                    onSearchButtonClick = { onSearchButtonClick() }
+                    value = searchCode.value,
+                    onSearchButtonClick = { onSearchButtonClick(searchCode.value) }
                 )
 
                 Spacer(modifier = Modifier.height(30.dp))
