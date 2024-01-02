@@ -75,9 +75,7 @@ class CameraViewModel @Inject constructor(
 
     var userName = mutableStateOf("")
         private set
-
-<<<<<<< HEAD
-=======
+    
     var selectedImage = mutableStateOf<MultipartBody.Part?>(null)
         private set
 
@@ -98,7 +96,6 @@ class CameraViewModel @Inject constructor(
             this.imageUrl.add(detailPostData)
         }
     }
->>>>>>> 16b754101ac2a77e766a50572aedf79d4c7a74dc
 
     fun setImageArray(imageArray: MutableList<Bitmap>) {
         _imageArray.value = imageArray
