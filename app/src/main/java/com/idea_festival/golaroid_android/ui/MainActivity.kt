@@ -29,6 +29,7 @@ class MainActivity : ComponentActivity() {
                         windowSizeClass = calculateWindowSizeClass(this),
                         postViewModel = postViewModel,
                         cameraViewModel = cameraViewModel,
+                        imageViewModel = imageViewModel
                     )
                 }
             }

@@ -34,8 +34,6 @@ fun ChooseImage(
     imageViewModel: ImageViewModel
 ) {
 
-    var selectedImage by remember { mutableStateOf<Bitmap?>(null) }
-
     GolaroidAndroidTheme { colors, typography ->
         Box(
             modifier = modifier

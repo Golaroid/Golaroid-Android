@@ -9,6 +9,7 @@ import com.idea_festival.presentation.ui.capture.navigation.captureScreen
 import com.idea_festival.presentation.ui.capture.navigation.captureWithCodeScreen
 import com.idea_festival.presentation.ui.capture.navigation.navigateToCapture
 import com.idea_festival.presentation.ui.capture.navigation.navigateToCaptureWithCode
+import com.idea_festival.presentation.ui.check_image.navigation.navigateToCheckImageWithCode
 import com.idea_festival.presentation.ui.input_information.navigation.inputInformationScreen
 import com.idea_festival.presentation.ui.input_information.navigation.navigateToInputInformation
 import com.idea_festival.presentation.ui.input_information.navigation.navigateToUploadImageSuccess
@@ -134,7 +135,7 @@ fun GolaroidNavHost(
         )
 
         selectFrameWithCodeScreen(
-            onNextButtonClick = navController::navigateToUploadImageSuccess,
+            onNextButtonClick = navController::navigateToCheckImageWithCode,
             onPrintButtonClick = navController::navigateToPrintSuccess,
             cameraViewModel = cameraViewModel,
             postViewModel = postViewModel

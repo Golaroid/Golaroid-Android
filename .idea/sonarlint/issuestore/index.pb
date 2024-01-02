@@ -89,8 +89,6 @@ _presentation/src/main/java/com/idea_festival/presentation/ui/capture/component/
 apresentation/src/main/java/com/idea_festival/presentation/ui/capture/component/CheckPermission.kt,d/3/d37f1d71bb6f23125790c2b7f3a56c9d9ff9383a
 ‡
 Wpresentation/src/main/java/com/idea_festival/presentation/ui/viewmodel/PostViewModel.kt,4/b/4b989a46735c85931ce819e36f0eff5a94c9ebdc
-{
-Kpresentation/src/main/java/com/idea_festival/presentation/ui/GolaroidApp.kt,a/0/a0df71750c8e4afd4d4dbe7ade785be22d8e235b
 §
 wpresentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/InputInformationNavigation.kt,c/e/ce1c2a626513302937150718f71f95c0561dbc22
 –
