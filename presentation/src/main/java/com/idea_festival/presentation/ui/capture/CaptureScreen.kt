@@ -77,8 +77,6 @@ fun CaptureScreen(
 
     var onCaptured by remember { mutableStateOf(false) }
 
-    var imageUrl = mutableListOf<GetDetailPostResponseModel>()
-
     CheckPermission(context = context, viewModel = viewModel)
 
     GolaroidAndroidTheme { colors, typography ->
