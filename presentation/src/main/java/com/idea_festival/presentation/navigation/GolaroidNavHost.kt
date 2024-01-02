@@ -19,6 +19,8 @@ import com.idea_festival.presentation.ui.main.navigation.mainRoute
 import com.idea_festival.presentation.ui.main.navigation.mainScreen
 import com.idea_festival.presentation.ui.main.navigation.navigateToMain
 import com.idea_festival.presentation.ui.main.navigation.navigateToTodayImage
+import com.idea_festival.presentation.ui.main.navigation.todayImageRoute
+import com.idea_festival.presentation.ui.main.navigation.todayImageScreen
 import com.idea_festival.presentation.ui.search_result.navigation.existCodeScreen
 import com.idea_festival.presentation.ui.search_result.navigation.navigateToExistCode
 import com.idea_festival.presentation.ui.search_result.navigation.noExistCodeScreen
@@ -27,24 +29,34 @@ import com.idea_festival.presentation.ui.select_frame.navigation.navigateToSelec
 import com.idea_festival.presentation.ui.select_frame.navigation.selectFrameScreen
 import com.idea_festival.presentation.ui.select_image.navigation.navigateToSelectImage
 import com.idea_festival.presentation.ui.select_image.navigation.selectImageScreen
+import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
 @Composable
 fun GolaroidNavHost(
     appState: GolaroidAppState,
     modifier: Modifier = Modifier,
     startDestination: String = mainRoute,
+    postViewModel: PostViewModel,
+    imageViewModel: ImageViewModel
 ) {
     val navController = appState.navController
 
     NavHost(
         navController = navController,
         startDestination = startDestination,
-        modifier = modifier
+        modifier = modifier,
     ) {
         mainScreen(
             onTakePictureButtonClick = navController::navigateToCapture,
             onSearchButtonClick = navController::navigateToExistCode,
-            onImageClick = navController::navigateToTodayImage
+            onImageClick = navController::navigateToTodayImage,
+            postViewModel = postViewModel
+        )
+
+        todayImageScreen(
+            onCheckButtonClick = navController::popBackStack,
+            postViewModel = postViewModel
         )
 
         captureScreen(

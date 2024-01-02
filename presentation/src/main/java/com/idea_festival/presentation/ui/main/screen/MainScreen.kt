@@ -47,13 +47,11 @@ fun MainRoute(
     onTakePictureButtonClick: () -> Unit,
     onSearchButtonClick: () -> Unit,
     onImageClick: () -> Unit,
-    postViewModel: PostViewModel = hiltViewModel(),
+    postViewModel: PostViewModel,
 ) {
     val status = remember { mutableStateOf(false) }
-    var key = 0
     postViewModel.getPostList()
-    LaunchedEffect(key1 = key) {
-        delay(2000)
+    LaunchedEffect(true) {
         getPostList(
             viewModel = postViewModel,
             onSuccess = {
@@ -69,13 +67,13 @@ fun MainRoute(
             onTakePictureButtonClick = onTakePictureButtonClick,
             onSearchButtonClick = onSearchButtonClick,
             onImageClick = {
-                onImageClick()
                 postViewModel.getDetailPostList(it)
+                postViewModel.postList.clear()
+                Log.d("TAG", postViewModel.postList.size.toString())
+                onImageClick()
             },
             items = postViewModel.postList
         )
-    } else {
-        key += 1
     }
 }
 

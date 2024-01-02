@@ -10,6 +10,7 @@ import com.idea_festival.domain.usecase.image.UploadImageUseCase
 import com.idea_festival.domain.usecase.image.UploadImageWithCodeUseCase
 import com.idea_festival.presentation.ui.viewmodel.util.Event
 import com.idea_festival.presentation.ui.viewmodel.util.errorHandling
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
+@HiltViewModel
 class ImageViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
     private val uploadImageWithCodeUseCase: UploadImageWithCodeUseCase

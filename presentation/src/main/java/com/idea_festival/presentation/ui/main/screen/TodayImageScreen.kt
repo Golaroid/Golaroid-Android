@@ -1,5 +1,6 @@
 package com.idea_festival.presentation.ui.main.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,33 +27,42 @@ import com.idea_festival.presentation.ui.viewmodel.util.Event
 @Composable
 fun TodayImageRoute(
     onCheckButtonClick: () -> Unit,
-    viewModel: PostViewModel = hiltViewModel()
+    viewModel: PostViewModel
 ) {
+    val status = remember{ mutableStateOf(false) }
     LaunchedEffect(key1 = true) {
         getPost(
             viewModel = viewModel,
             onSuccess = {
                 viewModel.post.value = it
+            },
+            onFinished = {
+                status.value = it
             }
         )
     }
-    TodayImageScreen(
-        onCheckButtonClick = onCheckButtonClick,
-        data = viewModel.post.value
-    )
+    Log.d("TAG",  viewModel.post.value.writer)
+    if (status.value) {
+        TodayImageScreen(
+            onCheckButtonClick = onCheckButtonClick,
+            data = viewModel.post.value
+        )
+    }
 }
 
 suspend fun getPost(
     viewModel: PostViewModel,
-    onSuccess: (data: GetDetailPostResponseModel) -> Unit
+    onSuccess: (data: GetDetailPostResponseModel) -> Unit,
+    onFinished: (isSuccess: Boolean) -> Unit
 ) {
     viewModel.getDetailPostResponse.collect { response ->
         when (response) {
             is Event.Success -> {
                 onSuccess(response.data!!)
+                onFinished(true)
             }
 
-            else -> {}
+            else -> { onFinished(false) }
         }
     }
 }
