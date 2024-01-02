@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,22 +19,51 @@ import androidx.compose.ui.unit.dp
 import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.ClipboardIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.domain.model.image.ImageResponseModel
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
+import com.idea_festival.presentation.ui.viewmodel.util.Event
+import com.idea_festival.presentation.ui.viewmodel.util.getCode
 
 @Composable
 fun IssuedCodeRoute(
     onNextButtonClick: () -> Unit,
     cameraViewModel: CameraViewModel
 ) {
+    LaunchedEffect(key1 = true) {
+        getCode(
+            viewModel = cameraViewModel,
+            onSuccess = {
+                cameraViewModel.issuedCode.value = it.fileName
+            }
+        )
+    }
     IssuedCodeScreen(
-        onNextButtonClick = onNextButtonClick
+        onNextButtonClick = onNextButtonClick,
+        name = cameraViewModel.userName.value,
+        code = cameraViewModel.issuedCode.value.getCode()
     )
+}
+
+suspend fun getCode(
+    viewModel: CameraViewModel,
+    onSuccess: (data: ImageResponseModel) -> Unit
+) {
+    viewModel.uploadImageResponse.collect { response ->
+        when (response) {
+            is Event.Success -> {
+                onSuccess(response.data!!)
+            }
+            else -> {}
+        }
+    }
 }
 
 @Composable
 fun IssuedCodeScreen(
     onNextButtonClick: () -> Unit,
+    name: String,
+    code: String
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
@@ -46,7 +76,7 @@ fun IssuedCodeScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "이동욱" + "님",
+                text = name + "님",
                 style = typography.titleMedium,
                 color = colors.WHITE,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -61,7 +91,7 @@ fun IssuedCodeScreen(
                 Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                    text = "F14GH",
+                    text = code,
                     style = typography.headlineSmall,
                     color = colors.WHITE,
                 )
@@ -110,5 +140,9 @@ fun IssuedCodeScreen(
 @Preview
 @Composable
 fun IssuedCodeScreenPre() {
-    IssuedCodeScreen(onNextButtonClick = {})
+    IssuedCodeScreen(
+        onNextButtonClick = {},
+        name = "채종인",
+        code = ""
+    )
 }

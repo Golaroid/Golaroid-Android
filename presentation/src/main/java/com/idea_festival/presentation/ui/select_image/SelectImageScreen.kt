@@ -46,6 +46,7 @@ fun SelectImageRoute(
                 isDefault = false,
                 selectedIndex = it
             )
+            cameraViewModel.upload()
             onNextButtonClick()
         },
         imageArray = cameraViewModel.imageArray.value,
