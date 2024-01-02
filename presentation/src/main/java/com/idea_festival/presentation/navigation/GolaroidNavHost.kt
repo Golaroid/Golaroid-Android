@@ -14,6 +14,7 @@ import com.idea_festival.presentation.ui.input_information.navigation.navigateTo
 import com.idea_festival.presentation.ui.input_information.navigation.navigateToUploadImageSuccess
 import com.idea_festival.presentation.ui.input_information.navigation.uploadImageSuccessScreen
 import com.idea_festival.presentation.ui.issued_code.navigation.issuedCodeScreen
+import com.idea_festival.presentation.ui.issued_code.navigation.navigateToIssuedCode
 import com.idea_festival.presentation.ui.issued_code.navigation.navigateToRevealPicture
 import com.idea_festival.presentation.ui.issued_code.navigation.revealPictureScreen
 import com.idea_festival.presentation.ui.main.navigation.mainRoute
@@ -27,10 +28,13 @@ import com.idea_festival.presentation.ui.search_result.navigation.navigateToNoEx
 import com.idea_festival.presentation.ui.search_result.navigation.noExistCodeScreen
 import com.idea_festival.presentation.ui.select_frame.navigation.navigateToPrintSuccess
 import com.idea_festival.presentation.ui.select_frame.navigation.navigateToSelectFrame
+import com.idea_festival.presentation.ui.select_frame.navigation.navigateToSelectFrameWithCode
 import com.idea_festival.presentation.ui.select_frame.navigation.selectFrameScreen
 import com.idea_festival.presentation.ui.select_frame.navigation.selectFrameWithCodeScreen
 import com.idea_festival.presentation.ui.select_image.navigation.navigateToSelectImage
+import com.idea_festival.presentation.ui.select_image.navigation.navigateToSelectImageWithCode
 import com.idea_festival.presentation.ui.select_image.navigation.selectImageScreen
+import com.idea_festival.presentation.ui.select_image.navigation.selectImageWithCodeScreen
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
@@ -70,7 +74,7 @@ fun GolaroidNavHost(
 
         captureWithCodeScreen(
             onBackClick = navController::popBackStack,
-            onTakePictureFinish = navController::navigateToSelectImage,
+            onTakePictureFinish = navController::navigateToSelectImageWithCode,
             cameraViewModel = cameraViewModel,
             postViewModel = postViewModel
         )
@@ -89,7 +93,7 @@ fun GolaroidNavHost(
         )
 
         issuedCodeScreen(
-            onNextButtonClick = navController::navigateToRevealPicture,
+            onNextButtonClick = navController::navigateToMain,
             cameraViewModel = cameraViewModel
         )
 
@@ -114,8 +118,14 @@ fun GolaroidNavHost(
             cameraViewModel = cameraViewModel
         )
 
+        selectImageWithCodeScreen(
+            onNextButtonClick = navController::navigateToSelectFrameWithCode,
+            imageArray = navController.currentBackStackEntry?.arguments?.get("imageArray") as? MutableList<Bitmap>,
+            cameraViewModel = cameraViewModel
+        )
+
         selectFrameScreen(
-            onNextButtonClick = navController::navigateToUploadImageSuccess,
+            onNextButtonClick = navController::navigateToIssuedCode,
             onPrintButtonClick = navController::navigateToPrintSuccess,
             cameraViewModel = cameraViewModel
         )
@@ -126,6 +136,7 @@ fun GolaroidNavHost(
             cameraViewModel = cameraViewModel,
             postViewModel = postViewModel
         )
+
         uploadImageSuccessScreen(
             onCheckButtonClick = navController::navigateToMain,
             cameraViewModel = cameraViewModel

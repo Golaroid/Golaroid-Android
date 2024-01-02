@@ -3,8 +3,6 @@ I
 buildSrc/build.gradle.kts,d/9/d90b697280fada81e52ec92d24725920f1cb087b
 D
 app/build.gradle.kts,d/2/d2a4383452aad84a18429a5844d31330a012a9e6
-›
-kpresentation/src/main/java/com/idea_festival/presentation/ui/issued_code/navigation/IssuedCodeNavigation.kt,7/6/76f3deed3f20923a957356d7a6b5f33ccd3fb22c
 ž
 npresentation/src/main/java/com/idea_festival/presentation/ui/issued_code/navigation/RevealPictureNavigation.kt,4/9/493cd434c2f124d929eec7b43f9725b9859ea5fc
 F
