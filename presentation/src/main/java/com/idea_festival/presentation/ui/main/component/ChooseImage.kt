@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,12 +23,19 @@ import coil.compose.AsyncImage
 import com.idea_festival.design_system.component.icon.CheckIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.domain.model.post.GetDetailPostResponseModel
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 
 @Composable
 fun ChooseImage(
     modifier: Modifier = Modifier,
     image: Bitmap? = null,
+    page: Int,
+    imageViewModel: ImageViewModel
 ) {
+
+    var selectedImage by remember { mutableStateOf<Bitmap?>(null) }
+
     GolaroidAndroidTheme { colors, typography ->
         Box(
             modifier = modifier
@@ -44,7 +55,9 @@ fun ChooseImage(
             }
 
             IconButton(
-                onClick = { },
+                onClick = {
+                    imageViewModel.setSelectedImage(image)
+                },
                 modifier = Modifier.align(Alignment.TopEnd)
             ) {
                 CheckIcon()

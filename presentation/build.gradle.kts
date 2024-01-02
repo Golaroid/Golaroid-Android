@@ -75,6 +75,7 @@ android {
         implementation("androidx.camera:camera-view:1.3.0-beta01")
         implementation("androidx.camera:camera-extensions:1.3.0-beta01")
         implementation("com.google.accompanist:accompanist-permissions:0.31.2-alpha")
+        implementation("com.github.SmartToolFactory:Compose-Screenshot:1.0.3")
 
         implementation(Dependency.Google.HILT)
         kapt(Dependency.Google.HILT_COMPILER)

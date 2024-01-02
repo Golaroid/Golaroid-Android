@@ -46,6 +46,7 @@ fun GolaroidNavHost(
     startDestination: String = mainRoute,
     postViewModel: PostViewModel,
     cameraViewModel: CameraViewModel,
+    imageViewModel: ImageViewModel
 ) {
     val navController = appState.navController
 
@@ -115,13 +116,15 @@ fun GolaroidNavHost(
         selectImageScreen(
             onNextButtonClick = navController::navigateToSelectFrame,
             imageArray = navController.currentBackStackEntry?.arguments?.get("imageArray") as? MutableList<Bitmap>,
-            cameraViewModel = cameraViewModel
+            cameraViewModel = cameraViewModel,
+            imageViewModel = imageViewModel
         )
 
         selectImageWithCodeScreen(
             onNextButtonClick = navController::navigateToSelectFrameWithCode,
             imageArray = navController.currentBackStackEntry?.arguments?.get("imageArray") as? MutableList<Bitmap>,
-            cameraViewModel = cameraViewModel
+            cameraViewModel = cameraViewModel,
+            postViewModel = postViewModel
         )
 
         selectFrameScreen(

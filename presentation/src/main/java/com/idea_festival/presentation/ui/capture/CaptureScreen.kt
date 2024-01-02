@@ -1,4 +1,3 @@
-@file:JvmName("CaptureScreenKt")
 
 package com.idea_festival.presentation.ui.capture
 
@@ -33,6 +32,7 @@ import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.presentation.ui.capture.component.CameraPreview
 import com.idea_festival.presentation.ui.capture.component.CheckPermission
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.smarttoolfactory.screenshot.rememberScreenshotState
 import kotlinx.coroutines.delay
 
 
@@ -56,6 +56,7 @@ fun CaptureScreen(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
 ) {
+    val screenshotState = rememberScreenshotState()
 
     var lensFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
 

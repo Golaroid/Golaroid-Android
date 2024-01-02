@@ -10,6 +10,8 @@ import androidx.navigation.navArgument
 import com.idea_festival.presentation.ui.select_image.SelectImageRoute
 import com.idea_festival.presentation.ui.select_image.SelectImageWithCodeRoute
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
 const val selectImageRoute = "select_image_route"
 
@@ -25,14 +27,16 @@ fun NavController.navigateToSelectImageWithCode(navOptions: NavOptions? = null) 
 fun NavGraphBuilder.selectImageScreen(
     onNextButtonClick:() -> Unit,
     imageArray: MutableList<Bitmap>? = null,
-    cameraViewModel: CameraViewModel
+    cameraViewModel: CameraViewModel,
+    imageViewModel: ImageViewModel
 ) {
     composable (
         route = selectImageRoute
     ){
         SelectImageRoute(
             onNextButtonClick = {},
-            cameraViewModel = cameraViewModel
+            cameraViewModel = cameraViewModel,
+            imageViewModel = imageViewModel
         )
     }
 }
@@ -40,14 +44,16 @@ fun NavGraphBuilder.selectImageScreen(
 fun NavGraphBuilder.selectImageWithCodeScreen(
     onNextButtonClick:() -> Unit,
     imageArray: MutableList<Bitmap>? = null,
-    cameraViewModel: CameraViewModel
+    cameraViewModel: CameraViewModel,
+    postViewModel: PostViewModel
 ) {
     composable (
         route = selectImageWithCodeRoute
     ){
         SelectImageWithCodeRoute(
             onNextButtonClick = {},
-            cameraViewModel = cameraViewModel
+            cameraViewModel = cameraViewModel,
+            postViewModel = postViewModel
         )
     }
 }

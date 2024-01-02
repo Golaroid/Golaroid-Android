@@ -77,10 +77,6 @@ Xdata/src/main/java/com/idea_festival/data/remote/dto/image/ImageUploadWithCodeR
 Kdata/src/main/java/com/idea_festival/data/repository/ImageRepositoryImpl.kt,e/9/e933936c1a734bb011057a87ba1b7315af141066
 ‰
 Ydomain/src/main/java/com/idea_festival/domain/usecase/image/UploadImageWithCodeUseCase.kt,1/3/13b05ac1ffda4c4f7cf97c794dcdb7331425d6ad
-ˆ
-Xpresentation/src/main/java/com/idea_festival/presentation/ui/viewmodel/ImageViewModel.kt,7/0/702213afcc74fa738594a502c2927edc08fab851
-”
-dpresentation/src/main/java/com/idea_festival/presentation/ui/main/navigation/TodayImageNavigation.kt,1/e/1ea80b5323a1ec629749fe4c8385b901bfda63d9
 €
 Pdomain/src/main/java/com/idea_festival/domain/model/post/GetPostResponseModel.kt,d/6/d6be9df034c7e8cb905eacf4eb300419ddfaeb46
 Œ
@@ -99,8 +95,6 @@ Wpresentation/src/main/java/com/idea_festival/presentation/ui/viewmodel/PostView
 qpresentation/src/main/java/com/idea_festival/presentation/ui/input_information/screen/UploadImageSuccessScreen.kt,3/0/3087f22c21a849ad3c4c0cfa64084b0fa289a98c
 §
 wpresentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/InputInformationNavigation.kt,c/e/ce1c2a626513302937150718f71f95c0561dbc22
-¬
-|presentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/UploadingImageSuccessNavigation.kt,a/a/aa592afa960f4417a0f148e9b398efb0817d7c37
 –
 fpresentation/src/main/java/com/idea_festival/presentation/ui/search_result/screen/NoExistCodeScreen.kt,e/5/e59182bb452f0a14ab469b59c5966d1b5b6acd0b
 ”
@@ -109,12 +103,8 @@ dpresentation/src/main/java/com/idea_festival/presentation/ui/search_result/scre
 opresentation/src/main/java/com/idea_festival/presentation/ui/search_result/navigation/SearchResultNavigation.kt,9/5/95a16c8a81b53214891a5f7cac58778e3025ffc4
 ”
 dpresentation/src/main/java/com/idea_festival/presentation/ui/capture/navigation/CaptureNavigation.kt,f/b/fb5583a813b12b2d172b89b282c9243bc1715028
-M
-presentation/build.gradle.kts,b/b/bbb5f5d9acc7530bc591aed4f71c56457464aa34
 @
 build.gradle.kts,d/b/dbcff70658daf80b53ce624f6adcaa529df5ed8d
-C
-settings.gradle.kts,7/4/749edfcc96398253e5b3416184e95c46621da850
 G
 domain/build.gradle.kts,d/7/d72c8b69b8da0b3b02b699ccd509295dbd783baa
 T

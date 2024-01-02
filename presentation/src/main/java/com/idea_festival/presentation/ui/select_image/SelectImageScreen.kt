@@ -23,7 +23,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.idea_festival.design_system.component.button.GolaroidButton
@@ -31,11 +30,13 @@ import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.presentation.ui.main.component.ChooseImage
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 
 @Composable
 fun SelectImageRoute(
     onNextButtonClick: () -> Unit,
     cameraViewModel: CameraViewModel,
+    imageViewModel: ImageViewModel
 ) {
     val localContext = LocalContext.current
     SelectImageScreen(
@@ -47,7 +48,8 @@ fun SelectImageRoute(
             )
             onNextButtonClick()
         },
-        imageArray = cameraViewModel.imageArray.value
+        imageArray = cameraViewModel.imageArray.value,
+        imageViewModel = imageViewModel
     )
 
 }
@@ -57,6 +59,7 @@ fun SelectImageRoute(
 fun SelectImageScreen(
     onNextButtonClick: (Int) -> Unit,
     imageArray: MutableList<Bitmap>,
+    imageViewModel: ImageViewModel
 ) {
 
     val state = rememberPagerState {
@@ -109,6 +112,8 @@ fun SelectImageScreen(
                 ChooseImage(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     image = imageArray?.get(page),
+                    page = page,
+                    imageViewModel = imageViewModel
                 )
                 currentPage.value = state.currentPage
             }

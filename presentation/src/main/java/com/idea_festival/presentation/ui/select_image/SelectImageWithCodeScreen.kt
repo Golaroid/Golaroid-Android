@@ -31,15 +31,17 @@ import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.presentation.ui.main.component.ChooseImage
 import com.idea_festival.presentation.ui.select_image.component.ChooseImageWithCode
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
 @Composable
 fun SelectImageWithCodeRoute(
     onNextButtonClick: () -> Unit,
     cameraViewModel: CameraViewModel,
+    postViewModel: PostViewModel
 ) {
     val localContext = LocalContext.current
-    SelectImageScreen(
+    SelectImageWithCodeScreen(
         onNextButtonClick = {
             cameraViewModel.getMultipartFile(
                 context = localContext,
@@ -47,9 +49,11 @@ fun SelectImageWithCodeRoute(
                 selectedIndex = it
             )
             onNextButtonClick()
-        },
-        imageArray = cameraViewModel.imageArray.value
-    )
+     },
+        imageArray = cameraViewModel.imageArray.value,
+
+        postViewModel = postViewModel
+        )
 
 }
 
