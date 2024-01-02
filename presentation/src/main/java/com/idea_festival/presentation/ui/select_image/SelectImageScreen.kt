@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.component.image.ChooseImage
@@ -35,19 +34,19 @@ import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 @Composable
 fun SelectImageRoute(
     onNextButtonClick: () -> Unit,
-    viewModel: CameraViewModel,
+    cameraViewModel: CameraViewModel,
 ) {
     val localContext = LocalContext.current
     SelectImageScreen(
         onNextButtonClick = {
-            viewModel.getMultipartFile(
+            cameraViewModel.getMultipartFile(
                 context = localContext,
                 isDefault = false,
                 selectedIndex = it
             )
             onNextButtonClick()
         },
-        imageArray = viewModel.imageArray.value
+        imageArray = cameraViewModel.imageArray.value
     )
 
 }

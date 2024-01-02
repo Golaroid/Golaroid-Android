@@ -18,10 +18,13 @@ import androidx.compose.ui.unit.dp
 import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.ClipboardIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
 @Composable
 fun IssuedCodeRoute(
     onNextButtonClick: () -> Unit,
+    cameraViewModel: CameraViewModel
 ) {
     IssuedCodeScreen(
         onNextButtonClick = onNextButtonClick

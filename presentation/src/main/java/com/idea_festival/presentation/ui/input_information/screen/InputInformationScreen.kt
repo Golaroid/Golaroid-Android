@@ -28,11 +28,11 @@ import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 @Composable
 fun InputInformationRoute(
     onNextButtonClick: () -> Unit,
-    viewModel: CameraViewModel
+    cameraViewModel: CameraViewModel
 ) {
     InputInformationScreen(
         onNextButtonClick = {
-            viewModel.userName.value = it
+            cameraViewModel.userName.value = it
             onNextButtonClick()
         }
     )
