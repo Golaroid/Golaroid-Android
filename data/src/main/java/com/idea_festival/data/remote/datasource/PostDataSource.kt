@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface PostDataSource {
     suspend fun getPost(): Flow<List<PostModel>>
-    suspend fun getDetailPost(code: String): Flow<GetDetailPostResponse>
+    suspend fun getDetailPost(code: String): Flow<List<GetDetailPostResponse>>
 }

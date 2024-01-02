@@ -17,6 +17,7 @@ import androidx.lifecycle.viewModelScope
 import com.idea_festival.domain.model.image.ImageResponseModel
 import com.idea_festival.domain.model.image.ImageUploadRequestModel
 import com.idea_festival.domain.model.image.ImageUploadWithCodeRequestModel
+import com.idea_festival.domain.model.post.GetDetailPostResponseModel
 import com.idea_festival.domain.usecase.image.UploadImageUseCase
 import com.idea_festival.domain.usecase.image.UploadImageWithCodeUseCase
 import com.idea_festival.presentation.ui.capture.CaptureState
@@ -38,6 +39,7 @@ import javax.inject.Inject
 class CameraViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
     private val uploadImageWithCodeUseCase: UploadImageWithCodeUseCase,
+    private val postViewModel: PostViewModel
 ) : ViewModel() {
 
     val _facing = MutableStateFlow(CameraSelector.LENS_FACING_BACK)
@@ -72,6 +74,8 @@ class CameraViewModel @Inject constructor(
 
     var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
         private set
+
+    var imageUrl: String = postViewModel.post.toString()
 
     fun setImageArray(imageArray: MutableList<Bitmap>) {
         _imageArray.value = imageArray

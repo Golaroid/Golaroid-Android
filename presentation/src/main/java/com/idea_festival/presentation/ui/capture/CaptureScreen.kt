@@ -56,6 +56,7 @@ fun CaptureScreen(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
 ) {
+    var overlayImageIndex by remember { mutableStateOf(0) }
     var lensFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
 
     val imageArray: MutableList<Bitmap> = mutableListOf()
@@ -83,6 +84,7 @@ fun CaptureScreen(
                     if (countdownValue == 0) {
                         countdownValue = 2
                         --leftoverPictureValue
+                        ++overlayImageIndex
                         onCaptured = true
                     }
                 } else if (leftoverPictureValue == 0) {
@@ -105,6 +107,7 @@ fun CaptureScreen(
             )
 
 
+
             Row(
                 modifier = Modifier
                     .padding(top = 30.dp)
@@ -117,8 +120,9 @@ fun CaptureScreen(
                 SwitchCameraIcon(
                     modifier = Modifier
                         .clickable {
-                            lensFacing = if (lensFacing == CameraSelector.DEFAULT_FRONT_CAMERA) CameraSelector.DEFAULT_BACK_CAMERA
-                            else CameraSelector.DEFAULT_FRONT_CAMERA
+                            lensFacing =
+                                if (lensFacing == CameraSelector.DEFAULT_FRONT_CAMERA) CameraSelector.DEFAULT_BACK_CAMERA
+                                else CameraSelector.DEFAULT_FRONT_CAMERA
                             viewModel.toggleCameraFacing()
                         }
                         .width(24.dp)
@@ -126,12 +130,14 @@ fun CaptureScreen(
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
+
                 Text(
                     text = "남은 사진 ${leftoverPictureValue}개",
                     style = typography.headlineSmall,
                     color = colors.WHITE,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
+
                 Spacer(modifier = Modifier.weight(1f))
 
 

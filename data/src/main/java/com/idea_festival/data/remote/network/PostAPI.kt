@@ -12,5 +12,5 @@ interface PostAPI {
     @GET("post/detail")
     suspend fun getDetailPost(
         @Query("code") code: String
-    ): GetDetailPostResponse
+    ): List<GetDetailPostResponse>
 }

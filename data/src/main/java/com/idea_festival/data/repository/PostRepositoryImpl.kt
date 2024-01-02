@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PostRepositoryImpl @Inject constructor(
-    private val dataSource: PostDataSource
+    private val dataSource: PostDataSource,
 ) : PostRepository {
     override suspend fun getPost(): Flow<List<PostModel>> =
         dataSource.getPost().map { it -> it.map { it.toModel() } }
 
-    override suspend fun getDetailPost(code: String): Flow<GetDetailPostResponseModel> {
+    override suspend fun getDetailPost(code: String): Flow<List<GetDetailPostResponseModel>> {
         return dataSource.getDetailPost(
             code = code
-        ).map { it.toModel() }
+        ).map { it -> it.map { it.toModel() } }
     }
 }
