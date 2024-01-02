@@ -6,7 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.idea_festival.presentation.ui.GolaroidAppState
 import com.idea_festival.presentation.ui.capture.navigation.captureScreen
+import com.idea_festival.presentation.ui.capture.navigation.captureWithCodeScreen
 import com.idea_festival.presentation.ui.capture.navigation.navigateToCapture
+import com.idea_festival.presentation.ui.capture.navigation.navigateToCaptureWithCode
 import com.idea_festival.presentation.ui.input_information.navigation.inputInformationScreen
 import com.idea_festival.presentation.ui.input_information.navigation.navigateToInputInformation
 import com.idea_festival.presentation.ui.input_information.navigation.navigateToUploadImageSuccess
@@ -63,11 +65,17 @@ fun GolaroidNavHost(
             onBackClick = navController::popBackStack,
             onTakePictureFinish = navController::navigateToRevealPicture,
             cameraViewModel = cameraViewModel,
+        )
+
+        captureWithCodeScreen(
+            onBackClick = navController::popBackStack,
+            onTakePictureFinish = navController::navigateToRevealPicture,
+            cameraViewModel = cameraViewModel,
             postViewModel = postViewModel
         )
 
         existCodeScreen(
-            onTakePictureButtonClick = navController::navigateToCapture,
+            onTakePictureWithCodeButtonClick = navController::navigateToCaptureWithCode,
             onBackClick = navController::popBackStack,
             onNotFound = navController::navigateToNoExistCode,
             postViewModel = postViewModel

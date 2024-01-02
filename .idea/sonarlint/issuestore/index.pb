@@ -9,24 +9,10 @@ D
 \design-system/src/main/java/com/idea_festival/design_system/component/textfield/TextField.kt,7/1/716774594730013651f73dfa941a9f6d3879a4d1
 û
 npresentation/src/main/java/com/idea_festival/presentation/ui/issued_code/navigation/RevealPictureNavigation.kt,4/9/493cd434c2f124d929eec7b43f9725b9859ea5fc
-ß
-wpresentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/InputInformationNavigation.kt,c/e/ce1c2a626513302937150718f71f95c0561dbc22
-¨
-|presentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/UploadingImageSuccessNavigation.kt,a/a/aa592afa960f4417a0f148e9b398efb0817d7c37
-ü
-opresentation/src/main/java/com/idea_festival/presentation/ui/search_result/navigation/SearchResultNavigation.kt,9/5/95a16c8a81b53214891a5f7cac58778e3025ffc4
-ü
-opresentation/src/main/java/com/idea_festival/presentation/ui/input_information/screen/InputInformationScreen.kt,4/1/41285d83e7b2ca4c6aa8956ff52395b2f1000260
-°
-qpresentation/src/main/java/com/idea_festival/presentation/ui/input_information/screen/UploadImageSuccessScreen.kt,3/0/3087f22c21a849ad3c4c0cfa64084b0fa289a98c
 å
 \presentation/src/main/java/com/idea_festival/presentation/ui/issued_code/IssuedCodeScreen.kt,b/e/bece67472114eb5011bfe4e80ee0e668eb1ea4d3
 è
 _presentation/src/main/java/com/idea_festival/presentation/ui/issued_code/RevealPictureScreen.kt,b/8/b8d59a783e9d5b15dc99c70641f425d9f4147667
-î
-dpresentation/src/main/java/com/idea_festival/presentation/ui/search_result/screen/ExistCodeScreen.kt,2/4/242f3abfebca286e57cd073371e822b1b2863ff8
-ñ
-fpresentation/src/main/java/com/idea_festival/presentation/ui/search_result/screen/NoExistCodeScreen.kt,e/5/e59182bb452f0a14ab469b59c5966d1b5b6acd0b
 Y
 )presentation/src/main/AndroidManifest.xml,f/f/ff448c8b12f3de1e58a75bb9abe0b8d4396181d5
 õ
@@ -71,8 +57,6 @@ Xdesign-system/src/main/java/com/idea_festival/design_system/theme/color/Golaroi
 Udesign-system/src/main/java/com/idea_festival/design_system/theme/color/ColorTheme.kt,4/d/4de5bed495422340acf344eed377062b0215c415
 Ç
 Rdesign-system/src/main/java/com/idea_festival/design_system/component/icon/Icon.kt,1/e/1e1b9f04146680a8a9aba34b052bfe7f1ee60cfc
-P
- app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 G
 domain/build.gradle.kts,d/7/d72c8b69b8da0b3b02b699ccd509295dbd783baa
 M
