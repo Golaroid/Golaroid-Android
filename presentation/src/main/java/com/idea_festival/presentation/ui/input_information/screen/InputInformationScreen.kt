@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,20 +23,26 @@ import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.component.textfield.GolaroidTextFieldWithOutIcon
 import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 
 @Composable
 fun InputInformationRoute(
     onNextButtonClick: () -> Unit,
+    viewModel: CameraViewModel
 ) {
     InputInformationScreen(
-        onNextButtonClick = onNextButtonClick
+        onNextButtonClick = {
+            viewModel.userName.value = it
+            onNextButtonClick()
+        }
     )
 }
 
 @Composable
 fun InputInformationScreen(
-    onNextButtonClick: () -> Unit,
+    onNextButtonClick: (String) -> Unit,
 ) {
+    val userName = remember { mutableStateOf("") }
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -83,10 +91,13 @@ fun InputInformationScreen(
 
                         GolaroidTextFieldWithOutIcon(
                             placeholder = "닉네임을 입력해 주세요",
-                            onValueChange = {},
+                            onValueChange = {
+                                userName.value = it
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 14.dp)
+                                .padding(horizontal = 14.dp),
+                            value = userName.value
                         )
 
                         Spacer(modifier = Modifier.height(52.dp))
@@ -104,7 +115,7 @@ fun InputInformationScreen(
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-                onNextButtonClick()
+                onNextButtonClick(userName.value)
             }
         }
     }

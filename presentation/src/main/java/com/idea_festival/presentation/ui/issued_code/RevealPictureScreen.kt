@@ -30,22 +30,24 @@ import com.idea_festival.design_system.component.icon.StarfishStarIcon
 import com.idea_festival.design_system.component.icon.UnCutOrangeCameraIcon
 import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 
 @Composable
 fun RevealPictureRoute(
-    onApproveButtonClick: () -> Unit,
-    onRejectButtonClick: () -> Unit,
+    onButtonClick: () -> Unit,
+    viewModel: CameraViewModel
 ) {
     RevealPictureScreen(
-        onApproveButtonClick = onApproveButtonClick,
-        onRejectButtonClick = onRejectButtonClick
+        onButtonClick = {
+            viewModel.isPublic.value = it
+            onButtonClick()
+        }
     )
 }
 
 @Composable
 fun RevealPictureScreen(
-    onApproveButtonClick: () -> Unit,
-    onRejectButtonClick: () -> Unit,
+    onButtonClick: (Boolean) -> Unit
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
@@ -159,7 +161,7 @@ fun RevealPictureScreen(
                     modifier = Modifier.weight(1f),
                     text = "예"
                 ) {
-                    onApproveButtonClick()
+                    onButtonClick(true)
                 }
 
                 Spacer(modifier = Modifier.width(20.dp))
@@ -168,7 +170,7 @@ fun RevealPictureScreen(
                     modifier = Modifier.weight(1f),
                     text = "아니오"
                 ) {
-                    onRejectButtonClick()
+                    onButtonClick(false)
                 }
             }
 
@@ -182,7 +184,6 @@ fun RevealPictureScreen(
 @Composable
 fun RevealPictureScreenPre() {
     RevealPictureScreen(
-        onApproveButtonClick = {},
-        onRejectButtonClick = {}
+        onButtonClick = {}
     )
 }

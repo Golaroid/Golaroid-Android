@@ -7,17 +7,16 @@ import androidx.activity.viewModels
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.presentation.ui.GolaroidApp
-import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val postViewModel by viewModels<PostViewModel>()
-    private val imageViewModel by viewModels<ImageViewModel>()
+    private val cameraViewModel by viewModels<CameraViewModel>()
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     GolaroidApp(
                         windowSizeClass = calculateWindowSizeClass(this),
                         postViewModel = postViewModel,
-                        imageViewModel = imageViewModel
+                        cameraViewModel = cameraViewModel
                     )
                 }
             }

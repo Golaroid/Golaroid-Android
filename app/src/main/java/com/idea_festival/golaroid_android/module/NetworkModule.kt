@@ -35,7 +35,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://ec2-13-124-194-222.ap-northeast-2.compute.amazonaws.com:8080/")
+            .baseUrl("http://golaroid.store/")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()
