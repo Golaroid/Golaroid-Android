@@ -2,7 +2,6 @@ package com.idea_festival.presentation.ui.capture
 
 import android.graphics.Bitmap
 import androidx.camera.core.CameraSelector
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import com.idea_festival.design_system.component.icon.SwitchCameraIcon
 import com.idea_festival.design_system.component.icon.WhiteCircleIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
@@ -48,7 +45,7 @@ fun CaptureRoute(
     postViewModel: PostViewModel,
 ) {
     val status = remember { mutableStateOf(false) }
-    LaunchedEffect(true) {
+    LaunchedEffect(key1 = true) {
         getOverLayImageUrl(
             viewModel = postViewModel,
             onSuccess = {
@@ -195,7 +192,6 @@ fun CaptureScreen(
 
         }
     }
-
 }
 
 suspend fun getOverLayImageUrl(

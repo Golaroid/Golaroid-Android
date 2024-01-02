@@ -12,14 +12,12 @@ import com.idea_festival.presentation.ui.input_information.navigation.navigateTo
 import com.idea_festival.presentation.ui.input_information.navigation.navigateToUploadImageSuccess
 import com.idea_festival.presentation.ui.input_information.navigation.uploadImageSuccessScreen
 import com.idea_festival.presentation.ui.issued_code.navigation.issuedCodeScreen
-import com.idea_festival.presentation.ui.issued_code.navigation.navigateToIssuedCode
 import com.idea_festival.presentation.ui.issued_code.navigation.navigateToRevealPicture
 import com.idea_festival.presentation.ui.issued_code.navigation.revealPictureScreen
 import com.idea_festival.presentation.ui.main.navigation.mainRoute
 import com.idea_festival.presentation.ui.main.navigation.mainScreen
 import com.idea_festival.presentation.ui.main.navigation.navigateToMain
 import com.idea_festival.presentation.ui.main.navigation.navigateToTodayImage
-import com.idea_festival.presentation.ui.main.navigation.todayImageRoute
 import com.idea_festival.presentation.ui.main.navigation.todayImageScreen
 import com.idea_festival.presentation.ui.search_result.navigation.existCodeScreen
 import com.idea_festival.presentation.ui.search_result.navigation.navigateToExistCode
@@ -39,7 +37,8 @@ fun GolaroidNavHost(
     modifier: Modifier = Modifier,
     startDestination: String = mainRoute,
     postViewModel: PostViewModel,
-    cameraViewModel: CameraViewModel
+    cameraViewModel: CameraViewModel,
+    imageViewModel: ImageViewModel
 ) {
     val navController = appState.navController
 

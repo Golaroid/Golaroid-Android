@@ -40,7 +40,6 @@ import javax.inject.Inject
 class CameraViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
     private val uploadImageWithCodeUseCase: UploadImageWithCodeUseCase,
-    private val postViewModel: PostViewModel
 ) : ViewModel() {
 
     val _facing = MutableStateFlow(CameraSelector.LENS_FACING_BACK)
@@ -76,29 +75,12 @@ class CameraViewModel @Inject constructor(
     var userName = mutableStateOf("")
         private set
 
-<<<<<<< HEAD
-=======
     var selectedImage = mutableStateOf<MultipartBody.Part?>(null)
         private set
 
     private var uploadImage = mutableStateOf<ImageUploadRequestModel?>(null)
 
     private var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
-
-    var imageUrl: MutableList<DetailPostData> = mutableListOf()
-
-    fun setImageUrl(imageUrl: List<GetDetailPostResponseModel>) {
-        this.imageUrl.clear()
-        imageUrl.forEach { getDetailPostResponseModel ->
-            val detailPostData = DetailPostData(
-                postId = getDetailPostResponseModel.postId,
-                imageUrl = getDetailPostResponseModel.imageUrl,
-                writer = getDetailPostResponseModel.writer
-            )
-            this.imageUrl.add(detailPostData)
-        }
-    }
->>>>>>> 16b754101ac2a77e766a50572aedf79d4c7a74dc
 
     fun setImageArray(imageArray: MutableList<Bitmap>) {
         _imageArray.value = imageArray

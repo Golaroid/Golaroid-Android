@@ -1,10 +1,6 @@
 
-{
-Kpresentation/src/main/java/com/idea_festival/presentation/ui/GolaroidApp.kt,a/0/a0df71750c8e4afd4d4dbe7ade785be22d8e235b
 I
 buildSrc/build.gradle.kts,d/9/d90b697280fada81e52ec92d24725920f1cb087b
-w
-Gapp/src/main/java/com/idea_festival/golaroid_android/ui/MainActivity.kt,6/c/6c684edcc626f3834f00574205c49079fdbee01c
 |
 Lapp/src/main/java/com/idea_festival/golaroid_android/module/NetworkModule.kt,8/8/88315aa7d484e2e63f653a34df46fc8a8f99d67f
 D
@@ -19,8 +15,6 @@ npresentation/src/main/java/com/idea_festival/presentation/ui/issued_code/naviga
 wpresentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/InputInformationNavigation.kt,c/e/ce1c2a626513302937150718f71f95c0561dbc22
 ¬
 |presentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/UploadingImageSuccessNavigation.kt,a/a/aa592afa960f4417a0f148e9b398efb0817d7c37
-”
-dpresentation/src/main/java/com/idea_festival/presentation/ui/main/navigation/TodayImageNavigation.kt,1/e/1ea80b5323a1ec629749fe4c8385b901bfda63d9
 Ÿ
 opresentation/src/main/java/com/idea_festival/presentation/ui/search_result/navigation/SearchResultNavigation.kt,9/5/95a16c8a81b53214891a5f7cac58778e3025ffc4
 Ÿ
@@ -79,8 +73,6 @@ Udesign-system/src/main/java/com/idea_festival/design_system/theme/color/ColorTh
 Rdesign-system/src/main/java/com/idea_festival/design_system/component/icon/Icon.kt,1/e/1e1b9f04146680a8a9aba34b052bfe7f1ee60cfc
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-„
-Tdesign-system/src/main/java/com/idea_festival/design_system/component/image/Image.kt,1/d/1dff859c56a76193d123acea50141a841a6f0adc
 G
 domain/build.gradle.kts,d/7/d72c8b69b8da0b3b02b699ccd509295dbd783baa
 M
@@ -89,9 +81,3 @@ R
 "buildSrc/src/main/java/Versions.kt,1/7/17cc39576120ea39e86f37255d0843f33952bb99
 T
 $buildSrc/src/main/java/Dependency.kt,0/5/05e18f13e16e2ae760966dac11c3d26643594bdc
-Ž
-^presentation/src/main/java/com/idea_festival/presentation/ui/main/navigation/MainNavigation.kt,c/e/ceeb2c034d9a03823f65ec519ae39f043708e2ea
-€
-Pdomain/src/main/java/com/idea_festival/domain/model/post/GetPostResponseModel.kt,d/6/d6be9df034c7e8cb905eacf4eb300419ddfaeb46
-†
-Vpresentation/src/main/java/com/idea_festival/presentation/ui/main/screen/MainScreen.kt,b/5/b51613f6739d05af3ccfaa1ae8b446c05ab3bf25

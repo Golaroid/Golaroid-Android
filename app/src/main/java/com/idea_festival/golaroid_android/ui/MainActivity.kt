@@ -10,6 +10,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.presentation.ui.GolaroidApp
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val postViewModel by viewModels<PostViewModel>()
     private val cameraViewModel by viewModels<CameraViewModel>()
+    private val imageViewModel by viewModels<ImageViewModel>()
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,8 @@ class MainActivity : ComponentActivity() {
                     GolaroidApp(
                         windowSizeClass = calculateWindowSizeClass(this),
                         postViewModel = postViewModel,
-                        cameraViewModel = cameraViewModel
+                        cameraViewModel = cameraViewModel,
+                        imageViewModel = imageViewModel
                     )
                 }
             }
