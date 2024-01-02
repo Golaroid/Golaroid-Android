@@ -61,6 +61,18 @@ class CameraViewModel @Inject constructor(
     private val _imageArray = MutableStateFlow<MutableList<Bitmap>>(mutableListOf())
     val imageArray: StateFlow<MutableList<Bitmap>> get() = _imageArray
 
+    private val _uploadImageResponse = MutableStateFlow<Event<ImageResponseModel>>(Event.Loading)
+    val uploadImageResponse = _uploadImageResponse.asStateFlow()
+
+    private val _uploadImageWithCodeResponse = MutableStateFlow<Event<ImageResponseModel>>(Event.Loading)
+    val uploadImageWithCodeResponse = _uploadImageWithCodeResponse
+
+    var uploadImage = mutableStateOf<ImageUploadRequestModel?>(null)
+        private set
+
+    var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
+        private set
+
     fun setImageArray(imageArray: MutableList<Bitmap>) {
         _imageArray.value = imageArray
     }
@@ -81,7 +93,6 @@ class CameraViewModel @Inject constructor(
                 capturedImage = getBitmapFromDrawableResourceId(
                     context = context,
                     drawableResId = R.drawable.ic_logo
-
                 )
             )
             swapBitmapToJpegWithMultipartFile(true).toRequestBody(mediaType.toMediaType())
@@ -152,32 +163,35 @@ class CameraViewModel @Inject constructor(
         }
     }
 
-
-    fun uploadImage(body: ImageUploadRequestModel) = viewModelScope.launch {
-        uploadImageUseCase(
-            body = body
-        ).onSuccess {
-            it.catch { remoteError ->
-                _uploadImageRequest.value = remoteError.errorHandling()
-            }.collect { response ->
-                _uploadImageRequest.value = Event.Success(data = response)
+    fun upload() = viewModelScope.launch {
+        uploadImage.value?.let { image ->
+            uploadImageUseCase(
+                body = image
+            ).onSuccess {
+                it.catch { remoteError ->
+                    _uploadImageResponse.value = remoteError.errorHandling()
+                }.collect { response ->
+                    _uploadImageResponse.value = Event.Success(data = response)
+                }
+            }.onFailure { error ->
+                _uploadImageResponse.value = error.errorHandling()
             }
-        }.onFailure {
-            _uploadImageRequest.value = it.errorHandling()
         }
     }
 
-    fun uploadImageWithCode(body: ImageUploadWithCodeRequestModel) = viewModelScope.launch {
-        uploadImageWithCodeUseCase(
-            body = body
-        ).onSuccess {
-            it.catch { remoteError ->
-                _uploadImageWithRequest.value = remoteError.errorHandling()
-            }.collect { response ->
-                _uploadImageWithRequest.value = Event.Success(data = response)
+    fun uploadWithCode() = viewModelScope.launch {
+        uploadImageWithCode.value?.let { image ->
+            uploadImageWithCodeUseCase(
+                body = image
+            ).onSuccess {
+                it.catch { remoteError ->
+                    _uploadImageWithCodeResponse.value = remoteError.errorHandling()
+                }.collect { response ->
+                    _uploadImageWithCodeResponse.value = Event.Success(data = response)
+                }
+            }.onFailure { error ->
+                _uploadImageWithCodeResponse.value = error.errorHandling()
             }
-        }.onFailure {
-            _uploadImageWithRequest.value = it.errorHandling()
         }
     }
 }

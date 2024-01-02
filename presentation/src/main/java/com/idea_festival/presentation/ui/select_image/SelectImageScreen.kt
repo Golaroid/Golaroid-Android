@@ -22,19 +22,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.component.image.ChooseImage
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 
 @Composable
 fun SelectImageRoute(
     onNextButtonClick: () -> Unit,
-    imageArray: MutableList<Bitmap>?,
+    viewModel: CameraViewModel = hiltViewModel(),
 ) {
     SelectImageScreen(
         onNextButtonClick = onNextButtonClick,
-        imageArray = imageArray
+        viewModel = viewModel
     )
 
 }
@@ -43,8 +45,10 @@ fun SelectImageRoute(
 @Composable
 fun SelectImageScreen(
     onNextButtonClick: () -> Unit,
-    imageArray: List<Bitmap>? = null,
+    viewModel: CameraViewModel,
 ) {
+    var imageArray: MutableList<Bitmap> = viewModel.imageArray.value
+
     val state = rememberPagerState {
         8
     }

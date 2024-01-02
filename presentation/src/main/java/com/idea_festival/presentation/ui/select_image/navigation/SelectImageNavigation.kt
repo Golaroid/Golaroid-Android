@@ -19,18 +19,11 @@ fun NavGraphBuilder.selectImageScreen(
     onNextButtonClick:() -> Unit,
     imageArray: MutableList<Bitmap>? = null
 ) {
-    composable(
-        route = "${selectImageRoute}/{imageArray}",
-        arguments = listOf(
-            navArgument("imageArray") {
-                type = NavType.ParcelableArrayType(Bitmap::class.java)
-            }
-        )
-    ) { backStackEntry ->
-        val imageArray: MutableList<Bitmap>? = backStackEntry.arguments?.getParcelableArrayList("imageArray")
+    composable (
+        route = selectImageRoute
+    ){
         SelectImageRoute(
             onNextButtonClick = {},
-            imageArray = imageArray
         )
     }
 }

@@ -41,16 +41,11 @@ fun CaptureRoute(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
     viewModel: CameraViewModel = hiltViewModel(),
-    onInquiryCapture: (imageArray: MutableList<Bitmap>) -> Unit,
 ) {
     CaptureScreen(
         viewModel = viewModel,
         onTakePictureFinish = onTakePictureFinish,
         onBackClick = onBackClick,
-        onInquiryCapture = { imageArray ->
-            viewModel.setImageArray(imageArray)
-            onInquiryCapture(imageArray)
-        }
     )
 }
 
@@ -59,7 +54,6 @@ fun CaptureScreen(
     viewModel: CameraViewModel,
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
-    onInquiryCapture: (imageArray: MutableList<Bitmap>) -> Unit,
 ) {
     val imageArray: MutableList<Bitmap> = mutableListOf()
     val context = LocalContext.current
@@ -87,9 +81,6 @@ fun CaptureScreen(
                         countdownValue = 2
                         --leftoverPictureValue
                         onCaptured = true
-                        onInquiryCapture(
-                            imageArray
-                        )
                     }
                 } else if (leftoverPictureValue == 0) {
                     onTakePictureFinish()
@@ -105,6 +96,7 @@ fun CaptureScreen(
                 onPhotoCaptured = { captured ->
                     onCaptured = false
                     lastCapturedPhoto.value?.let { imageArray?.add(it) }
+                    viewModel.setImageArray(imageArray)
                 },
                 onCaptured = onCaptured,
             )

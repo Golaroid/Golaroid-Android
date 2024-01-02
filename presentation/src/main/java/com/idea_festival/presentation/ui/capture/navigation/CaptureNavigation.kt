@@ -24,7 +24,6 @@ fun NavGraphBuilder.captureScreen(
         CaptureRoute(
             onBackClick = onBackClick,
             onTakePictureFinish = onTakePictureFinish,
-            onInquiryCapture = {}
         )
     }
 }
