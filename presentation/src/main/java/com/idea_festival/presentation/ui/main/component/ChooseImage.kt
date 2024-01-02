@@ -56,6 +56,7 @@ fun ChooseImage(
 
             IconButton(
                 onClick = {
+                    // 이거는 뒤에 나올 프린트를 위함이지 서버통신을 위한 저장이 아님
                     imageViewModel.setSelectedImage(image)
                 },
                 modifier = Modifier.align(Alignment.TopEnd)
