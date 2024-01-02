@@ -29,10 +29,10 @@ import com.idea_festival.presentation.ui.viewmodel.util.Event
 
 @Composable
 fun ExistCodeRoute(
-    onTakePictureButtonClick: () -> Unit,
+    onTakePictureWithCodeButtonClick: () -> Unit,
     onBackClick: () -> Unit,
     onNotFound: () -> Unit,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
 ) {
     val status = remember{ mutableStateOf(false) }
     LaunchedEffect(true) {
@@ -50,7 +50,7 @@ fun ExistCodeRoute(
     if (status.value) {
         postViewModel.withCode.value = true
         ExistCodeScreen(
-            onTakePictureButtonClick = onTakePictureButtonClick,
+            onTakePictureWithCodeButtonClick = onTakePictureWithCodeButtonClick,
             onBackClick = onBackClick,
             code = postViewModel.savedCode.value,
             writer = postViewModel.post.value.writer
@@ -83,7 +83,7 @@ suspend fun getPost(
 
 @Composable
 fun ExistCodeScreen(
-    onTakePictureButtonClick: () -> Unit,
+    onTakePictureWithCodeButtonClick: () -> Unit,
     onBackClick: () -> Unit,
     code: String,
     writer: String
@@ -150,7 +150,7 @@ fun ExistCodeScreen(
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-                onTakePictureButtonClick()
+                onTakePictureWithCodeButtonClick()
             }
         }
     }
@@ -160,7 +160,7 @@ fun ExistCodeScreen(
 @Composable
 fun ExistCodeScreenPre() {
     ExistCodeScreen(
-        onTakePictureButtonClick = {},
+        onTakePictureWithCodeButtonClick = {},
         onBackClick = {},
         code = "",
         writer = ""

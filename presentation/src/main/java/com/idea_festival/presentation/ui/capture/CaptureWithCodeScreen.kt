@@ -1,8 +1,6 @@
-
 package com.idea_festival.presentation.ui.capture
 
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,42 +24,46 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.idea_festival.design_system.component.icon.SwitchCameraIcon
 import com.idea_festival.design_system.component.icon.WhiteCircleIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.presentation.ui.capture.component.CameraPreview
 import com.idea_festival.presentation.ui.capture.component.CheckPermission
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
-import com.smarttoolfactory.screenshot.rememberScreenshotState
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 import kotlinx.coroutines.delay
 
 
 @Composable
-fun CaptureRoute(
+fun CaptureWithCodeRoute(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
     cameraViewModel: CameraViewModel,
+    postViewModel: PostViewModel,
 ) {
-    CaptureScreen(
+    cameraViewModel.isPublic.value = null
+
+    CaptureWithCodeScreen(
         viewModel = cameraViewModel,
         onTakePictureFinish = onTakePictureFinish,
         onBackClick = onBackClick,
+        postViewModel = postViewModel,
     )
 }
 
 
 @Composable
-fun CaptureScreen(
+fun CaptureWithCodeScreen(
     viewModel: CameraViewModel,
+    postViewModel: PostViewModel,
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
 ) {
-    val screenshotState = rememberScreenshotState()
 
     var lensFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
 
     val imageArray: MutableList<Bitmap> = mutableListOf()
-
     val context = LocalContext.current
 
     var countdownValue by remember { mutableIntStateOf(2) }
@@ -106,6 +108,14 @@ fun CaptureScreen(
                     viewModel.setImageArray(imageArray)
                 },
                 onCaptured = onCaptured,
+            )
+
+            AsyncImage(
+                model = postViewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
             )
 
             Row(

@@ -45,7 +45,6 @@ fun CameraPreview(
         Scaffold(
             modifier = Modifier.fillMaxSize(),
         ) { innerPadding: PaddingValues ->
-            Log.e("captureTest", onCaptured.toString())
             if (onCaptured) {
                 capturePhoto(
                     context = context,

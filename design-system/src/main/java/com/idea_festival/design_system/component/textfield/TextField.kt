@@ -37,15 +37,13 @@ fun GolaroidTextField(
     modifier: Modifier = Modifier,
     placeholder: String,
     onValueChange: (String) -> Unit,
-    value: String? = null,
+    value: String,
 ) {
-    var text by remember { mutableStateOf(value ?: "") }
 
     GolaroidAndroidTheme { colors, typography ->
             TextField(
-                value = text,
+                value = value,
                 onValueChange = {
-                    text = value ?: it
                     onValueChange(it)
                 },
                 modifier = modifier.background(color = Color.Transparent),
@@ -122,13 +120,13 @@ fun GolaroidTextFieldWithOutIcon(
     }
 }
 
-@Preview
-@Composable
-fun GolaroidTextFieldPre() {
-    GolaroidTextField(
-        modifier = Modifier.fillMaxWidth(),
-        placeholder = "코드를 입력해 주세요",
-        onValueChange = {},
-        onSearchButtonClick = {}
-    )
-}
+//@Preview
+//@Composable
+//fun GolaroidTextFieldPre() {
+//    GolaroidTextField(
+//        modifier = Modifier.fillMaxWidth(),
+//        placeholder = "코드를 입력해 주세요",
+//        onValueChange = {},
+//        onSearchButtonClick = {}
+//    )
+//}

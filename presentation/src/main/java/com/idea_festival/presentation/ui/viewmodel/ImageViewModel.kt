@@ -1,5 +1,6 @@
 package com.idea_festival.presentation.ui.viewmodel
 
+import android.graphics.Bitmap
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,6 +25,10 @@ class ImageViewModel @Inject constructor(
     private val uploadImageWithCodeUseCase: UploadImageWithCodeUseCase
 ) : ViewModel() {
 
+    private val _selectedImage = mutableStateOf<Bitmap?>(null)
+    val selectedImage: Bitmap? get() = _selectedImage.value
+
+
     private val _uploadImageResponse = MutableStateFlow<Event<ImageResponseModel>>(Event.Loading)
     val uploadImageResponse = _uploadImageResponse.asStateFlow()
 
@@ -35,6 +40,9 @@ class ImageViewModel @Inject constructor(
 
     var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
         private set
+    fun setSelectedImage(image: Bitmap?) {
+        _selectedImage.value = image
+    }
 
     fun upload() = viewModelScope.launch {
         uploadImage.value?.let { image ->

@@ -21,14 +21,14 @@ fun NavController.navigateToNoExistCode(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.existCodeScreen(
-    onTakePictureButtonClick: () -> Unit,
+    onTakePictureWithCodeButtonClick: () -> Unit,
     onBackClick: () -> Unit,
     onNotFound: () -> Unit,
     postViewModel: PostViewModel
 ) {
     composable(route = existCodeRoute) {
         ExistCodeRoute (
-            onTakePictureButtonClick = onTakePictureButtonClick,
+            onTakePictureWithCodeButtonClick = onTakePictureWithCodeButtonClick,
             onBackClick = onBackClick,
             onNotFound = onNotFound,
             postViewModel = postViewModel
