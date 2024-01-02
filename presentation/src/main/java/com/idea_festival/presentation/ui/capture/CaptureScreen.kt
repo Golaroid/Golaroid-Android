@@ -3,6 +3,7 @@ package com.idea_festival.presentation.ui.capture
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.camera.core.CameraSelector
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,9 +30,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberImagePainter
 import com.idea_festival.design_system.component.icon.SwitchCameraIcon
 import com.idea_festival.design_system.component.icon.WhiteCircleIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.domain.model.post.GetDetailPostResponseModel
 import com.idea_festival.presentation.ui.capture.component.CameraPreview
 import com.idea_festival.presentation.ui.capture.component.CheckPermission
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
@@ -57,6 +61,7 @@ fun CaptureScreen(
     onBackClick: () -> Unit,
 ) {
     var overlayImageIndex by remember { mutableStateOf(0) }
+
     var lensFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
 
     val imageArray: MutableList<Bitmap> = mutableListOf()
@@ -68,6 +73,8 @@ fun CaptureScreen(
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
 
     var onCaptured by remember { mutableStateOf(false) }
+
+    var imageUrl = mutableListOf<GetDetailPostResponseModel>()
 
     CheckPermission(context = context, viewModel = viewModel)
 
@@ -84,7 +91,6 @@ fun CaptureScreen(
                     if (countdownValue == 0) {
                         countdownValue = 2
                         --leftoverPictureValue
-                        ++overlayImageIndex
                         onCaptured = true
                     }
                 } else if (leftoverPictureValue == 0) {
@@ -102,11 +108,18 @@ fun CaptureScreen(
                     onCaptured = false
                     lastCapturedPhoto.value?.let { imageArray?.add(it) }
                     viewModel.setImageArray(imageArray)
+                    ++overlayImageIndex
                 },
                 onCaptured = onCaptured,
             )
 
-
+            Image(
+                painter = rememberImagePainter(
+                    data = viewModel.imageUrl.getOrNull(overlayImageIndex)
+                ),
+                contentDescription = null,
+                modifier = Modifier.wrapContentSize()
+            )
 
             Row(
                 modifier = Modifier

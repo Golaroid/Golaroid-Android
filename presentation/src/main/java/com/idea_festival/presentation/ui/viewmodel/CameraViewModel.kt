@@ -21,6 +21,7 @@ import com.idea_festival.domain.model.post.GetDetailPostResponseModel
 import com.idea_festival.domain.usecase.image.UploadImageUseCase
 import com.idea_festival.domain.usecase.image.UploadImageWithCodeUseCase
 import com.idea_festival.presentation.ui.capture.CaptureState
+import com.idea_festival.presentation.ui.capture.DetailPostData
 import com.idea_festival.presentation.ui.util.Event
 import com.idea_festival.presentation.ui.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -75,7 +76,19 @@ class CameraViewModel @Inject constructor(
     var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
         private set
 
-    var imageUrl: String = postViewModel.post.toString()
+    var imageUrl: MutableList<DetailPostData> = mutableListOf()
+
+    fun setImageUrl(imageUrl: List<GetDetailPostResponseModel>) {
+        this.imageUrl.clear()
+        imageUrl.forEach { getDetailPostResponseModel ->
+            val detailPostData = DetailPostData(
+                postId = getDetailPostResponseModel.postId,
+                imageUrl = getDetailPostResponseModel.imageUrl,
+                writer = getDetailPostResponseModel.writer
+            )
+            this.imageUrl.add(detailPostData)
+        }
+    }
 
     fun setImageArray(imageArray: MutableList<Bitmap>) {
         _imageArray.value = imageArray

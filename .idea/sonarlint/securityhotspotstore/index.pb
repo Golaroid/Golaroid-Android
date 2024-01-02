@@ -23,8 +23,6 @@ wpresentation/src/main/java/com/idea_festival/presentation/ui/input_information/
 dpresentation/src/main/java/com/idea_festival/presentation/ui/main/navigation/TodayImageNavigation.kt,1/e/1ea80b5323a1ec629749fe4c8385b901bfda63d9
 Ÿ
 opresentation/src/main/java/com/idea_festival/presentation/ui/search_result/navigation/SearchResultNavigation.kt,9/5/95a16c8a81b53214891a5f7cac58778e3025ffc4
-Œ
-\presentation/src/main/java/com/idea_festival/presentation/ui/main/screen/TodayImageScreen.kt,7/2/72333d3a4c532e795c7f173028569842b8585653
 Ÿ
 opresentation/src/main/java/com/idea_festival/presentation/ui/input_information/screen/InputInformationScreen.kt,4/1/41285d83e7b2ca4c6aa8956ff52395b2f1000260
 ¡

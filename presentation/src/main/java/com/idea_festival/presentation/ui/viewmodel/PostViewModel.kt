@@ -26,7 +26,7 @@ class PostViewModel @Inject constructor(
     private val _getPostResponse = MutableStateFlow<Event<List<PostModel>>>(Event.Loading)
     val getPostResponse = _getPostResponse.asStateFlow()
 
-    private val _getDetailPostResponse = MutableStateFlow<Event<GetDetailPostResponseModel>>(Event.Loading)
+    private val _getDetailPostResponse = MutableStateFlow<Event<List<GetDetailPostResponseModel>>>(Event.Loading)
     val getDetailPostResponse = _getDetailPostResponse
 
     var postList = mutableStateListOf<PostModel>()
