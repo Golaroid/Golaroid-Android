@@ -2,6 +2,7 @@ package com.idea_festival.presentation.ui.capture
 
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.camera.core.CameraSelector
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -55,6 +56,8 @@ fun CaptureScreen(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
 ) {
+    var lensFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
+
     val imageArray: MutableList<Bitmap> = mutableListOf()
     val context = LocalContext.current
 
@@ -114,6 +117,8 @@ fun CaptureScreen(
                 SwitchCameraIcon(
                     modifier = Modifier
                         .clickable {
+                            lensFacing = if (lensFacing == CameraSelector.DEFAULT_FRONT_CAMERA) CameraSelector.DEFAULT_BACK_CAMERA
+                            else CameraSelector.DEFAULT_FRONT_CAMERA
                             viewModel.toggleCameraFacing()
                         }
                         .width(24.dp)
