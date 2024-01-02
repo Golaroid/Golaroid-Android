@@ -14,6 +14,7 @@ fun GolaroidApp(
     appState: GolaroidAppState = rememberGolaroidAppState(windowSizeClass = windowSizeClass),
     postViewModel: PostViewModel,
     cameraViewModel: CameraViewModel
+
 ) {
     GolaroidAndroidTheme { _, _ ->
         GolaroidNavHost(

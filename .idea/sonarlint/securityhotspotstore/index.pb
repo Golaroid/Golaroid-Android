@@ -1,10 +1,6 @@
 
-{
-Kpresentation/src/main/java/com/idea_festival/presentation/ui/GolaroidApp.kt,a/0/a0df71750c8e4afd4d4dbe7ade785be22d8e235b
 I
 buildSrc/build.gradle.kts,d/9/d90b697280fada81e52ec92d24725920f1cb087b
-w
-Gapp/src/main/java/com/idea_festival/golaroid_android/ui/MainActivity.kt,6/c/6c684edcc626f3834f00574205c49079fdbee01c
 |
 Lapp/src/main/java/com/idea_festival/golaroid_android/module/NetworkModule.kt,8/8/88315aa7d484e2e63f653a34df46fc8a8f99d67f
 D
@@ -19,8 +15,6 @@ npresentation/src/main/java/com/idea_festival/presentation/ui/issued_code/naviga
 wpresentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/InputInformationNavigation.kt,c/e/ce1c2a626513302937150718f71f95c0561dbc22
 ¨
 |presentation/src/main/java/com/idea_festival/presentation/ui/input_information/navigation/UploadingImageSuccessNavigation.kt,a/a/aa592afa960f4417a0f148e9b398efb0817d7c37
-î
-dpresentation/src/main/java/com/idea_festival/presentation/ui/main/navigation/TodayImageNavigation.kt,1/e/1ea80b5323a1ec629749fe4c8385b901bfda63d9
 ü
 opresentation/src/main/java/com/idea_festival/presentation/ui/search_result/navigation/SearchResultNavigation.kt,9/5/95a16c8a81b53214891a5f7cac58778e3025ffc4
 ü
@@ -53,26 +47,12 @@ Ppresentation/src/main/java/com/idea_festival/presentation/ui/GolaroidAppState.k
 Vdesign-system/src/main/java/com/idea_festival/design_system/component/button/Button.kt,3/c/3cef0c24dc9edb94af72a2b85a315803b91eadcb
 Å
 Qdomain/src/main/java/com/idea_festival/domain/usecase/image/UploadImageUseCase.kt,e/d/ed7afa560b3bd10662d2a94eb6bdeb88fa824465
-â
-Ydomain/src/main/java/com/idea_festival/domain/usecase/image/UploadImageWithCodeUseCase.kt,1/3/13b05ac1ffda4c4f7cf97c794dcdb7331425d6ad
 z
 Jpresentation/src/main/java/com/idea_festival/presentation/ui/util/Event.kt,1/c/1c9393fb604002ade8abcf104122e5e13ecafeae
-Ä
-Pdata/src/main/java/com/idea_festival/data/remote/dto/image/ImageUploadRequest.kt,c/a/cac7b63624320a5fa19e785058e3ee546fbc55a7
-à
-Xdata/src/main/java/com/idea_festival/data/remote/dto/image/ImageUploadWithCodeRequest.kt,e/d/ed70d0af1536f19653f84a8eaae91e430a4fded1
 Ñ
 Tdomain/src/main/java/com/idea_festival/domain/model/image/ImageUploadRequestModel.kt,0/7/07e5efbded92b00ad9b1478e0ca0eeb82e81a44e
 
 Odomain/src/main/java/com/idea_festival/domain/model/image/ImageResponseModel.kt,e/c/ec2974c5b190b5aef09cf48ae619fd18d39298a9
-~
-Ndata/src/main/java/com/idea_festival/data/remote/datasource/ImageDataSource.kt,1/9/19579bffb7cdb2c0dfa2f3214726d94d7aa9b1ca
-t
-Ddata/src/main/java/com/idea_festival/data/remote/network/ImageAPI.kt,4/f/4f758eaf7c5ac9ad27709728a922a7a10f67ca79
-Ç
-Rdata/src/main/java/com/idea_festival/data/remote/datasource/ImageDataSourceImpl.kt,1/9/1991cd1d7bde1a3727d6eae70062010b8f662e41
-{
-Kdata/src/main/java/com/idea_festival/data/repository/ImageRepositoryImpl.kt,e/9/e933936c1a734bb011057a87ba1b7315af141066
 {
 Kdata/src/main/java/com/idea_festival/data/remote/dto/image/ImageResponse.kt,5/6/568ca8d54d3e893c00b1328b6356f903e768d5a2
 t
@@ -93,10 +73,6 @@ Udesign-system/src/main/java/com/idea_festival/design_system/theme/color/ColorTh
 Rdesign-system/src/main/java/com/idea_festival/design_system/component/icon/Icon.kt,1/e/1e1b9f04146680a8a9aba34b052bfe7f1ee60cfc
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-å
-\domain/src/main/java/com/idea_festival/domain/model/image/ImageUploadWithCodeRequestModel.kt,f/6/f687d663b07ca8c8ce062aca4fc0f4249a940356
-Ñ
-Tdesign-system/src/main/java/com/idea_festival/design_system/component/image/Image.kt,1/d/1dff859c56a76193d123acea50141a841a6f0adc
 G
 domain/build.gradle.kts,d/7/d72c8b69b8da0b3b02b699ccd509295dbd783baa
 M
@@ -105,9 +81,3 @@ R
 "buildSrc/src/main/java/Versions.kt,1/7/17cc39576120ea39e86f37255d0843f33952bb99
 T
 $buildSrc/src/main/java/Dependency.kt,0/5/05e18f13e16e2ae760966dac11c3d26643594bdc
-é
-^presentation/src/main/java/com/idea_festival/presentation/ui/main/navigation/MainNavigation.kt,c/e/ceeb2c034d9a03823f65ec519ae39f043708e2ea
-Ä
-Pdomain/src/main/java/com/idea_festival/domain/model/post/GetPostResponseModel.kt,d/6/d6be9df034c7e8cb905eacf4eb300419ddfaeb46
-Ü
-Vpresentation/src/main/java/com/idea_festival/presentation/ui/main/screen/MainScreen.kt,b/5/b51613f6739d05af3ccfaa1ae8b446c05ab3bf25

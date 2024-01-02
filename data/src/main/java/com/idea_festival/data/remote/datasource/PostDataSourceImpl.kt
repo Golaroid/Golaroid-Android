@@ -21,9 +21,9 @@ class PostDataSourceImpl @Inject constructor(
         )
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getDetailPost(code: String): Flow<List<GetDetailPostResponse>> = flow {
+    override suspend fun getDetailPost(code: String): Flow<GetDetailPostResponse> = flow {
         emit(
-            GolaroidApiHandler<List<GetDetailPostResponse>>()
+            GolaroidApiHandler<GetDetailPostResponse>()
                 .httpRequest { service.getDetailPost(code = code) }
                 .sendRequest()
         )

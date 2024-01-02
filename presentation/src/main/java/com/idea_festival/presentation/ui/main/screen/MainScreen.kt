@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,12 +34,10 @@ import com.idea_festival.design_system.component.textfield.GolaroidTextField
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.design_system.theme.pretendard
 import com.idea_festival.domain.model.post.PostModel
-import com.idea_festival.presentation.ui.main.component.AutoScrollingLazyRow
 import com.idea_festival.presentation.ui.main.component.GolaroidLogo
 import com.idea_festival.presentation.ui.main.component.PictureLazyRow
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 import com.idea_festival.presentation.ui.viewmodel.util.Event
-import kotlinx.coroutines.delay
 
 @Composable
 fun MainRoute(
@@ -80,7 +77,8 @@ fun MainRoute(
 suspend fun getPostList(
     viewModel: PostViewModel,
     onSuccess: (data: List<PostModel>) -> Unit,
-    onFinished: (isSuccess: Boolean) -> Unit
+    onFinished: (isSuccess: Boolean) -> Unit,
+    saveInputCode: (String) -> Unit = {_->}
 ) {
     viewModel.getPostResponse.collect { response ->
         when (response) {
@@ -130,6 +128,7 @@ fun MainScreen(
                 GolaroidTextField(
                     placeholder = "코드를 입력해 주세요",
                     onValueChange = {
+
                     }, modifier = Modifier
                         .fillMaxWidth(),
                     onSearchButtonClick = { onSearchButtonClick() }

@@ -1,12 +1,9 @@
 package com.idea_festival.presentation.ui.main.navigation
 
-import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.idea_festival.presentation.ui.GolaroidAppState
 import com.idea_festival.presentation.ui.main.screen.MainRoute
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 

@@ -28,7 +28,7 @@ class ImageRepositoryImpl @Inject constructor(
     override suspend fun imageUploadWithCode(body: ImageUploadWithCodeRequestModel): Flow<ImageResponseModel> {
         return imageDataSource.uploadImageWithCode(
             body = ImageUploadWithCodeRequest(
-                images = body.images,
+                image = body.image,
                 isPublic = body.isPublic,
                 writer = body.writer
             )

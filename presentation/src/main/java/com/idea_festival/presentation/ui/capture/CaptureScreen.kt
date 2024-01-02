@@ -2,7 +2,6 @@ package com.idea_festival.presentation.ui.capture
 
 import android.graphics.Bitmap
 import androidx.camera.core.CameraSelector
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,7 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
 import com.idea_festival.design_system.component.icon.SwitchCameraIcon
 import com.idea_festival.design_system.component.icon.WhiteCircleIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
@@ -35,6 +33,7 @@ import com.idea_festival.presentation.ui.capture.component.CameraPreview
 import com.idea_festival.presentation.ui.capture.component.CheckPermission
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
+import com.idea_festival.presentation.ui.viewmodel.util.Event
 import kotlinx.coroutines.delay
 
 
@@ -43,22 +42,39 @@ fun CaptureRoute(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
     cameraViewModel: CameraViewModel,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
 ) {
-    CaptureScreen(
-        viewModel = cameraViewModel,
-        onTakePictureFinish = onTakePictureFinish,
-        onBackClick = onBackClick,
-    )
+    val status = remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        getOverLayImageUrl(
+            viewModel = postViewModel,
+            onSuccess = {
+                postViewModel.post.value = it
+            },
+            onFinished = {
+                status.value = it
+            }
+        )
+    }
+    if (status.value) {
+        CaptureScreen(
+            viewModel = cameraViewModel,
+            onTakePictureFinish = onTakePictureFinish,
+            onBackClick = onBackClick,
+            postViewModel = postViewModel,
+            overLayImageUrl = postViewModel.post.value
+        )
+    }
 }
 
 @Composable
 fun CaptureScreen(
     viewModel: CameraViewModel,
+    postViewModel: PostViewModel,
     onTakePictureFinish: () -> Unit,
+    overLayImageUrl: GetDetailPostResponseModel,
     onBackClick: () -> Unit,
 ) {
-    var overlayImageIndex by remember { mutableStateOf(0) }
 
     var lensFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
 
@@ -66,13 +82,11 @@ fun CaptureScreen(
     val context = LocalContext.current
 
     var countdownValue by remember { mutableIntStateOf(2) }
-    var leftoverPictureValue by remember { mutableIntStateOf(8) }
+    var leftoverPictureValue by remember { mutableIntStateOf(4) }
 
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
 
     var onCaptured by remember { mutableStateOf(false) }
-
-    var imageUrl = mutableListOf<GetDetailPostResponseModel>()
 
     CheckPermission(context = context, viewModel = viewModel)
 
@@ -96,6 +110,7 @@ fun CaptureScreen(
                 }
             }
 
+
             CameraPreview(
                 context = context,
                 onPhotoCapturedData = {
@@ -106,17 +121,13 @@ fun CaptureScreen(
                     onCaptured = false
                     lastCapturedPhoto.value?.let { imageArray?.add(it) }
                     viewModel.setImageArray(imageArray)
-                    ++overlayImageIndex
                 },
                 onCaptured = onCaptured,
             )
 
-            Image(
-                painter = rememberImagePainter(
-                    data = viewModel.imageUrl.getOrNull(overlayImageIndex)
-                ),
-                contentDescription = null,
-                modifier = Modifier.wrapContentSize()
+            AsyncImage(
+                model = overLayImageUrl.imageUrl,
+                contentDescription = "",
             )
 
             Row(
@@ -179,6 +190,25 @@ fun CaptureScreen(
                 Spacer(modifier = Modifier.width(16.dp))
             }
 
+        }
+    }
+}
+
+suspend fun getOverLayImageUrl(
+    viewModel: PostViewModel,
+    onSuccess: (data: GetDetailPostResponseModel) -> Unit,
+    onFinished: (isSuccess: Boolean) -> Unit,
+) {
+    viewModel.getDetailPostResponse.collect { response ->
+        when (response) {
+            is Event.Success -> {
+                onSuccess(response.data!!)
+                onFinished(true)
+            }
+
+            else -> {
+                onFinished(false)
+            }
         }
     }
 }

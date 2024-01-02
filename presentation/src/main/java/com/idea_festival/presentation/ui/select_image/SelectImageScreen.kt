@@ -27,7 +27,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.GoBackIcon
-import com.idea_festival.design_system.component.image.ChooseImage
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 
@@ -55,11 +54,11 @@ fun SelectImageRoute(
 @Composable
 fun SelectImageScreen(
     onNextButtonClick: (Int) -> Unit,
-    imageArray: MutableList<Bitmap>
+    imageArray: MutableList<Bitmap>,
 ) {
 
     val state = rememberPagerState {
-        8
+        4
     }
     val currentPage = remember { mutableStateOf(0) }
     GolaroidAndroidTheme { colors, typography ->
@@ -92,7 +91,7 @@ fun SelectImageScreen(
 
                 Spacer(modifier = Modifier.width(43.dp))
                 Text(
-                    text = "4장의사진을 골라주세요!!",
+                    text = "원하시는 사진을 1장 골라주세요!!",
                     style = typography.headlineSmall,
                     color = colors.WHITE
                 )
@@ -105,10 +104,10 @@ fun SelectImageScreen(
                 contentPadding = PaddingValues(horizontal = 40.dp)
             ) { page ->
                 Log.e("imageArray", imageArray.toString())
-                ChooseImage(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    image = imageArray?.get(page),
-                )
+//                ChooseImage(
+//                    modifier = Modifier.padding(horizontal = 16.dp),
+//                    image = imageArray?.get(page),
+//                )
                 currentPage.value = state.currentPage
             }
 

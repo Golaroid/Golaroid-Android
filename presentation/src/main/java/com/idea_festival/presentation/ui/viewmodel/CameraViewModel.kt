@@ -40,7 +40,6 @@ import javax.inject.Inject
 class CameraViewModel @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
     private val uploadImageWithCodeUseCase: UploadImageWithCodeUseCase,
-    private val postViewModel: PostViewModel
 ) : ViewModel() {
 
     val _facing = MutableStateFlow(CameraSelector.LENS_FACING_BACK)

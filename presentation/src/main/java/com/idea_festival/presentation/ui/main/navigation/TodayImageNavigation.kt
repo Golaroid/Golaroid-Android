@@ -1,8 +1,5 @@
 package com.idea_festival.presentation.ui.main.navigation
 
-import androidx.compose.runtime.remember
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
