@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -24,21 +25,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import java.util.UUID
 import androidx.compose.runtime.setValue
-import com.idea_festival.domain.model.post.GetPostResponseModel
+import com.idea_festival.domain.model.post.PostModel
 
 @Composable
-fun PictureLazyRow() {
+fun PictureLazyRow(
+    data: List<PostModel>,
+    onClick: (String) -> Unit
+) {
     LazyRow(
         modifier = Modifier.wrapContentHeight(),
     ) {
-        items(10) {
-            Row {
-                Spacer(modifier = Modifier.width(10.dp))
+        items(data) {
+            Spacer(modifier = Modifier.width(10.dp))
 
-                //PictureCard()
-            }
+            PictureCard(
+                data = it,
+                onClick = onClick
+            )
         }
     }
 }
@@ -52,7 +56,7 @@ private class AutoScrollItem<T>(
 
 @Composable
 fun AutoScrollingLazyRow(
-    list: List<GetPostResponseModel.Post>,
+    list: List<PostModel>,
     modifier: Modifier = Modifier,
     itemClicked: (String) -> Unit
 ) {
@@ -106,7 +110,7 @@ fun AutoScrollingLazyRow(
     }
 }
 
-private fun List<GetPostResponseModel.Post>.mapAutoScrollItem(): List<AutoScrollItem<GetPostResponseModel.Post>> {
+private fun List<PostModel>.mapAutoScrollItem(): List<AutoScrollItem<PostModel>> {
     val newList = this.map { AutoScrollItem(data = it) }.toMutableList()
     var index = 0
     if (this.size < REQUIRED_CARD_COUNT) {

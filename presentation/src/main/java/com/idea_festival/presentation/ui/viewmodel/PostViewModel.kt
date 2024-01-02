@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.idea_festival.domain.model.post.GetDetailPostResponseModel
-import com.idea_festival.domain.model.post.GetPostResponseModel
+import com.idea_festival.domain.model.post.PostModel
 import com.idea_festival.domain.usecase.post.GetDetailPostUseCase
 import com.idea_festival.domain.usecase.post.GetPostUseCase
 import com.idea_festival.presentation.ui.viewmodel.util.Event
@@ -23,13 +23,13 @@ class PostViewModel @Inject constructor(
     private val getDetailPostUseCase: GetDetailPostUseCase
 ) : ViewModel() {
 
-    private val _getPostResponse = MutableStateFlow<Event<GetPostResponseModel>>(Event.Loading)
+    private val _getPostResponse = MutableStateFlow<Event<List<PostModel>>>(Event.Loading)
     val getPostResponse = _getPostResponse.asStateFlow()
 
     private val _getDetailPostResponse = MutableStateFlow<Event<GetDetailPostResponseModel>>(Event.Loading)
     val getDetailPostResponse = _getDetailPostResponse
 
-    var postList = mutableStateOf<GetPostResponseModel?>(null)
+    var postList = mutableStateListOf<PostModel>()
         private set
 
     var post = mutableStateOf(

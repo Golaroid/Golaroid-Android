@@ -1,5 +1,6 @@
 package com.idea_festival.presentation.ui.main.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -31,11 +34,13 @@ import com.idea_festival.design_system.component.icon.StarfishStarIcon
 import com.idea_festival.design_system.component.textfield.GolaroidTextField
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.design_system.theme.pretendard
-import com.idea_festival.domain.model.post.GetPostResponseModel
+import com.idea_festival.domain.model.post.PostModel
 import com.idea_festival.presentation.ui.main.component.AutoScrollingLazyRow
 import com.idea_festival.presentation.ui.main.component.GolaroidLogo
+import com.idea_festival.presentation.ui.main.component.PictureLazyRow
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 import com.idea_festival.presentation.ui.viewmodel.util.Event
+import kotlinx.coroutines.delay
 
 @Composable
 fun MainRoute(
@@ -44,37 +49,52 @@ fun MainRoute(
     onImageClick: () -> Unit,
     postViewModel: PostViewModel = hiltViewModel(),
 ) {
+    val status = remember { mutableStateOf(false) }
+    var key = 0
     postViewModel.getPostList()
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = key) {
+        delay(2000)
         getPostList(
             viewModel = postViewModel,
             onSuccess = {
-                postViewModel.postList.value = it
+                postViewModel.postList.addAll(it)
+            },
+            onFinished = {
+                status.value = it
             }
         )
     }
-    MainScreen(
-        onTakePictureButtonClick = onTakePictureButtonClick,
-        onSearchButtonClick = onSearchButtonClick,
-        onImageClick = {
-            onImageClick()
-            postViewModel.getDetailPostList(it)
-        },
-        items = postViewModel.postList.value!!
-    )
+    if (status.value) {
+        MainScreen(
+            onTakePictureButtonClick = onTakePictureButtonClick,
+            onSearchButtonClick = onSearchButtonClick,
+            onImageClick = {
+                onImageClick()
+                postViewModel.getDetailPostList(it)
+            },
+            items = postViewModel.postList
+        )
+    } else {
+        key += 1
+    }
 }
 
 suspend fun getPostList(
     viewModel: PostViewModel,
-    onSuccess: (data: GetPostResponseModel) -> Unit
+    onSuccess: (data: List<PostModel>) -> Unit,
+    onFinished: (isSuccess: Boolean) -> Unit
 ) {
     viewModel.getPostResponse.collect { response ->
         when (response) {
             is Event.Success -> {
                 onSuccess(response.data!!)
+                onFinished(true)
             }
 
-            else -> {}
+            else -> {
+                onFinished(false)
+                Log.e("here", response.toString())
+            }
         }
     }
 }
@@ -84,7 +104,7 @@ fun MainScreen(
     onTakePictureButtonClick: () -> Unit,
     onSearchButtonClick: () -> Unit,
     onImageClick: (String) -> Unit,
-    items: GetPostResponseModel
+    items: List<PostModel>
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
@@ -214,9 +234,9 @@ fun MainScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            AutoScrollingLazyRow(
-                list = items.post,
-                itemClicked = onImageClick
+            PictureLazyRow(
+                data = items,
+                onClick = onImageClick
             )
 
             Spacer(modifier = Modifier.height(21.dp))
@@ -263,14 +283,12 @@ fun MainScreenPre() {
         onTakePictureButtonClick = {},
         onSearchButtonClick = {},
         onImageClick = {},
-        items = GetPostResponseModel(
-            post = listOf(
-                GetPostResponseModel.Post(
-                    id = 1341513L,
-                    writer = "채종인",
-                    code = "A368SF",
-                    imageUrl = ""
-                )
+        items = listOf(
+            PostModel(
+                id = 1341513L,
+                writer = "채종인",
+                code = "A368SF",
+                imageUrl = ""
             )
         )
     )
