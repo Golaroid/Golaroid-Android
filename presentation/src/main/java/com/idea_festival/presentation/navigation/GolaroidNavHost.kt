@@ -38,7 +38,6 @@ fun GolaroidNavHost(
     startDestination: String = mainRoute,
     postViewModel: PostViewModel,
     cameraViewModel: CameraViewModel,
-    imageViewModel: ImageViewModel
 ) {
     val navController = appState.navController
 

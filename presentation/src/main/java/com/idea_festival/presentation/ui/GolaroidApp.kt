@@ -13,15 +13,14 @@ fun GolaroidApp(
     windowSizeClass: WindowSizeClass,
     appState: GolaroidAppState = rememberGolaroidAppState(windowSizeClass = windowSizeClass),
     postViewModel: PostViewModel,
-    imageViewModel: ImageViewModel,
-    cameraViewModel: CameraViewModel,
+    cameraViewModel: CameraViewModel
+
 ) {
     GolaroidAndroidTheme { _, _ ->
         GolaroidNavHost(
             appState = appState,
             postViewModel = postViewModel,
-            cameraViewModel = cameraViewModel,
-            imageViewModel = imageViewModel
+            cameraViewModel = cameraViewModel
         )
     }
 }
