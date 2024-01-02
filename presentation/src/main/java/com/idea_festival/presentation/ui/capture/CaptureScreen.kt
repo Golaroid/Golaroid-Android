@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.idea_festival.design_system.component.icon.SwitchCameraIcon
 import com.idea_festival.design_system.component.icon.WhiteCircleIcon
@@ -44,14 +45,29 @@ fun CaptureRoute(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
     cameraViewModel: CameraViewModel,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
 ) {
-    CaptureScreen(
-        viewModel = cameraViewModel,
-        onTakePictureFinish = onTakePictureFinish,
-        onBackClick = onBackClick,
-        postViewModel = postViewModel
-    )
+    val status = remember { mutableStateOf(false) }
+    LaunchedEffect(true) {
+        getOverLayImageUrl(
+            viewModel = postViewModel,
+            onSuccess = {
+                postViewModel.post.value = it
+            },
+            onFinished = {
+                status.value = it
+            }
+        )
+    }
+    if (status.value) {
+        CaptureScreen(
+            viewModel = cameraViewModel,
+            onTakePictureFinish = onTakePictureFinish,
+            onBackClick = onBackClick,
+            postViewModel = postViewModel,
+            overLayImageUrl = postViewModel.post.value
+        )
+    }
 }
 
 @Composable
@@ -59,11 +75,9 @@ fun CaptureScreen(
     viewModel: CameraViewModel,
     postViewModel: PostViewModel,
     onTakePictureFinish: () -> Unit,
+    overLayImageUrl: GetDetailPostResponseModel,
     onBackClick: () -> Unit,
 ) {
-    val status = remember{ mutableStateOf(false) }
-
-    var overlayImageIndex by remember { mutableStateOf(0) }
 
     var lensFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
 
@@ -71,7 +85,7 @@ fun CaptureScreen(
     val context = LocalContext.current
 
     var countdownValue by remember { mutableIntStateOf(2) }
-    var leftoverPictureValue by remember { mutableIntStateOf(8) }
+    var leftoverPictureValue by remember { mutableIntStateOf(4) }
 
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
 
@@ -99,17 +113,6 @@ fun CaptureScreen(
                 }
             }
 
-            LaunchedEffect(true) {
-                getOverLayImageUrl(
-                    viewModel = postViewModel,
-                    onSuccess = {
-                        postViewModel.post.value = it
-                    },
-                    onFinished = {
-                        status.value = it
-                    }
-                )
-            }
 
             CameraPreview(
                 context = context,
@@ -121,19 +124,14 @@ fun CaptureScreen(
                     onCaptured = false
                     lastCapturedPhoto.value?.let { imageArray?.add(it) }
                     viewModel.setImageArray(imageArray)
-                    ++overlayImageIndex
                 },
                 onCaptured = onCaptured,
             )
 
-            postViewModel.getDetailPostResponse?.let { imageUrl ->
-                Image(
-                    painter = rememberImagePainter(data = imageUrl),
-                    contentDescription = null,
-                    modifier = Modifier.wrapContentSize()
-
-                )
-            }
+            AsyncImage(
+                model = overLayImageUrl.imageUrl,
+                contentDescription = "",
+            )
 
             Row(
                 modifier = Modifier
@@ -203,7 +201,7 @@ fun CaptureScreen(
 suspend fun getOverLayImageUrl(
     viewModel: PostViewModel,
     onSuccess: (data: GetDetailPostResponseModel) -> Unit,
-    onFinished: (isSuccess: Boolean) -> Unit
+    onFinished: (isSuccess: Boolean) -> Unit,
 ) {
     viewModel.getDetailPostResponse.collect { response ->
         when (response) {
@@ -212,7 +210,9 @@ suspend fun getOverLayImageUrl(
                 onFinished(true)
             }
 
-            else -> { onFinished(false) }
+            else -> {
+                onFinished(false)
+            }
         }
     }
 }
