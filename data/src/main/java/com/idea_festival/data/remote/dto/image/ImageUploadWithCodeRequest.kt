@@ -5,7 +5,7 @@ import okhttp3.MultipartBody
 
 data class ImageUploadWithCodeRequest(
     @SerializedName("images")
-    val images: List<MultipartBody.Part>,
+    val image: MultipartBody.Part,
     @SerializedName("isPublic")
     val isPublic: Boolean,
     @SerializedName("writer")

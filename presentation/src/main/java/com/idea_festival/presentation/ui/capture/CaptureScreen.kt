@@ -1,7 +1,7 @@
 package com.idea_festival.presentation.ui.capture
 
 import android.graphics.Bitmap
-import android.util.Log
+import androidx.camera.core.CameraSelector
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -24,14 +24,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.idea_festival.design_system.component.icon.SwitchCameraIcon
 import com.idea_festival.design_system.component.icon.WhiteCircleIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.domain.model.post.GetDetailPostResponseModel
 import com.idea_festival.presentation.ui.capture.component.CameraPreview
 import com.idea_festival.presentation.ui.capture.component.CheckPermission
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
+import com.idea_festival.presentation.ui.viewmodel.util.Event
 import kotlinx.coroutines.delay
 
 
@@ -39,33 +41,48 @@ import kotlinx.coroutines.delay
 fun CaptureRoute(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
-    viewModel: CameraViewModel = hiltViewModel(),
-    onInquiryCapture: (ByteArray) -> Unit
+    cameraViewModel: CameraViewModel,
+    postViewModel: PostViewModel,
 ) {
-    val navController = rememberNavController()
-
-    CaptureScreen(
-        viewModel = viewModel,
-        onTakePictureFinish = onTakePictureFinish,
-        onBackClick = onBackClick,
-        onInquiryCapture = { imageArray ->
-            navController.navigate(route = "selectImageRoute/image{$imageArray}")
-        }
-    )
+    val status = remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        getOverLayImageUrl(
+            viewModel = postViewModel,
+            onSuccess = {
+                postViewModel.post.value = it
+            },
+            onFinished = {
+                status.value = it
+            }
+        )
+    }
+    if (status.value) {
+        CaptureScreen(
+            viewModel = cameraViewModel,
+            onTakePictureFinish = onTakePictureFinish,
+            onBackClick = onBackClick,
+            postViewModel = postViewModel,
+            overLayImageUrl = postViewModel.post.value
+        )
+    }
 }
 
 @Composable
 fun CaptureScreen(
     viewModel: CameraViewModel,
+    postViewModel: PostViewModel,
     onTakePictureFinish: () -> Unit,
+    overLayImageUrl: GetDetailPostResponseModel,
     onBackClick: () -> Unit,
-    onInquiryCapture: (ByteArray) -> Unit,
 ) {
-    val imageArray: MutableList<Bitmap>? = mutableListOf()
+
+    var lensFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
+
+    val imageArray: MutableList<Bitmap> = mutableListOf()
     val context = LocalContext.current
 
     var countdownValue by remember { mutableIntStateOf(2) }
-    var leftoverPictureValue by remember { mutableIntStateOf(8) }
+    var leftoverPictureValue by remember { mutableIntStateOf(4) }
 
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
 
@@ -93,6 +110,7 @@ fun CaptureScreen(
                 }
             }
 
+
             CameraPreview(
                 context = context,
                 onPhotoCapturedData = {
@@ -102,10 +120,15 @@ fun CaptureScreen(
                 onPhotoCaptured = { captured ->
                     onCaptured = false
                     lastCapturedPhoto.value?.let { imageArray?.add(it) }
+                    viewModel.setImageArray(imageArray)
                 },
                 onCaptured = onCaptured,
             )
 
+            AsyncImage(
+                model = overLayImageUrl.imageUrl,
+                contentDescription = "",
+            )
 
             Row(
                 modifier = Modifier
@@ -119,6 +142,9 @@ fun CaptureScreen(
                 SwitchCameraIcon(
                     modifier = Modifier
                         .clickable {
+                            lensFacing =
+                                if (lensFacing == CameraSelector.DEFAULT_FRONT_CAMERA) CameraSelector.DEFAULT_BACK_CAMERA
+                                else CameraSelector.DEFAULT_FRONT_CAMERA
                             viewModel.toggleCameraFacing()
                         }
                         .width(24.dp)
@@ -126,12 +152,14 @@ fun CaptureScreen(
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
+
                 Text(
                     text = "남은 사진 ${leftoverPictureValue}개",
                     style = typography.headlineSmall,
                     color = colors.WHITE,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
+
                 Spacer(modifier = Modifier.weight(1f))
 
 
@@ -162,6 +190,25 @@ fun CaptureScreen(
                 Spacer(modifier = Modifier.width(16.dp))
             }
 
+        }
+    }
+}
+
+suspend fun getOverLayImageUrl(
+    viewModel: PostViewModel,
+    onSuccess: (data: GetDetailPostResponseModel) -> Unit,
+    onFinished: (isSuccess: Boolean) -> Unit,
+) {
+    viewModel.getDetailPostResponse.collect { response ->
+        when (response) {
+            is Event.Success -> {
+                onSuccess(response.data!!)
+                onFinished(true)
+            }
+
+            else -> {
+                onFinished(false)
+            }
         }
     }
 }

@@ -4,8 +4,11 @@ import android.graphics.Bitmap
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.idea_festival.presentation.ui.select_image.SelectImageRoute
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 
 const val selectImageRoute = "select_image_route"
 
@@ -15,12 +18,15 @@ fun NavController.navigateToSelectImage(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.selectImageScreen(
     onNextButtonClick:() -> Unit,
-    imageArray: MutableList<Bitmap>? = null
+    imageArray: MutableList<Bitmap>? = null,
+    cameraViewModel: CameraViewModel
 ) {
-    composable(route = selectImageRoute) {
+    composable (
+        route = selectImageRoute
+    ){
         SelectImageRoute(
-            onNextButtonClick = onNextButtonClick,
-            imageArray = imageArray
+            onNextButtonClick = {},
+            cameraViewModel = cameraViewModel
         )
     }
 }

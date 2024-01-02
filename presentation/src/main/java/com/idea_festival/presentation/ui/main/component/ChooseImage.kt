@@ -1,8 +1,7 @@
-package com.idea_festival.design_system.component.image
+package com.idea_festival.presentation.ui.main.component
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -15,17 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.idea_festival.design_system.component.icon.CheckIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
-import com.idea_festival.golaroid_android.design_system.R
+import com.idea_festival.domain.model.post.GetDetailPostResponseModel
 
 @Composable
 fun ChooseImage(
     modifier: Modifier = Modifier,
-    image: Bitmap? = null
+    image: Bitmap? = null,
+    overLayImageUrl: GetDetailPostResponseModel
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Box(
@@ -42,6 +41,8 @@ fun ChooseImage(
                     contentDescription = "Selected image",
                     contentScale = ContentScale.Crop
                 )
+
+                AsyncImage(model = overLayImageUrl, contentDescription = null)
             }
 
             IconButton(
@@ -52,11 +53,4 @@ fun ChooseImage(
             }
         }
     }
-}
-
-
-@Preview
-@Composable
-fun ChooseImagePre() {
-    ChooseImage()
 }

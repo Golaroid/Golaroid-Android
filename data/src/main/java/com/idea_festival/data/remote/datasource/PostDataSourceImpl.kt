@@ -1,7 +1,7 @@
 package com.idea_festival.data.remote.datasource
 
 import com.idea_festival.data.remote.dto.post.GetDetailPostResponse
-import com.idea_festival.data.remote.dto.post.GetPostResponse
+import com.idea_festival.data.remote.dto.post.PostModel
 import com.idea_festival.data.remote.network.PostAPI
 import com.idea_festival.data.util.GolaroidApiHandler
 import kotlinx.coroutines.Dispatchers
@@ -13,9 +13,9 @@ import javax.inject.Inject
 class PostDataSourceImpl @Inject constructor(
     private val service: PostAPI
 ) : PostDataSource {
-    override suspend fun getPost(): Flow<GetPostResponse> = flow {
+    override suspend fun getPost(): Flow<List<PostModel>> = flow {
         emit(
-            GolaroidApiHandler<GetPostResponse>()
+            GolaroidApiHandler<List<PostModel>>()
                 .httpRequest { service.getPost() }
                 .sendRequest()
         )

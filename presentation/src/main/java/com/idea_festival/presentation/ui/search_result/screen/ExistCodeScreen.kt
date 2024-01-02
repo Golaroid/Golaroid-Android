@@ -20,11 +20,13 @@ import com.idea_festival.design_system.component.icon.ClipboardIcon
 import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
 @Composable
 fun ExistCodeRoute(
     onTakePictureButtonClick: () -> Unit,
     onBackClick: () -> Unit,
+    postViewModel: PostViewModel
 ) {
     ExistCodeScreen(
         onTakePictureButtonClick = onTakePictureButtonClick,

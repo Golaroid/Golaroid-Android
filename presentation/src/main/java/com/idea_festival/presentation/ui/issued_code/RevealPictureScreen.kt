@@ -1,7 +1,6 @@
 package com.idea_festival.presentation.ui.issued_code
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,34 +17,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.idea_festival.design_system.component.button.GolaroidButton
-import com.idea_festival.design_system.component.icon.ClipboardIcon
 import com.idea_festival.design_system.component.icon.CutPinkStarIcon
 import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.component.icon.GreenStarIcon
-import com.idea_festival.design_system.component.icon.OrangeCameraIcon
 import com.idea_festival.design_system.component.icon.OrangeCircleIcon
 import com.idea_festival.design_system.component.icon.PurpleStickIcon
-import com.idea_festival.design_system.component.icon.StarIcon
 import com.idea_festival.design_system.component.icon.StarfishStarIcon
 import com.idea_festival.design_system.component.icon.UnCutOrangeCameraIcon
 import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 
 @Composable
 fun RevealPictureRoute(
-    onApproveButtonClick: () -> Unit,
-    onRejectButtonClick: () -> Unit,
+    onButtonClick: () -> Unit,
+    cameraViewModel: CameraViewModel
 ) {
     RevealPictureScreen(
-        onApproveButtonClick = onApproveButtonClick,
-        onRejectButtonClick = onRejectButtonClick
+        onButtonClick = {
+            cameraViewModel.isPublic.value = it
+            onButtonClick()
+        }
     )
 }
 
 @Composable
 fun RevealPictureScreen(
-    onApproveButtonClick: () -> Unit,
-    onRejectButtonClick: () -> Unit,
+    onButtonClick: (Boolean) -> Unit
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
@@ -159,7 +157,7 @@ fun RevealPictureScreen(
                     modifier = Modifier.weight(1f),
                     text = "예"
                 ) {
-                    onApproveButtonClick()
+                    onButtonClick(true)
                 }
 
                 Spacer(modifier = Modifier.width(20.dp))
@@ -168,7 +166,7 @@ fun RevealPictureScreen(
                     modifier = Modifier.weight(1f),
                     text = "아니오"
                 ) {
-                    onRejectButtonClick()
+                    onButtonClick(false)
                 }
             }
 
@@ -182,7 +180,6 @@ fun RevealPictureScreen(
 @Composable
 fun RevealPictureScreenPre() {
     RevealPictureScreen(
-        onApproveButtonClick = {},
-        onRejectButtonClick = {}
+        onButtonClick = {}
     )
 }

@@ -17,13 +17,16 @@ import androidx.lifecycle.viewModelScope
 import com.idea_festival.domain.model.image.ImageResponseModel
 import com.idea_festival.domain.model.image.ImageUploadRequestModel
 import com.idea_festival.domain.model.image.ImageUploadWithCodeRequestModel
+import com.idea_festival.domain.model.post.GetDetailPostResponseModel
 import com.idea_festival.domain.usecase.image.UploadImageUseCase
 import com.idea_festival.domain.usecase.image.UploadImageWithCodeUseCase
 import com.idea_festival.presentation.ui.capture.CaptureState
+import com.idea_festival.presentation.ui.capture.DetailPostData
 import com.idea_festival.presentation.ui.util.Event
 import com.idea_festival.presentation.ui.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -57,14 +60,40 @@ class CameraViewModel @Inject constructor(
 
     var isInquiry = mutableStateOf(false)
 
-    fun loadImgBitmap(bitmap: Bitmap){
+    private val _imageArray = MutableStateFlow<MutableList<Bitmap>>(mutableListOf())
+    val imageArray: StateFlow<MutableList<Bitmap>> get() = _imageArray
+
+    private val _uploadImageResponse = MutableStateFlow<Event<ImageResponseModel>>(Event.Loading)
+    val uploadImageResponse = _uploadImageResponse.asStateFlow()
+
+    private val _uploadImageWithCodeResponse = MutableStateFlow<Event<ImageResponseModel>>(Event.Loading)
+    val uploadImageWithCodeResponse = _uploadImageWithCodeResponse
+
+    var isPublic = mutableStateOf<Boolean?>(null)
+        private set
+
+    var userName = mutableStateOf("")
+        private set
+
+    var selectedImage = mutableStateOf<MultipartBody.Part?>(null)
+        private set
+
+    private var uploadImage = mutableStateOf<ImageUploadRequestModel?>(null)
+
+    private var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
+
+    fun setImageArray(imageArray: MutableList<Bitmap>) {
+        _imageArray.value = imageArray
+    }
+
+    fun loadImgBitmap(bitmap: Bitmap) {
         viewModelScope.launch {
             _capturedImgBitmapState.value.capturedImage?.recycle()
             _capturedImgBitmapState.value = _capturedImgBitmapState.value.copy(capturedImage = bitmap)
         }
     }
 
-    fun getMultipartFile(context: Context, isDefault: Boolean): MultipartBody.Part {
+    fun getMultipartFile(context: Context, isDefault: Boolean, selectedIndex: Int) {
         val fileName = "capturedImage.jpg"
         val mediaType = "image/jpeg"
         val byteArray = if (isDefault) {
@@ -73,15 +102,14 @@ class CameraViewModel @Inject constructor(
                 capturedImage = getBitmapFromDrawableResourceId(
                     context = context,
                     drawableResId = R.drawable.ic_logo
-
                 )
             )
-            swapBitmapToJpegWithMultipartFile(true).toRequestBody(mediaType.toMediaType())
+            swapBitmapToJpegWithMultipartFile(imageArray.value[selectedIndex],true).toRequestBody(mediaType.toMediaType())
         } else {
-            swapBitmapToJpegWithMultipartFile(false).toRequestBody(mediaType.toMediaType())
+            swapBitmapToJpegWithMultipartFile(imageArray.value[selectedIndex],false).toRequestBody(mediaType.toMediaType())
         }
 
-        return MultipartBody.Part.createFormData("golaroid", fileName, byteArray)
+        selectedImage.value = MultipartBody.Part.createFormData("golaroid", fileName, byteArray)
     }
 
 
@@ -96,13 +124,13 @@ class CameraViewModel @Inject constructor(
     }
 
 
-    private fun swapBitmapToJpegWithMultipartFile(isDefault: Boolean): ByteArray {
+    private fun swapBitmapToJpegWithMultipartFile(selectedImage: Bitmap, isDefault: Boolean): ByteArray {
         val byteArrayOutputStream = ByteArrayOutputStream()
 
         val swapBitmap = if (isDefault) {
             _defaultImageBitmap.value.capturedImage
         } else {
-            _capturedImgBitmapState.value.capturedImage
+            selectedImage
         }
 
         swapBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
@@ -144,32 +172,35 @@ class CameraViewModel @Inject constructor(
         }
     }
 
-
-    fun uploadImage(body: ImageUploadRequestModel) = viewModelScope.launch {
-        uploadImageUseCase(
-            body = body
-        ).onSuccess {
-            it.catch { remoteError ->
-                _uploadImageRequest.value = remoteError.errorHandling()
-            }.collect { response ->
-                _uploadImageRequest.value = Event.Success(data = response)
+    fun upload() = viewModelScope.launch {
+        uploadImage.value?.let { image ->
+            uploadImageUseCase(
+                body = image
+            ).onSuccess {
+                it.catch { remoteError ->
+                    _uploadImageResponse.value = remoteError.errorHandling()
+                }.collect { response ->
+                    _uploadImageResponse.value = Event.Success(data = response)
+                }
+            }.onFailure { error ->
+                _uploadImageResponse.value = error.errorHandling()
             }
-        }.onFailure {
-            _uploadImageRequest.value = it.errorHandling()
         }
     }
 
-    fun uploadImageWithCode(body: ImageUploadWithCodeRequestModel) = viewModelScope.launch {
-        uploadImageWithCodeUseCase(
-            body = body
-        ).onSuccess {
-            it.catch { remoteError ->
-                _uploadImageWithRequest.value = remoteError.errorHandling()
-            }.collect { response ->
-                _uploadImageWithRequest.value = Event.Success(data = response)
+    fun uploadWithCode() = viewModelScope.launch {
+        uploadImageWithCode.value?.let { image ->
+            uploadImageWithCodeUseCase(
+                body = image
+            ).onSuccess {
+                it.catch { remoteError ->
+                    _uploadImageWithCodeResponse.value = remoteError.errorHandling()
+                }.collect { response ->
+                    _uploadImageWithCodeResponse.value = Event.Success(data = response)
+                }
+            }.onFailure { error ->
+                _uploadImageWithCodeResponse.value = error.errorHandling()
             }
-        }.onFailure {
-            _uploadImageWithRequest.value = it.errorHandling()
         }
     }
 }

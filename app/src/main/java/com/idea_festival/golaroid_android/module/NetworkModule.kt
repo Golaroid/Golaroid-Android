@@ -35,7 +35,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://naver.com/")
+            .baseUrl("http://golaroid.store/")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

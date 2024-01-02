@@ -1,19 +1,21 @@
 package com.idea_festival.presentation.ui.main.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -31,29 +33,74 @@ import com.idea_festival.design_system.component.icon.StarfishStarIcon
 import com.idea_festival.design_system.component.textfield.GolaroidTextField
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.design_system.theme.pretendard
+import com.idea_festival.domain.model.post.PostModel
 import com.idea_festival.presentation.ui.main.component.GolaroidLogo
 import com.idea_festival.presentation.ui.main.component.PictureLazyRow
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
+import com.idea_festival.presentation.ui.viewmodel.util.Event
 
 @Composable
 fun MainRoute(
     onTakePictureButtonClick: () -> Unit,
     onSearchButtonClick: () -> Unit,
     onImageClick: () -> Unit,
-    postViewModel: PostViewModel = hiltViewModel(),
+    postViewModel: PostViewModel,
 ) {
-    MainScreen(
-        onTakePictureButtonClick = onTakePictureButtonClick,
-        onSearchButtonClick = onSearchButtonClick,
-        onImageClick = onImageClick
-    )
+    val status = remember { mutableStateOf(false) }
+    postViewModel.getPostList()
+    LaunchedEffect(true) {
+        getPostList(
+            viewModel = postViewModel,
+            onSuccess = {
+                postViewModel.postList.addAll(it)
+            },
+            onFinished = {
+                status.value = it
+            }
+        )
+    }
+    if (status.value) {
+        MainScreen(
+            onTakePictureButtonClick = onTakePictureButtonClick,
+            onSearchButtonClick = onSearchButtonClick,
+            onImageClick = {
+                postViewModel.getDetailPostList(it)
+                postViewModel.postList.clear()
+                Log.d("TAG", postViewModel.postList.size.toString())
+                onImageClick()
+            },
+            items = postViewModel.postList
+        )
+    }
+}
+
+suspend fun getPostList(
+    viewModel: PostViewModel,
+    onSuccess: (data: List<PostModel>) -> Unit,
+    onFinished: (isSuccess: Boolean) -> Unit,
+    saveInputCode: (String) -> Unit = {_->}
+) {
+    viewModel.getPostResponse.collect { response ->
+        when (response) {
+            is Event.Success -> {
+                onSuccess(response.data!!)
+                onFinished(true)
+            }
+
+            else -> {
+                onFinished(false)
+                Log.e("here", response.toString())
+            }
+        }
+    }
 }
 
 @Composable
 fun MainScreen(
     onTakePictureButtonClick: () -> Unit,
     onSearchButtonClick: () -> Unit,
-    onImageClick: () -> Unit,
+    onImageClick: (String) -> Unit,
+    items: List<PostModel>
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
@@ -81,6 +128,7 @@ fun MainScreen(
                 GolaroidTextField(
                     placeholder = "코드를 입력해 주세요",
                     onValueChange = {
+
                     }, modifier = Modifier
                         .fillMaxWidth(),
                     onSearchButtonClick = { onSearchButtonClick() }
@@ -183,7 +231,10 @@ fun MainScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            PictureLazyRow()
+            PictureLazyRow(
+                data = items,
+                onClick = onImageClick
+            )
 
             Spacer(modifier = Modifier.height(21.dp))
 
@@ -228,6 +279,14 @@ fun MainScreenPre() {
     MainScreen(
         onTakePictureButtonClick = {},
         onSearchButtonClick = {},
-        onImageClick = {}
+        onImageClick = {},
+        items = listOf(
+            PostModel(
+                id = 1341513L,
+                writer = "채종인",
+                code = "A368SF",
+                imageUrl = ""
+            )
+        )
     )
 }

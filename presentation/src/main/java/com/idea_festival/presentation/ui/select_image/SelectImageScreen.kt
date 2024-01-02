@@ -15,32 +15,37 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.TopAppBar
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
 import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.GoBackIcon
-import com.idea_festival.design_system.component.image.ChooseImage
-import com.idea_festival.design_system.component.tobar.GoBackTopBar
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 
 @Composable
 fun SelectImageRoute(
     onNextButtonClick: () -> Unit,
-    imageArray: MutableList<Bitmap>?,
+    cameraViewModel: CameraViewModel,
 ) {
+    val localContext = LocalContext.current
     SelectImageScreen(
-        onNextButtonClick = onNextButtonClick,
-        imageArray = imageArray
+        onNextButtonClick = {
+            cameraViewModel.getMultipartFile(
+                context = localContext,
+                isDefault = false,
+                selectedIndex = it
+            )
+            onNextButtonClick()
+        },
+        imageArray = cameraViewModel.imageArray.value
     )
 
 }
@@ -48,12 +53,14 @@ fun SelectImageRoute(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SelectImageScreen(
-    onNextButtonClick: () -> Unit,
-    imageArray: MutableList<Bitmap>? = null,
+    onNextButtonClick: (Int) -> Unit,
+    imageArray: MutableList<Bitmap>,
 ) {
+
     val state = rememberPagerState {
-        8
+        4
     }
+    val currentPage = remember { mutableStateOf(0) }
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -84,7 +91,7 @@ fun SelectImageScreen(
 
                 Spacer(modifier = Modifier.width(43.dp))
                 Text(
-                    text = "4장의사진을 골라주세요!!",
+                    text = "원하시는 사진을 1장 골라주세요!!",
                     style = typography.headlineSmall,
                     color = colors.WHITE
                 )
@@ -97,10 +104,11 @@ fun SelectImageScreen(
                 contentPadding = PaddingValues(horizontal = 40.dp)
             ) { page ->
                 Log.e("imageArray", imageArray.toString())
-                ChooseImage(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    image = imageArray?.get(page)
-                )
+//                ChooseImage(
+//                    modifier = Modifier.padding(horizontal = 16.dp),
+//                    image = imageArray?.get(page),
+//                )
+                currentPage.value = state.currentPage
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -112,7 +120,7 @@ fun SelectImageScreen(
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-                onNextButtonClick()
+                onNextButtonClick(currentPage.value)
             }
         }
     }

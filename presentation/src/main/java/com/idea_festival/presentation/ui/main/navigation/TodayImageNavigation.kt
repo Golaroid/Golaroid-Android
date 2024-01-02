@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.idea_festival.presentation.ui.main.screen.TodayImageRoute
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
 const val todayImageRoute = "today_image_route"
 
@@ -13,11 +14,13 @@ fun NavController.navigateToTodayImage(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.todayImageScreen(
-    onCheckButtonClick: () -> Unit
+    onCheckButtonClick: () -> Unit,
+    postViewModel: PostViewModel
 ) {
     composable(route = todayImageRoute) {
         TodayImageRoute(
-            onCheckButtonClick = onCheckButtonClick
+            onCheckButtonClick = onCheckButtonClick,
+            viewModel = postViewModel
         )
     }
 }

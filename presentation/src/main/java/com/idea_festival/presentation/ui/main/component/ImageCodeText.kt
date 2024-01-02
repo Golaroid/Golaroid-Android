@@ -14,7 +14,11 @@ import androidx.compose.ui.unit.dp
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 
 @Composable
-fun ImageCodeText(modifier: Modifier = Modifier) {
+fun ImageCodeText(
+    modifier: Modifier = Modifier,
+    writer: String,
+    code: String
+) {
     GolaroidAndroidTheme { colors, typography ->
         Box(
             modifier = modifier
@@ -28,13 +32,13 @@ fun ImageCodeText(modifier: Modifier = Modifier) {
                 modifier = Modifier.align(Alignment.Center)
             ) {
                 Text(
-                    text = "이동욱 ",
+                    text = "$writer ",
                     style = typography.labelSmall,
                     color = colors.WHITE,
                 )
 
                 Text(
-                    text = "F239AS",
+                    text = code,
                     style = typography.labelSmall,
                     color = colors.WHITE
                 )
@@ -46,5 +50,5 @@ fun ImageCodeText(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun ImageCodeTextPre() {
-    ImageCodeText()
+    ImageCodeText(writer = "이동욱", code = "F239AS")
 }

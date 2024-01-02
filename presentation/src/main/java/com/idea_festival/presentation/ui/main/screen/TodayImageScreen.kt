@@ -1,8 +1,7 @@
 package com.idea_festival.presentation.ui.main.screen
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,28 +9,67 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.idea_festival.design_system.component.button.GolaroidButton
-import com.idea_festival.design_system.component.frame.RupeeFrame
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.domain.model.post.GetDetailPostResponseModel
+import com.idea_festival.presentation.ui.viewmodel.PostViewModel
+import com.idea_festival.presentation.ui.viewmodel.util.Event
 
 @Composable
 fun TodayImageRoute(
     onCheckButtonClick: () -> Unit,
+    viewModel: PostViewModel
 ) {
-    TodayImageScreen(
-        onCheckButtonClick = onCheckButtonClick
-    )
+    val status = remember{ mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        getPost(
+            viewModel = viewModel,
+            onSuccess = {
+                viewModel.post.value = it
+            },
+            onFinished = {
+                status.value = it
+            }
+        )
+    }
+    Log.d("TAG",  viewModel.post.value.writer)
+    if (status.value) {
+        TodayImageScreen(
+            onCheckButtonClick = onCheckButtonClick,
+            data = viewModel.post.value
+        )
+    }
+}
+
+suspend fun getPost(
+    viewModel: PostViewModel,
+    onSuccess: (data: GetDetailPostResponseModel) -> Unit,
+    onFinished: (isSuccess: Boolean) -> Unit
+) {
+    viewModel.getDetailPostResponse.collect { response ->
+        when (response) {
+            is Event.Success -> {
+                onSuccess(response.data!!)
+                onFinished(true)
+            }
+
+            else -> { onFinished(false) }
+        }
+    }
 }
 
 @Composable
 fun TodayImageScreen(
     onCheckButtonClick: () -> Unit,
+    data: GetDetailPostResponseModel
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Column(
@@ -44,7 +82,9 @@ fun TodayImageScreen(
 
             Row {
                 Spacer(modifier = Modifier.weight(1f))
-                RupeeFrame(
+                AsyncImage(
+                    model = data.imageUrl,
+                    contentDescription = ""
                 )
                 Spacer(modifier = Modifier.weight(1f))
 
@@ -70,6 +110,11 @@ fun TodayImageScreen(
 @Composable
 fun TodayImageScreenPre() {
     TodayImageScreen(
-        onCheckButtonClick = {}
+        onCheckButtonClick = {},
+        data = GetDetailPostResponseModel(
+            postId = 5253L,
+            imageUrl = "",
+            writer = ""
+        )
     )
 }
