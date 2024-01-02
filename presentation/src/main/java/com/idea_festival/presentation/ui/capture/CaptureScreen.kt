@@ -1,7 +1,6 @@
 package com.idea_festival.presentation.ui.capture
 
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -18,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -28,8 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.idea_festival.design_system.component.icon.SwitchCameraIcon
 import com.idea_festival.design_system.component.icon.WhiteCircleIcon
@@ -37,7 +33,6 @@ import com.idea_festival.design_system.theme.GolaroidAndroidTheme
 import com.idea_festival.domain.model.post.GetDetailPostResponseModel
 import com.idea_festival.presentation.ui.capture.component.CameraPreview
 import com.idea_festival.presentation.ui.capture.component.CheckPermission
-import com.idea_festival.presentation.ui.main.screen.getPost
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 import com.idea_festival.presentation.ui.viewmodel.util.Event
@@ -48,24 +43,25 @@ import kotlinx.coroutines.delay
 fun CaptureRoute(
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
-    viewModel: CameraViewModel = hiltViewModel(),
+    cameraViewModel: CameraViewModel,
+    postViewModel: PostViewModel
 ) {
     CaptureScreen(
-        viewModel = viewModel,
+        viewModel = cameraViewModel,
         onTakePictureFinish = onTakePictureFinish,
         onBackClick = onBackClick,
+        postViewModel = postViewModel
     )
 }
 
 @Composable
 fun CaptureScreen(
     viewModel: CameraViewModel,
+    postViewModel: PostViewModel,
     onTakePictureFinish: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     val status = remember{ mutableStateOf(false) }
-
-    var postViewModel: PostViewModel = hiltViewModel()
 
     var overlayImageIndex by remember { mutableStateOf(0) }
 

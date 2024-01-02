@@ -70,12 +70,35 @@ class CameraViewModel @Inject constructor(
     private val _uploadImageWithCodeResponse = MutableStateFlow<Event<ImageResponseModel>>(Event.Loading)
     val uploadImageWithCodeResponse = _uploadImageWithCodeResponse
 
-    var uploadImage = mutableStateOf<ImageUploadRequestModel?>(null)
+    var isPublic = mutableStateOf<Boolean?>(null)
         private set
 
-    var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
+    var userName = mutableStateOf("")
         private set
 
+<<<<<<< HEAD
+=======
+    var selectedImage = mutableStateOf<MultipartBody.Part?>(null)
+        private set
+
+    private var uploadImage = mutableStateOf<ImageUploadRequestModel?>(null)
+
+    private var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
+
+    var imageUrl: MutableList<DetailPostData> = mutableListOf()
+
+    fun setImageUrl(imageUrl: List<GetDetailPostResponseModel>) {
+        this.imageUrl.clear()
+        imageUrl.forEach { getDetailPostResponseModel ->
+            val detailPostData = DetailPostData(
+                postId = getDetailPostResponseModel.postId,
+                imageUrl = getDetailPostResponseModel.imageUrl,
+                writer = getDetailPostResponseModel.writer
+            )
+            this.imageUrl.add(detailPostData)
+        }
+    }
+>>>>>>> 16b754101ac2a77e766a50572aedf79d4c7a74dc
 
     fun setImageArray(imageArray: MutableList<Bitmap>) {
         _imageArray.value = imageArray
@@ -88,7 +111,7 @@ class CameraViewModel @Inject constructor(
         }
     }
 
-    fun getMultipartFile(context: Context, isDefault: Boolean): MultipartBody.Part {
+    fun getMultipartFile(context: Context, isDefault: Boolean, selectedIndex: Int) {
         val fileName = "capturedImage.jpg"
         val mediaType = "image/jpeg"
         val byteArray = if (isDefault) {
@@ -99,12 +122,12 @@ class CameraViewModel @Inject constructor(
                     drawableResId = R.drawable.ic_logo
                 )
             )
-            swapBitmapToJpegWithMultipartFile(true).toRequestBody(mediaType.toMediaType())
+            swapBitmapToJpegWithMultipartFile(imageArray.value[selectedIndex],true).toRequestBody(mediaType.toMediaType())
         } else {
-            swapBitmapToJpegWithMultipartFile(false).toRequestBody(mediaType.toMediaType())
+            swapBitmapToJpegWithMultipartFile(imageArray.value[selectedIndex],false).toRequestBody(mediaType.toMediaType())
         }
 
-        return MultipartBody.Part.createFormData("golaroid", fileName, byteArray)
+        selectedImage.value = MultipartBody.Part.createFormData("golaroid", fileName, byteArray)
     }
 
 
@@ -119,13 +142,13 @@ class CameraViewModel @Inject constructor(
     }
 
 
-    private fun swapBitmapToJpegWithMultipartFile(isDefault: Boolean): ByteArray {
+    private fun swapBitmapToJpegWithMultipartFile(selectedImage: Bitmap, isDefault: Boolean): ByteArray {
         val byteArrayOutputStream = ByteArrayOutputStream()
 
         val swapBitmap = if (isDefault) {
             _defaultImageBitmap.value.capturedImage
         } else {
-            _capturedImgBitmapState.value.capturedImage
+            selectedImage
         }
 
         swapBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)

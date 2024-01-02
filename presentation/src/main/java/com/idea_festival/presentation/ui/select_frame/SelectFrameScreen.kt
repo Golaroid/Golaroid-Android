@@ -26,11 +26,13 @@ import com.idea_festival.design_system.component.frame.RupeeFrame
 import com.idea_festival.design_system.component.frame.WantedFrame
 import com.idea_festival.design_system.component.frame.WinterFrame
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 
 @Composable
 fun SelectFrameRoute(
     onPrintButtonClick: () -> Unit,
     onNextButtonClick: () -> Unit,
+    cameraViewModel: CameraViewModel
 ) {
     SelectFrameScreen(
         onPrintButtonClick = onPrintButtonClick,

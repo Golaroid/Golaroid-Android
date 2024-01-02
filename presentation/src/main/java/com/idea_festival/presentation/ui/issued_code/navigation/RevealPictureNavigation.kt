@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.idea_festival.presentation.ui.issued_code.RevealPictureRoute
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 
 const val revealPictureRoute = "reveal_picture_route"
 
@@ -13,13 +14,13 @@ fun NavController.navigateToRevealPicture(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.revealPictureScreen(
-    onApproveButtonClick: () -> Unit,
-    onRejectButtonClick: () -> Unit,
+    onButtonClick: () -> Unit,
+    cameraViewModel: CameraViewModel
 ) {
     composable(route = revealPictureRoute) {
         RevealPictureRoute(
-            onApproveButtonClick = onApproveButtonClick,
-            onRejectButtonClick = onRejectButtonClick
+            onButtonClick = onButtonClick,
+            cameraViewModel = cameraViewModel
         )
     }
 }

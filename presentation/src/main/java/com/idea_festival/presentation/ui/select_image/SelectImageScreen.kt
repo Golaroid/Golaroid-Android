@@ -19,10 +19,12 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.idea_festival.design_system.component.button.GolaroidButton
 import com.idea_festival.design_system.component.icon.GoBackIcon
 import com.idea_festival.design_system.component.image.ChooseImage
@@ -32,11 +34,19 @@ import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 @Composable
 fun SelectImageRoute(
     onNextButtonClick: () -> Unit,
-    viewModel: CameraViewModel = hiltViewModel(),
+    cameraViewModel: CameraViewModel,
 ) {
+    val localContext = LocalContext.current
     SelectImageScreen(
-        onNextButtonClick = onNextButtonClick,
-        viewModel = viewModel
+        onNextButtonClick = {
+            cameraViewModel.getMultipartFile(
+                context = localContext,
+                isDefault = false,
+                selectedIndex = it
+            )
+            onNextButtonClick()
+        },
+        imageArray = cameraViewModel.imageArray.value
     )
 
 }
@@ -44,14 +54,14 @@ fun SelectImageRoute(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SelectImageScreen(
-    onNextButtonClick: () -> Unit,
-    viewModel: CameraViewModel,
+    onNextButtonClick: (Int) -> Unit,
+    imageArray: MutableList<Bitmap>
 ) {
-    var imageArray: MutableList<Bitmap> = viewModel.imageArray.value
 
     val state = rememberPagerState {
         8
     }
+    val currentPage = remember { mutableStateOf(0) }
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -97,8 +107,9 @@ fun SelectImageScreen(
                 Log.e("imageArray", imageArray.toString())
                 ChooseImage(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    image = imageArray?.get(page)
+                    image = imageArray?.get(page),
                 )
+                currentPage.value = state.currentPage
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -110,7 +121,7 @@ fun SelectImageScreen(
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 36.dp)
             ) {
-                onNextButtonClick()
+                onNextButtonClick(currentPage.value)
             }
         }
     }

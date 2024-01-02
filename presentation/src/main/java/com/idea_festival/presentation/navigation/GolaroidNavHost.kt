@@ -29,6 +29,7 @@ import com.idea_festival.presentation.ui.select_frame.navigation.navigateToSelec
 import com.idea_festival.presentation.ui.select_frame.navigation.selectFrameScreen
 import com.idea_festival.presentation.ui.select_image.navigation.navigateToSelectImage
 import com.idea_festival.presentation.ui.select_image.navigation.selectImageScreen
+import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
@@ -38,7 +39,7 @@ fun GolaroidNavHost(
     modifier: Modifier = Modifier,
     startDestination: String = mainRoute,
     postViewModel: PostViewModel,
-    imageViewModel: ImageViewModel
+    cameraViewModel: CameraViewModel
 ) {
     val navController = appState.navController
 
@@ -61,48 +62,58 @@ fun GolaroidNavHost(
 
         captureScreen(
             onBackClick = navController::popBackStack,
-            onTakePictureFinish = navController::navigateToRevealPicture
+            onTakePictureFinish = navController::navigateToRevealPicture,
+            cameraViewModel = cameraViewModel,
+            postViewModel = postViewModel
         )
 
         existCodeScreen(
             onTakePictureButtonClick = navController::navigateToCapture,
-            onBackClick = navController::popBackStack
+            onBackClick = navController::popBackStack,
+            postViewModel = postViewModel
         )
 
         noExistCodeScreen(
             onTakePictureButtonClick = navController::navigateToCapture,
-            onBackClick = navController::popBackStack
+            onBackClick = navController::popBackStack,
+            postViewModel = postViewModel
         )
 
         issuedCodeScreen(
             onNextButtonClick = navController::navigateToRevealPicture,
+            cameraViewModel = cameraViewModel
         )
 
         revealPictureScreen(
-            onApproveButtonClick = navController::navigateToInputInformation,
-            onRejectButtonClick = navController::navigateToInputInformation,
+            onButtonClick = navController::navigateToInputInformation,
+            cameraViewModel = cameraViewModel
         )
 
         inputInformationScreen(
-            onNextButtonClick = navController::navigateToSelectImage
+            onNextButtonClick = navController::navigateToSelectImage,
+            cameraViewModel = cameraViewModel
         )
 
         uploadImageSuccessScreen(
-            onCheckButtonClick = navController::navigateToSelectImage
+            onCheckButtonClick = navController::navigateToSelectImage,
+            cameraViewModel = cameraViewModel
         )
 
         selectImageScreen(
             onNextButtonClick = navController::navigateToSelectFrame,
-            imageArray = navController.currentBackStackEntry?.arguments?.get("imageArray") as? MutableList<Bitmap>
+            imageArray = navController.currentBackStackEntry?.arguments?.get("imageArray") as? MutableList<Bitmap>,
+            cameraViewModel = cameraViewModel
         )
 
         selectFrameScreen(
             onNextButtonClick = navController::navigateToUploadImageSuccess,
-            onPrintButtonClick = navController::navigateToPrintSuccess
+            onPrintButtonClick = navController::navigateToPrintSuccess,
+            cameraViewModel = cameraViewModel
         )
 
         uploadImageSuccessScreen(
-            onCheckButtonClick = navController::navigateToMain
+            onCheckButtonClick = navController::navigateToMain,
+            cameraViewModel = cameraViewModel
         )
     }
 }
