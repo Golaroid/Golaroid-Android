@@ -30,8 +30,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.parse
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
@@ -97,7 +100,7 @@ class CameraViewModel @Inject constructor(
     }
 
     fun getMultipartFile(context: Context, isDefault: Boolean, selectedIndex: Int) {
-        val fileName = "capturedImage.jpg"
+        val fileName = "image.jpeg"
         val mediaType = "image/jpeg"
         val byteArray = if (isDefault) {
             _defaultImageBitmap.value.capturedImage?.recycle()
@@ -112,7 +115,7 @@ class CameraViewModel @Inject constructor(
             swapBitmapToJpegWithMultipartFile(imageArray.value[selectedIndex],false).toRequestBody(mediaType.toMediaType())
         }
 
-        selectedImage.value = MultipartBody.Part.createFormData("golaroid", fileName, byteArray)
+        selectedImage.value = MultipartBody.Part.createFormData("image", fileName, byteArray)
     }
 
 
@@ -170,23 +173,20 @@ class CameraViewModel @Inject constructor(
         Log.e("스위칭", "스위치 함수 실행")
         if (_facing.value == CameraSelector.LENS_FACING_BACK) {
             _facing.value = CameraSelector.LENS_FACING_FRONT
+            Log.e("facing값", _facing.value.toString())
         } else {
             _facing.value = CameraSelector.LENS_FACING_BACK
+            Log.e("facing값", _facing.value.toString())
         }
     }
 
     fun upload() = viewModelScope.launch {
-        selectedImage.value?.let { image ->
-            isPublic.value?.let { isPublic ->
-                ImageUploadRequestModel(
-                    image = image,
-                    request = ImageUploadRequestModel.Request(
-                        isPublic = isPublic,
-                        writer = userName.value
-                    )
-                )
-            }
-        }?.let {
+        val isPublicBody = RequestBody.create("text/plain".toMediaTypeOrNull(), isPublic.toString())
+        val userNameBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userName.value)
+        val requestMap: HashMap<String, RequestBody> = HashMap()
+        requestMap["isPublic"] = isPublicBody
+        requestMap["writer"] = userNameBody
+        selectedImage.value?.let {
             uploadImageUseCase(
                 body = it
             ).onSuccess {
@@ -199,23 +199,23 @@ class CameraViewModel @Inject constructor(
                 _uploadImageResponse.value = error.errorHandling()
             }
         }
-
-    }
-
-    fun uploadWithCode() = viewModelScope.launch {
-        uploadImageWithCode.value?.let { image ->
-            uploadImageWithCodeUseCase(
-                body = image
-            ).onSuccess {
-                it.catch { remoteError ->
-                    _uploadImageWithCodeResponse.value = remoteError.errorHandling()
-                }.collect { response ->
-                    _uploadImageWithCodeResponse.value = Event.Success(data = response)
-                }
-            }.onFailure { error ->
-                _uploadImageWithCodeResponse.value = error.errorHandling()
-            }
         }
+
     }
 
-}
+//    fun uploadWithCode() = viewModelScope.launch {
+//        uploadImageWithCode.value?.let { image ->
+//            uploadImageWithCodeUseCase(
+//                body = image
+//            ).onSuccess {
+//                it.catch { remoteError ->
+//                    _uploadImageWithCodeResponse.value = remoteError.errorHandling()
+//                }.collect { response ->
+//                    _uploadImageWithCodeResponse.value = Event.Success(data = response)
+//                }
+//            }.onFailure { error ->
+//                _uploadImageWithCodeResponse.value = error.errorHandling()
+//            }
+//        }
+//    }
+

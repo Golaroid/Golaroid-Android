@@ -38,7 +38,7 @@ fun NavGraphBuilder.checkImageWithCodeScreen(
     onNextButtonClick: () -> Unit
 
 ) {
-    composable(route = checkImageRoute) {
+    composable(route = checkImageWithCodeRoute) {
         CheckImageWithCodeRoute(
             imageViewModel = imageViewModel,
             onNextButtonClick = onNextButtonClick,

@@ -28,15 +28,17 @@ fun NavGraphBuilder.selectImageScreen(
     onNextButtonClick:() -> Unit,
     imageArray: MutableList<Bitmap>? = null,
     cameraViewModel: CameraViewModel,
-    imageViewModel: ImageViewModel
-) {
+    imageViewModel: ImageViewModel,
+    onGoButtonClick: () -> Unit,
+    ) {
     composable (
         route = selectImageRoute
     ){
         SelectImageRoute(
             onNextButtonClick = {},
             cameraViewModel = cameraViewModel,
-            imageViewModel = imageViewModel
+            imageViewModel = imageViewModel,
+            onGoButtonClick = onGoButtonClick
         )
     }
 }
@@ -45,7 +47,9 @@ fun NavGraphBuilder.selectImageWithCodeScreen(
     onNextButtonClick:() -> Unit,
     imageArray: MutableList<Bitmap>? = null,
     cameraViewModel: CameraViewModel,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
+    onGoButtonClick: () -> Unit,
+    imageViewModel: ImageViewModel
 ) {
     composable (
         route = selectImageWithCodeRoute
@@ -53,7 +57,9 @@ fun NavGraphBuilder.selectImageWithCodeScreen(
         SelectImageWithCodeRoute(
             onNextButtonClick = {},
             cameraViewModel = cameraViewModel,
-            postViewModel = postViewModel
+            postViewModel = postViewModel,
+            onGoButtonClick = onGoButtonClick,
+            imageViewModel = imageViewModel
         )
     }
 }

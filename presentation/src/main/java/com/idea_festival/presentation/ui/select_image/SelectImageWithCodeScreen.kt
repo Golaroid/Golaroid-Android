@@ -38,8 +38,10 @@ import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 fun SelectImageWithCodeRoute(
     onNextButtonClick: () -> Unit,
     cameraViewModel: CameraViewModel,
-    postViewModel: PostViewModel
-) {
+    postViewModel: PostViewModel,
+    onGoButtonClick: () -> Unit,
+    imageViewModel: ImageViewModel
+    ) {
     val localContext = LocalContext.current
     SelectImageWithCodeScreen(
         onNextButtonClick = {
@@ -49,12 +51,13 @@ fun SelectImageWithCodeRoute(
                 selectedIndex = it
             )
             onNextButtonClick()
-     },
+        },
         imageArray = cameraViewModel.imageArray.value,
 
-        postViewModel = postViewModel
-        )
-
+        postViewModel = postViewModel,
+        onGoButtonClick = onGoButtonClick,
+        imageViewModel = imageViewModel
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -62,7 +65,9 @@ fun SelectImageWithCodeRoute(
 fun SelectImageWithCodeScreen(
     onNextButtonClick: (Int) -> Unit,
     imageArray: MutableList<Bitmap>,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
+    imageViewModel: ImageViewModel,
+    onGoButtonClick: () -> Unit,
 ) {
 
     val state = rememberPagerState {
@@ -115,7 +120,10 @@ fun SelectImageWithCodeScreen(
                 ChooseImageWithCode(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     image = imageArray?.get(page),
-                    postViewModel = postViewModel
+                    postViewModel = postViewModel,
+                    imageViewModel = imageViewModel,
+                    page = page,
+                    imageArray = imageArray
                 )
                 currentPage.value = state.currentPage
             }
@@ -130,6 +138,7 @@ fun SelectImageWithCodeScreen(
                     .padding(bottom = 36.dp)
             ) {
                 onNextButtonClick(currentPage.value)
+                onGoButtonClick()
             }
         }
     }

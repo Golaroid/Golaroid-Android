@@ -36,6 +36,7 @@ import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 fun SelectImageRoute(
     onNextButtonClick: () -> Unit,
     cameraViewModel: CameraViewModel,
+    onGoButtonClick: () -> Unit,
     imageViewModel: ImageViewModel
 ) {
     val localContext = LocalContext.current
@@ -50,7 +51,8 @@ fun SelectImageRoute(
             onNextButtonClick()
         },
         imageArray = cameraViewModel.imageArray.value,
-        imageViewModel = imageViewModel
+        imageViewModel = imageViewModel,
+        onGoButtonClick = onGoButtonClick
     )
 
 }
@@ -58,13 +60,14 @@ fun SelectImageRoute(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SelectImageScreen(
+    onGoButtonClick: () -> Unit,
     onNextButtonClick: (Int) -> Unit,
     imageArray: MutableList<Bitmap>,
     imageViewModel: ImageViewModel
 ) {
 
     val state = rememberPagerState {
-        4
+        7
     }
     val currentPage = remember { mutableStateOf(0) }
     GolaroidAndroidTheme { colors, typography ->
@@ -129,6 +132,7 @@ fun SelectImageScreen(
                     .padding(bottom = 36.dp)
             ) {
                 onNextButtonClick(currentPage.value)
+                onGoButtonClick()
             }
         }
     }

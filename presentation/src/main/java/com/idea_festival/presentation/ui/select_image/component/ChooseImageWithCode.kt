@@ -19,13 +19,17 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.idea_festival.design_system.component.icon.CheckIcon
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
 @Composable
 fun ChooseImageWithCode(
     modifier: Modifier = Modifier,
     image: Bitmap? = null,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
+    imageViewModel: ImageViewModel,
+    imageArray: MutableList<Bitmap>,
+    page: Int
 ) {
     GolaroidAndroidTheme { colors, typography ->
         Box(
@@ -54,7 +58,9 @@ fun ChooseImageWithCode(
 
 
             IconButton(
-                onClick = { },
+                onClick = {
+                    imageViewModel.setSelectedImage(image)
+                },
                 modifier = Modifier.align(Alignment.TopEnd)
             ) {
                 CheckIcon()

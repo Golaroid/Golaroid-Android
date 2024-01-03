@@ -35,7 +35,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://golaroid.store/")
+            .baseUrl("https://92a5-2001-2d8-6ade-1903-68a1-7033-d93a-8f74.ngrok-free.app/")
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

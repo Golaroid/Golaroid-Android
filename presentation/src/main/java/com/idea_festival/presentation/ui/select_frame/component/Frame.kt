@@ -2,7 +2,6 @@ package com.idea_festival.presentation.ui.select_frame.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,73 +23,60 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.idea_festival.golaroid_android.design_system.R
-import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
 import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
-
 @Composable
-fun WithCodeChristmasFrame(
+fun ChristmasFrame(
     modifier: Modifier = Modifier,
-    viewModel: PostViewModel,
     imageViewModel: ImageViewModel,
 ) {
+Box(
+modifier = Modifier
+.width(320.dp)
+.height(480.dp)
+.background(color = Color(0xFF7F1A19))
+) {
+
+    Image(
+        painter = painterResource(id = R.drawable.christmas_deco),
+        contentDescription = null
+    )
     Box(
-        modifier = Modifier
-            .width(320.dp)
-            .height(480.dp)
-            .background(color = Color(0xFF7F1A19))
+        modifier = Modifier.zIndex(-1f)
     ) {
-
-        Image(
-            painter = painterResource(id = R.drawable.christmas_deco),
-            contentDescription = null
-        )
-        Box(
-            modifier = Modifier.zIndex(-1f)
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .align(Alignment.Center)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .align(Alignment.Center)
-            ) {
-                Box {
-                    imageViewModel.selectedImage?.let {
-                        Image(
-                            bitmap = it.asImageBitmap(),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(top = 50.dp)
-                                .fillMaxWidth()
-                                .padding(horizontal = 12.dp)
-                                .height(362.dp)
-                                .clip(shape = RoundedCornerShape(5.dp)),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-
-                    AsyncImage(
-                        model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
-                        contentDescription = "",
+            Box {
+                imageViewModel.selectedImage?.let {
+                    Image(
+                        bitmap = it.asImageBitmap(),
+                        contentDescription = null,
                         modifier = Modifier
+                            .padding(top = 50.dp)
                             .fillMaxWidth()
-                            .align(Alignment.BottomCenter)
+                            .padding(horizontal = 12.dp)
+                            .height(362.dp)
+                            .clip(shape = RoundedCornerShape(5.dp)),
+                        contentScale = ContentScale.Crop
                     )
-
                 }
 
             }
-        }
 
+        }
     }
+
+}
 }
 
 @Composable
-fun WithCodeRupeeFrame(
+fun CodeRupeeFrame(
     modifier: Modifier = Modifier,
-    viewModel: PostViewModel,
     imageViewModel: ImageViewModel,
 ) {
     Box(
@@ -136,14 +122,6 @@ fun WithCodeRupeeFrame(
                         )
                     }
 
-                    AsyncImage(
-                        model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .align(Alignment.BottomCenter)
-                    )
-
                 }
             }
         }
@@ -152,9 +130,8 @@ fun WithCodeRupeeFrame(
 
 
 @Composable
-fun WithCodeGolaroidGrayFrame(
+fun GolaroidGrayFrame(
     modifier: Modifier = Modifier,
-    viewModel: PostViewModel,
     imageViewModel: ImageViewModel,
 ) {
     Box(
@@ -203,14 +180,6 @@ fun WithCodeGolaroidGrayFrame(
                         )
                     }
 
-                    AsyncImage(
-                        model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .align(Alignment.BottomCenter)
-                    )
-
                 }
 
             }
@@ -219,9 +188,8 @@ fun WithCodeGolaroidGrayFrame(
 }
 
 @Composable
-fun WithCodeGolaroidBlackFrame(
+fun GolaroidBlackFrame(
     modifier: Modifier = Modifier,
-    viewModel: PostViewModel,
     imageViewModel: ImageViewModel,
 ) {
     Box(
@@ -263,13 +231,6 @@ fun WithCodeGolaroidBlackFrame(
                         )
                     }
 
-                    AsyncImage(
-                        model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .align(Alignment.BottomCenter)
-                    )
 
                 }
 

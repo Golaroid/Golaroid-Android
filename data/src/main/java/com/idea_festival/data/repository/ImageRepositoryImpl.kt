@@ -10,17 +10,15 @@ import com.idea_festival.domain.model.image.ImageUploadWithCodeRequestModel
 import com.idea_festival.domain.repository.ImageRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class ImageRepositoryImpl @Inject constructor(
     private val imageDataSource: ImageDataSource,
 ) : ImageRepository {
-    override suspend fun imageUpload(body: ImageUploadRequestModel): Flow<ImageResponseModel> {
+    override suspend fun imageUpload(body: MultipartBody.Part): Flow<ImageResponseModel> {
         return imageDataSource.uploadImage(
-            body = ImageUploadRequest(
-                image = body.image,
-                request = body.request
-            )
+            body = body,
         ).map { it.toModel() }
     }
 

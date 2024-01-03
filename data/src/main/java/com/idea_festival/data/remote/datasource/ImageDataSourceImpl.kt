@@ -9,12 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class ImageDataSourceImpl @Inject constructor(
     private val service: ImageAPI
 ) : ImageDataSource {
-    override suspend fun uploadImage(body: ImageUploadRequest): Flow<ImageResponse> = flow {
+    override suspend fun uploadImage(body: MultipartBody.Part): Flow<ImageResponse> = flow {
         emit(
             GolaroidApiHandler<ImageResponse>()
                 .httpRequest { service.uploadImage(body = body) }
