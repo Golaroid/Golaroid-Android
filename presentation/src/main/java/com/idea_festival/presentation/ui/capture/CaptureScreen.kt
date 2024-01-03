@@ -63,7 +63,8 @@ fun CaptureScreen(
 
     val context = LocalContext.current
 
-    var countdownValue by remember { mutableIntStateOf(10) }
+    var countdownValue by remember { mutableIntStateOf(5) }
+
     var leftoverPictureValue by remember { mutableIntStateOf(4) }
 
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
@@ -83,7 +84,7 @@ fun CaptureScreen(
                     --countdownValue
 
                     if (countdownValue == 0) {
-                        countdownValue = 10
+                        countdownValue = 3
                         --leftoverPictureValue
                         onCaptured = true
                     }

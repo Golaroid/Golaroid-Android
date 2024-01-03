@@ -28,15 +28,17 @@ fun NavGraphBuilder.selectImageScreen(
     onNextButtonClick:() -> Unit,
     imageArray: MutableList<Bitmap>? = null,
     cameraViewModel: CameraViewModel,
-    imageViewModel: ImageViewModel
-) {
+    imageViewModel: ImageViewModel,
+    onGoButtonClick: () -> Unit,
+    ) {
     composable (
         route = selectImageRoute
     ){
         SelectImageRoute(
             onNextButtonClick = {},
             cameraViewModel = cameraViewModel,
-            imageViewModel = imageViewModel
+            imageViewModel = imageViewModel,
+            onGoButtonClick = onGoButtonClick
         )
     }
 }

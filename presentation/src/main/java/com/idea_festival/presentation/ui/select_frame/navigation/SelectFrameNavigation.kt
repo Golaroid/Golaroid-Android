@@ -24,13 +24,15 @@ fun NavController.navigateToSelectFrameWithCode(navOptions: NavOptions? = null) 
 fun NavGraphBuilder.selectFrameScreen(
     onPrintButtonClick: () -> Unit,
     onNextButtonClick: () -> Unit,
-    cameraViewModel: CameraViewModel
+    cameraViewModel: CameraViewModel,
+    imageViewModel: ImageViewModel
 ) {
     composable(route = selectFrameRoute) {
         SelectFrameRoute(
             onPrintButtonClick = onPrintButtonClick,
             onNextButtonClick = onNextButtonClick,
-            cameraViewModel = cameraViewModel
+            cameraViewModel = cameraViewModel,
+            imageViewModel = imageViewModel
         )
     }
 }

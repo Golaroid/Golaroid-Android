@@ -15,25 +15,29 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.idea_festival.design_system.component.button.GolaroidButton
-import com.idea_festival.design_system.component.frame.ChristmasFrame
-import com.idea_festival.design_system.component.frame.GolaroidBlackFrame
-import com.idea_festival.design_system.component.frame.GolaroidGrayFrame
-import com.idea_festival.design_system.component.frame.RupeeFrame
+import com.idea_festival.presentation.ui.select_frame.component.ChristmasFrame
+import com.idea_festival.presentation.ui.select_frame.component.GolaroidBlackFrame
+import com.idea_festival.presentation.ui.select_frame.component.GolaroidGrayFrame
 import com.idea_festival.design_system.theme.GolaroidAndroidTheme
+import com.idea_festival.presentation.ui.select_frame.component.CodeRupeeFrame
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
+import com.smarttoolfactory.screenshot.ScreenshotBox
+import com.smarttoolfactory.screenshot.rememberScreenshotState
 
 @Composable
 fun SelectFrameRoute(
     onPrintButtonClick: () -> Unit,
     onNextButtonClick: () -> Unit,
-    cameraViewModel: CameraViewModel
-) {
+    cameraViewModel: CameraViewModel,
+    imageViewModel: ImageViewModel,
+    ) {
     SelectFrameScreen(
         onPrintButtonClick = onPrintButtonClick,
-        onNextButtonClick = onNextButtonClick
+        onNextButtonClick = onNextButtonClick,
+        imageViewModel = imageViewModel
     )
 }
 
@@ -42,8 +46,18 @@ fun SelectFrameRoute(
 fun SelectFrameScreen(
     onPrintButtonClick: () -> Unit,
     onNextButtonClick: () -> Unit,
-) {
-    val pagerState = rememberPagerState(pageCount = { 6 })
+    imageViewModel: ImageViewModel,
+
+    ) {
+    val pagerState = rememberPagerState(pageCount = { 9 })
+
+    val screenshotStateList = listOf(
+        rememberScreenshotState(),
+        rememberScreenshotState(),
+        rememberScreenshotState(),
+        rememberScreenshotState()
+    )
+
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -57,17 +71,26 @@ fun SelectFrameScreen(
                 contentPadding = PaddingValues(horizontal = 15.dp),
                 state = pagerState
             ) { page ->
+                ScreenshotBox(screenshotState = screenshotStateList[page]) {
+                    when (page) {
 
-                when (page) {
+                        0 -> ChristmasFrame(
+                            imageViewModel = imageViewModel,
+                        )
 
-                    0 -> ChristmasFrame()
+                        1 -> CodeRupeeFrame(
+                            imageViewModel = imageViewModel
+                        )
 
-                    1 -> RupeeFrame()
+                        2 -> GolaroidGrayFrame(
+                            imageViewModel = imageViewModel
+                        )
 
-                    2 -> GolaroidGrayFrame()
+                        3 -> GolaroidBlackFrame(
+                            imageViewModel = imageViewModel
+                        )
 
-                    3 -> GolaroidBlackFrame()
-
+                    }
                 }
             }
 
@@ -86,20 +109,16 @@ fun SelectFrameScreen(
                 Spacer(modifier = Modifier.width(20.dp))
 
                 GolaroidButton(text = "넘어가기", modifier = Modifier.weight(1f)) {
-                    onNextButtonClick()
+                    with(screenshotStateList[pagerState.currentPage]) {
+                        capture()
+                        imageBitmap?.let {
+                            imageViewModel.setSelectedImageWithFrame(it)
+                            onNextButtonClick()
+                        }
+                    }
                 }
 
             }
         }
     }
-}
-
-
-@Preview
-@Composable
-fun SelectFrameScreenPre() {
-    SelectFrameScreen(
-        onPrintButtonClick = {},
-        onNextButtonClick = {}
-    )
 }

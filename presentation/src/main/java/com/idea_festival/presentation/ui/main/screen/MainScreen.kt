@@ -47,6 +47,7 @@ fun MainRoute(
     postViewModel: PostViewModel,
 ) {
     val status = remember { mutableStateOf(false) }
+    postViewModel.postList.clear()
     postViewModel.getPostList()
     LaunchedEffect(true) {
         getPostList(

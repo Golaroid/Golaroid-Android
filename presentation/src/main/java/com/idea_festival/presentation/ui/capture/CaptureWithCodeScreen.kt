@@ -66,7 +66,7 @@ fun CaptureWithCodeScreen(
     val imageArray: MutableList<Bitmap> = mutableListOf()
     val context = LocalContext.current
 
-    var countdownValue by remember { mutableIntStateOf(10) }
+    var countdownValue by remember { mutableIntStateOf(3) }
     var leftoverPictureValue by remember { mutableIntStateOf(4) }
 
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
@@ -86,7 +86,7 @@ fun CaptureWithCodeScreen(
                     --countdownValue
 
                     if (countdownValue == 0) {
-                        countdownValue = 10
+                        countdownValue = 3
                         --leftoverPictureValue
                         onCaptured = true
                     }

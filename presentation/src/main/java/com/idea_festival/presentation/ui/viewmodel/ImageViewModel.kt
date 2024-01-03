@@ -52,21 +52,21 @@ class ImageViewModel @Inject constructor(
         _selectedImage.value = image
     }
 
-    fun upload() = viewModelScope.launch {
-        uploadImage.value?.let { image ->
-            uploadImageUseCase(
-                body = image
-            ).onSuccess {
-                it.catch { remoteError ->
-                    _uploadImageResponse.value = remoteError.errorHandling()
-                }.collect { response ->
-                    _uploadImageResponse.value = Event.Success(data = response)
-                }
-            }.onFailure { error ->
-                _uploadImageResponse.value = error.errorHandling()
-            }
-        }
-    }
+//    fun upload() = viewModelScope.launch {
+//        uploadImage.value?.let { image ->
+//            uploadImageUseCase(
+//                body = body
+//            ).onSuccess {
+//                it.catch { remoteError ->
+//                    _uploadImageResponse.value = remoteError.errorHandling()
+//                }.collect { response ->
+//                    _uploadImageResponse.value = Event.Success(data = response)
+//                }
+//            }.onFailure { error ->
+//                _uploadImageResponse.value = error.errorHandling()
+//            }
+//        }
+//    }
 
     fun uploadWithCode() = viewModelScope.launch {
         uploadImageWithCode.value?.let { image ->
