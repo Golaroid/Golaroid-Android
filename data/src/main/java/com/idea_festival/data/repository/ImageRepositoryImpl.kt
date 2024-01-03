@@ -19,8 +19,7 @@ class ImageRepositoryImpl @Inject constructor(
         return imageDataSource.uploadImage(
             body = ImageUploadRequest(
                 image = body.image,
-                isPublic = body.isPublic,
-                writer = body.writer
+                request = body.request
             )
         ).map { it.toModel() }
     }
