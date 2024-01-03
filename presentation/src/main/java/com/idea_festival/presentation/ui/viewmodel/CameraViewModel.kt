@@ -22,8 +22,8 @@ import com.idea_festival.domain.usecase.image.UploadImageUseCase
 import com.idea_festival.domain.usecase.image.UploadImageWithCodeUseCase
 import com.idea_festival.presentation.ui.capture.CaptureState
 import com.idea_festival.presentation.ui.capture.DetailPostData
-import com.idea_festival.presentation.ui.util.Event
-import com.idea_festival.presentation.ui.util.errorHandling
+import com.idea_festival.presentation.ui.viewmodel.util.Event
+import com.idea_festival.presentation.ui.viewmodel.util.errorHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -81,6 +81,9 @@ class CameraViewModel @Inject constructor(
     private var uploadImage = mutableStateOf<ImageUploadRequestModel?>(null)
 
     private var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
+
+    var issuedCode = mutableStateOf("")
+        private set
 
     fun setImageArray(imageArray: MutableList<Bitmap>) {
         _imageArray.value = imageArray
@@ -175,9 +178,17 @@ class CameraViewModel @Inject constructor(
     }
 
     fun upload() = viewModelScope.launch {
-        uploadImage.value?.let { image ->
+        selectedImage.value?.let { image ->
+            isPublic.value?.let { isPublic ->
+                ImageUploadRequestModel(
+                    image = image,
+                    isPublic = isPublic,
+                    writer = userName.value
+                )
+            }
+        }?.let {
             uploadImageUseCase(
-                body = image
+                body = it
             ).onSuccess {
                 it.catch { remoteError ->
                     _uploadImageResponse.value = remoteError.errorHandling()
@@ -188,6 +199,7 @@ class CameraViewModel @Inject constructor(
                 _uploadImageResponse.value = error.errorHandling()
             }
         }
+
     }
 
     fun uploadWithCode() = viewModelScope.launch {
