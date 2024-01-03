@@ -2,6 +2,7 @@ package com.idea_festival.presentation.ui.viewmodel
 
 import android.graphics.Bitmap
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.idea_festival.domain.model.image.ImageResponseModel
@@ -40,6 +41,13 @@ class ImageViewModel @Inject constructor(
 
     var uploadImageWithCode = mutableStateOf<ImageUploadWithCodeRequestModel?>(null)
         private set
+
+    var _selectImageWithFrame= mutableStateOf<ImageBitmap?>(null)
+
+    fun setSelectedImageWithFrame(image: ImageBitmap?) {
+        _selectImageWithFrame.value = image
+    }
+
     fun setSelectedImage(image: Bitmap?) {
         _selectedImage.value = image
     }

@@ -45,7 +45,9 @@ fun NavGraphBuilder.selectImageWithCodeScreen(
     onNextButtonClick:() -> Unit,
     imageArray: MutableList<Bitmap>? = null,
     cameraViewModel: CameraViewModel,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
+    onGoButtonClick: () -> Unit,
+    imageViewModel: ImageViewModel
 ) {
     composable (
         route = selectImageWithCodeRoute
@@ -53,7 +55,9 @@ fun NavGraphBuilder.selectImageWithCodeScreen(
         SelectImageWithCodeRoute(
             onNextButtonClick = {},
             cameraViewModel = cameraViewModel,
-            postViewModel = postViewModel
+            postViewModel = postViewModel,
+            onGoButtonClick = onGoButtonClick,
+            imageViewModel = imageViewModel
         )
     }
 }

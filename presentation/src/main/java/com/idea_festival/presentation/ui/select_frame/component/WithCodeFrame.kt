@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,12 +28,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.idea_festival.golaroid_android.design_system.R
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
 
 @Composable
 fun WithCodeChristmasFrame(
     modifier: Modifier = Modifier,
-    viewModel: PostViewModel
+    viewModel: PostViewModel,
+    imageViewModel: ImageViewModel,
 ) {
     Box(
         modifier = Modifier
@@ -45,42 +48,50 @@ fun WithCodeChristmasFrame(
             painter = painterResource(id = R.drawable.christmas_deco),
             contentDescription = null
         )
-        Box {
+        Box(
+            modifier = Modifier.zIndex(-1f)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
                     .align(Alignment.Center)
-                    .zIndex(-1f)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.test_image_one_piece),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(top = 50.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                        .height(362.dp)
-                        .clip(shape = RoundedCornerShape(5.dp)),
-                    contentScale = ContentScale.Crop
-                )
+                Box {
+                    imageViewModel.selectedImage?.let {
+                        Image(
+                            bitmap = it.asImageBitmap(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(top = 50.dp)
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp)
+                                .height(362.dp)
+                                .clip(shape = RoundedCornerShape(5.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    AsyncImage(
+                        model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                    )
+
+                }
 
             }
-            AsyncImage(
-                model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-            )
-
         }
+
     }
 }
 
 @Composable
 fun WithCodeRupeeFrame(
     modifier: Modifier = Modifier,
-    viewModel: PostViewModel
+    viewModel: PostViewModel,
+    imageViewModel: ImageViewModel,
 ) {
     Box(
         modifier = Modifier
@@ -102,33 +113,39 @@ fun WithCodeRupeeFrame(
             contentDescription = null,
             modifier = Modifier.padding(top = 42.dp)
         )
-        Box {
-
+        Box(
+            modifier = Modifier.zIndex(-1f)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
                     .align(Alignment.Center)
-                    .zIndex(-1f)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.j1),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(top = 50.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                        .height(362.dp)
-                        .clip(shape = RoundedCornerShape(5.dp)),
-                    contentScale = ContentScale.Crop
-                )
+                Box {
+                    imageViewModel.selectedImage?.let {
+                        Image(
+                            bitmap = it.asImageBitmap(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(top = 50.dp)
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp)
+                                .height(362.dp)
+                                .clip(shape = RoundedCornerShape(5.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    AsyncImage(
+                        model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                    )
+
+                }
             }
-            AsyncImage(
-                model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-            )
         }
     }
 }
@@ -137,7 +154,8 @@ fun WithCodeRupeeFrame(
 @Composable
 fun WithCodeGolaroidGrayFrame(
     modifier: Modifier = Modifier,
-    viewModel: PostViewModel
+    viewModel: PostViewModel,
+    imageViewModel: ImageViewModel,
 ) {
     Box(
         modifier = Modifier
@@ -161,34 +179,41 @@ fun WithCodeGolaroidGrayFrame(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
         )
-        Box{
 
+        Box(
+            modifier = Modifier.zIndex(-1f)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
                     .align(Alignment.Center)
-                    .zIndex(-1f)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.test_image_one_piece),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(top = 50.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                        .height(362.dp)
-                        .clip(shape = RoundedCornerShape(5.dp)),
-                    contentScale = ContentScale.Crop
-                )
+                Box {
+                    imageViewModel.selectedImage?.let {
+                        Image(
+                            bitmap = it.asImageBitmap(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(top = 50.dp)
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp)
+                                .height(362.dp)
+                                .clip(shape = RoundedCornerShape(5.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    AsyncImage(
+                        model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                    )
+
+                }
 
             }
-            AsyncImage(
-                model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-            )
         }
     }
 }
@@ -196,7 +221,8 @@ fun WithCodeGolaroidGrayFrame(
 @Composable
 fun WithCodeGolaroidBlackFrame(
     modifier: Modifier = Modifier,
-    viewModel: PostViewModel
+    viewModel: PostViewModel,
+    imageViewModel: ImageViewModel,
 ) {
     Box(
         modifier = Modifier
@@ -213,46 +239,41 @@ fun WithCodeGolaroidBlackFrame(
                 .height(18.dp)
                 .align(Alignment.TopCenter),
         )
-        Box {
+
+        Box(
+            modifier = Modifier.zIndex(-1f)
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
                     .align(Alignment.Center)
-                    .zIndex(-1f)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.test_image_one_piece),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(top = 50.dp)
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                        .height(362.dp)
-                        .clip(shape = RoundedCornerShape(5.dp)),
-                    contentScale = ContentScale.Crop
-                )
+                Box {
+                    imageViewModel.selectedImage?.let {
+                        Image(
+                            bitmap = it.asImageBitmap(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(top = 50.dp)
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp)
+                                .height(362.dp)
+                                .clip(shape = RoundedCornerShape(5.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    AsyncImage(
+                        model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                    )
+
+                }
+
             }
-            AsyncImage(
-                model = viewModel.getDetailPostResponse.value.data?.imageUrl.toString(),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-            )
         }
-
-    }
-}
-
-@Preview
-@Composable
-fun WithCodeFramePre() {
-    val viewModel: PostViewModel = hiltViewModel()
-    Row(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        WithCodeChristmasFrame(
-            viewModel = viewModel
-        )
     }
 }

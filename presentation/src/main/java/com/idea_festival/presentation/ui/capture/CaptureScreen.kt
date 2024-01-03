@@ -1,4 +1,3 @@
-
 package com.idea_festival.presentation.ui.capture
 
 import android.graphics.Bitmap
@@ -64,7 +63,7 @@ fun CaptureScreen(
 
     val context = LocalContext.current
 
-    var countdownValue by remember { mutableIntStateOf(2) }
+    var countdownValue by remember { mutableIntStateOf(10) }
     var leftoverPictureValue by remember { mutableIntStateOf(4) }
 
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
@@ -84,7 +83,7 @@ fun CaptureScreen(
                     --countdownValue
 
                     if (countdownValue == 0) {
-                        countdownValue = 2
+                        countdownValue = 10
                         --leftoverPictureValue
                         onCaptured = true
                     }
@@ -121,12 +120,14 @@ fun CaptureScreen(
                     modifier = Modifier
                         .clickable {
                             lensFacing =
-                                if (lensFacing == CameraSelector.DEFAULT_FRONT_CAMERA) CameraSelector.DEFAULT_BACK_CAMERA
-                                else CameraSelector.DEFAULT_FRONT_CAMERA
+                                if (lensFacing == CameraSelector.DEFAULT_FRONT_CAMERA)
+                                    CameraSelector.DEFAULT_BACK_CAMERA
+                                else
+                                    CameraSelector.DEFAULT_FRONT_CAMERA
                             viewModel.toggleCameraFacing()
                         }
-                        .width(24.dp)
-                        .height(24.dp)
+                        .width(50.dp)
+                        .height(50.dp)
                 )
 
                 Spacer(modifier = Modifier.weight(1f))

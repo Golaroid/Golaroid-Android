@@ -83,8 +83,6 @@ Pdomain/src/main/java/com/idea_festival/domain/model/post/GetPostResponseModel.k
 \presentation/src/main/java/com/idea_festival/presentation/ui/main/screen/TodayImageScreen.kt,7/2/72333d3a4c532e795c7f173028569842b8585653
 ç
 ]presentation/src/main/java/com/idea_festival/presentation/ui/main/component/PictureLazyRow.kt,d/6/d6e92bf211cb82ebb94db85f62f696ac4de98786
-è
-_presentation/src/main/java/com/idea_festival/presentation/ui/capture/component/CameraPreview.kt,7/a/7af9d04eaf1d54f0ca17b7ab710400ee22f4847d
 ë
 apresentation/src/main/java/com/idea_festival/presentation/ui/capture/component/CheckPermission.kt,d/3/d37f1d71bb6f23125790c2b7f3a56c9d9ff9383a
 á

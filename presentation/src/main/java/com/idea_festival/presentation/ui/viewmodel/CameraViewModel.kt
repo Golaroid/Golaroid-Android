@@ -167,8 +167,10 @@ class CameraViewModel @Inject constructor(
         Log.e("스위칭", "스위치 함수 실행")
         if (_facing.value == CameraSelector.LENS_FACING_BACK) {
             _facing.value = CameraSelector.LENS_FACING_FRONT
+            Log.e("facing값", _facing.value.toString())
         } else {
             _facing.value = CameraSelector.LENS_FACING_BACK
+            Log.e("facing값", _facing.value.toString())
         }
     }
 

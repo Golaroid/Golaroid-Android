@@ -66,7 +66,7 @@ fun CaptureWithCodeScreen(
     val imageArray: MutableList<Bitmap> = mutableListOf()
     val context = LocalContext.current
 
-    var countdownValue by remember { mutableIntStateOf(2) }
+    var countdownValue by remember { mutableIntStateOf(10) }
     var leftoverPictureValue by remember { mutableIntStateOf(4) }
 
     val lastCapturedPhoto: MutableState<Bitmap?> = remember { mutableStateOf(null) }
@@ -86,7 +86,7 @@ fun CaptureWithCodeScreen(
                     --countdownValue
 
                     if (countdownValue == 0) {
-                        countdownValue = 2
+                        countdownValue = 10
                         --leftoverPictureValue
                         onCaptured = true
                     }
@@ -135,8 +135,8 @@ fun CaptureWithCodeScreen(
                                 else CameraSelector.DEFAULT_FRONT_CAMERA
                             viewModel.toggleCameraFacing()
                         }
-                        .width(24.dp)
-                        .height(24.dp)
+                        .width(50.dp)
+                        .height(50.dp)
                 )
 
                 Spacer(modifier = Modifier.weight(1f))

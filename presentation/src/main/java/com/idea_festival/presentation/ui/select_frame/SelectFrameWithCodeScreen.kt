@@ -1,7 +1,9 @@
 package com.idea_festival.presentation.ui.select_frame
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -23,18 +25,24 @@ import com.idea_festival.presentation.ui.select_frame.component.WithCodeGolaroid
 import com.idea_festival.presentation.ui.select_frame.component.WithCodeGolaroidGrayFrame
 import com.idea_festival.presentation.ui.select_frame.component.WithCodeRupeeFrame
 import com.idea_festival.presentation.ui.viewmodel.CameraViewModel
+import com.idea_festival.presentation.ui.viewmodel.ImageViewModel
 import com.idea_festival.presentation.ui.viewmodel.PostViewModel
+import com.smarttoolfactory.screenshot.ScreenshotBox
+import com.smarttoolfactory.screenshot.rememberScreenshotState
 
 @Composable
 fun SelectFrameWithCodeRoute(
     onPrintButtonClick: () -> Unit,
     onNextButtonClick: () -> Unit,
     cameraViewModel: CameraViewModel,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
+    imageViewModel: ImageViewModel,
 ) {
-    SelectFrameScreen(
+    SelectFrameWithCodeScreen(
         onPrintButtonClick = onPrintButtonClick,
         onNextButtonClick = onNextButtonClick,
+        imageViewModel = imageViewModel,
+        postViewModel = postViewModel
     )
 }
 
@@ -43,9 +51,18 @@ fun SelectFrameWithCodeRoute(
 fun SelectFrameWithCodeScreen(
     onPrintButtonClick: () -> Unit,
     onNextButtonClick: () -> Unit,
-    postViewModel: PostViewModel
+    postViewModel: PostViewModel,
+    imageViewModel: ImageViewModel,
 ) {
     val pagerState = rememberPagerState(pageCount = { 6 })
+
+    val screenshotStateList = listOf(
+        rememberScreenshotState(),
+        rememberScreenshotState(),
+        rememberScreenshotState(),
+        rememberScreenshotState()
+    )
+
     GolaroidAndroidTheme { colors, typography ->
         Column(
             modifier = Modifier
@@ -59,17 +76,30 @@ fun SelectFrameWithCodeScreen(
                 contentPadding = PaddingValues(horizontal = 15.dp),
                 state = pagerState
             ) { page ->
+                ScreenshotBox(screenshotState = screenshotStateList[page]) {
+                    when (page) {
 
-                when (page) {
+                        0 -> WithCodeChristmasFrame(
+                            viewModel = postViewModel,
+                            imageViewModel = imageViewModel,
+                        )
 
-                    0 -> WithCodeChristmasFrame(viewModel = postViewModel)
+                        1 -> WithCodeRupeeFrame(
+                            viewModel = postViewModel,
+                            imageViewModel = imageViewModel
+                        )
 
-                    1 -> WithCodeRupeeFrame(viewModel = postViewModel)
+                        2 -> WithCodeGolaroidGrayFrame(
+                            viewModel = postViewModel,
+                            imageViewModel = imageViewModel
+                        )
 
-                    2 -> WithCodeGolaroidGrayFrame(viewModel = postViewModel)
+                        3 -> WithCodeGolaroidBlackFrame(
+                            viewModel = postViewModel,
+                            imageViewModel = imageViewModel
+                        )
 
-                    3 -> WithCodeGolaroidBlackFrame(viewModel = postViewModel)
-
+                    }
                 }
             }
 
@@ -88,9 +118,14 @@ fun SelectFrameWithCodeScreen(
                 Spacer(modifier = Modifier.width(20.dp))
 
                 GolaroidButton(text = "넘어가기", modifier = Modifier.weight(1f)) {
-                    onNextButtonClick()
+                    with(screenshotStateList[pagerState.currentPage]) {
+                        capture()
+                        imageBitmap?.let {
+                            imageViewModel.setSelectedImageWithFrame(it)
+                            onNextButtonClick()
+                        }
+                    }
                 }
-
             }
         }
     }
