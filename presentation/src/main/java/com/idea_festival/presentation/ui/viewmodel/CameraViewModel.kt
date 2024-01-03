@@ -180,8 +180,10 @@ class CameraViewModel @Inject constructor(
             isPublic.value?.let { isPublic ->
                 ImageUploadRequestModel(
                     image = image,
-                    isPublic = isPublic,
-                    writer = userName.value
+                    request = ImageUploadRequestModel.Request(
+                        isPublic = isPublic,
+                        writer = userName.value
+                    )
                 )
             }
         }?.let {
